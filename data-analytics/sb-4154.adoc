@@ -1,0 +1,19 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/sb-4154.html 
+keywords:  
+summary:  
+---
+= Analyse de données moderne - Différentes solutions pour différentes stratégies d'analyse
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Ce livre blanc décrit les stratégies de solutions d’analyse de données modernes de NetApp .  Il comprend des détails sur les résultats commerciaux, les défis des clients, les tendances technologiques, l'architecture héritée de la concurrence, les flux de travail modernes, les cas d'utilisation, les industries, le cloud, les partenaires technologiques, les déménageurs de données, NetApp Active IQ Digital Advisor (également connu sous le nom de Digital Advisor), NetApp DataOps Toolkit, Hadoop vers Spark, le stockage défini par logiciel avec NetApp Trident Protect, les conteneurs, la gestion des données d'entreprise, l'archivage et la hiérarchisation pour atteindre les objectifs de l'IA et de l'analyse et comment NetApp et les clients modernisent ensemble leur architecture de données.
+
+link:https://www.netapp.com/pdf.html?item=/media/58015-sb-4154.pdf["Analyse de données moderne - Différentes solutions pour différentes stratégies d'analyse"^]

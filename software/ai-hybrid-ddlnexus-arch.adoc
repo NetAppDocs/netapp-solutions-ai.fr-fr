@@ -1,0 +1,40 @@
+---
+sidebar: sidebar 
+permalink: software/ai-hybrid-ddlnexus-arch.html 
+keywords: NetApp AI, AI, Artificial Intelligence, ML, Machine Learning, NVIDIA, Hybrid, Hybrid Cloud, Hybrid Multicloud, Cloud, AWS, Amazon, Amazon Web Services, FSx ONTAP, FSx, NetApp ONTAP, FlexCache, SnapMirror, BlueXP 
+summary: MLOps multicloud hybride avec Domino Data Lab et NetApp - Architecture 
+---
+= Architecture
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Cette solution combine les capacités de planification de charge de travail multicloud hybride de Domino Nexus avec les services de données NetApp pour créer une plate-forme MLOps de cloud hybride unifiée.  Voir le tableau suivant pour plus de détails.
+
+|===
+| Composant | Nom | Environnement 
+
+
+| Plan de contrôle MLOps | link:https://domino.ai/platform/nexus["Plateforme d'IA Domino Enterprise avec Domino Nexus"] | AWS 
+
+
+| Environnements de calcul de la plateforme MLOps | link:https://docs.dominodatalab.com/en/latest/admin_guide/5781ea/data-planes/["Plans de données Domino Nexus"] | AWS, centre de données sur site 
+
+
+| Plateforme de calcul sur site | link:https://kubernetes.io["Kubernetes"]aveclink:https://docs.netapp.com/us-en/trident/index.html["NetApp Trident"] | Centre de données sur site 
+
+
+| Plateforme de calcul en nuage | link:https://aws.amazon.com/eks/["Amazon Elastic Kubernetes Service (EKS)"]aveclink:https://docs.netapp.com/us-en/trident/index.html["NetApp Trident"] | AWS 
+
+
+| Plateforme de données sur site | link:https://www.netapp.com/data-storage/["Dispositif de stockage NetApp"]alimenté parlink:https://www.netapp.com/data-management/ontap-data-management-software/["NetApp ONTAP"] | Centre de données sur site 
+
+
+| Plateforme de données cloud | link:https://aws.amazon.com/fsx/netapp-ontap/["Amazon FSx ONTAP"] | AWS 
+|===
+image:ddlnexus-001.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]

@@ -1,0 +1,23 @@
+---
+sidebar: sidebar 
+permalink: blogs.html 
+summary: Lisez les blogs IA/ML qui mettent en évidence les tendances du secteur, les innovations et l’impact réel, ainsi que les ressources pour les développeurs, les informations sur la communauté et les outils pratiques pour travailler avec les solutions d’IA NetApp . 
+keywords: netapp, solutions, blogs 
+---
+= Lisez les blogs sur les solutions d'IA des experts NetApp
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Lisez les blogs AI/ML qui mettent en évidence les tendances du secteur, les innovations et l’impact réel, ainsi que les ressources pour les développeurs, les informations sur la communauté et les outils pratiques pour travailler avec les solutions d’IA NetApp .
+
+.Tendances de l'IA et perspectives du secteur
+Explorez les tendances de l’industrie, les innovations et l’impact réel de l’IA dans divers secteurs. link:++https://www.netapp.com/blog/#t=Blogs&sort=%40publish_date_mktg%20descending&layout=card&f:@facet_language_mktg=["English"] &f:@facet_soultion_mktg=[IA,Analytique,intelligence-artificielle]++[Lire les blogs sur l'IA sur NetApp.com^]
+
+.Ressources et communauté pour les développeurs
+Informations techniques, outils pratiques et contenu communautaire pour les praticiens de l'IA/ML.link:https://netapp.io/category/ai-ml/["Lisez les blogs sur l'IA sur le Pub"^]

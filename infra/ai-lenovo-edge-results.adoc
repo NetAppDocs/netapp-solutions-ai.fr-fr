@@ -1,0 +1,87 @@
+---
+sidebar: sidebar 
+permalink: infra/ai-lenovo-edge-results.html 
+keywords: test, results, aff, offline, single-stream, ef 
+summary: 'Une multitude de tests ont été effectués pour évaluer les performances de l’architecture proposée.  Il existe six charges de travail différentes (classification d"images, détection d"objets [petits], détection d"objets [grands], imagerie médicale, conversion de la parole en texte et traitement du langage naturel [NLP]), que vous pouvez exécuter dans trois scénarios différents : hors ligne, flux unique et multiflux.' 
+---
+= Résultats des tests
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Une multitude de tests ont été effectués pour évaluer les performances de l’architecture proposée.
+
+Il existe six charges de travail différentes (classification d'images, détection d'objets [petits], détection d'objets [grands], imagerie médicale, conversion de la parole en texte et traitement du langage naturel [NLP]), que vous pouvez exécuter dans trois scénarios différents : hors ligne, flux unique et flux multiple.
+
+
+NOTE: Le dernier scénario est implémenté uniquement pour la classification d’images et la détection d’objets.
+
+Cela donne 15 charges de travail possibles, qui ont toutes été testées dans trois configurations différentes :
+
+* Serveur unique/stockage local
+* Stockage sur serveur unique/réseau
+* Stockage multi-serveurs/réseau
+
+
+Les résultats sont décrits dans les sections suivantes.
+
+
+
+== Inférence IA dans un scénario hors ligne pour AFF
+
+Dans ce scénario, toutes les données étaient disponibles sur le serveur et le temps nécessaire au traitement de tous les échantillons a été mesuré.  Nous rapportons les bandes passantes en échantillons par seconde comme résultats des tests.  Lorsque plusieurs serveurs de calcul sont utilisés, nous signalons la bande passante totale additionnée sur tous les serveurs.  Les résultats pour les trois cas d’utilisation sont présentés dans la figure ci-dessous.  Dans le cas de deux serveurs, nous rapportons la bande passante combinée des deux serveurs.
+
+image:ai-edge-012.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]
+
+Les résultats montrent que le stockage réseau n’affecte pas négativement les performances : le changement est minime et pour certaines tâches, aucun n’est constaté.  Lors de l'ajout du deuxième serveur, la bande passante totale double exactement ou, au pire, le changement est inférieur à 1 %.
+
+
+
+== Inférence de l'IA dans un scénario à flux unique pour AFF
+
+Ce benchmark mesure la latence.  Pour le cas de plusieurs serveurs de calcul, nous rapportons la latence moyenne.  Les résultats de la série de tâches sont donnés dans la figure ci-dessous.  Pour le cas à deux serveurs, nous rapportons la latence moyenne des deux serveurs.
+
+image:ai-edge-013.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]
+
+Les résultats montrent une fois de plus que le stockage réseau est suffisant pour gérer les tâches.  La différence entre le stockage local et le stockage réseau dans le cas d'un serveur unique est minime, voire nulle.  De même, lorsque deux serveurs utilisent le même stockage, la latence sur les deux serveurs reste la même ou change très légèrement.
+
+
+
+== Inférence IA dans un scénario multiflux pour AFF
+
+Dans ce cas, le résultat est le nombre de flux que le système peut gérer tout en satisfaisant la contrainte QoS.  Ainsi, le résultat est toujours un entier.  Pour plusieurs serveurs, nous rapportons le nombre total de flux additionnés sur tous les serveurs.  Toutes les charges de travail ne prennent pas en charge ce scénario, mais nous avons exécuté celles qui le permettent. Les résultats de nos tests sont résumés dans la figure ci-dessous.  Dans le cas de deux serveurs, nous signalons le nombre combiné de flux provenant des deux serveurs.
+
+image:ai-edge-014.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]
+
+Les résultats montrent des performances parfaites de la configuration : le stockage local et réseau donne les mêmes résultats et l'ajout du deuxième serveur double le nombre de flux que la configuration proposée peut gérer.
+
+
+
+== Résultats des tests pour EF
+
+Une multitude de tests ont été effectués pour évaluer les performances de l’architecture proposée.  Il existe six charges de travail différentes (classification d'images, détection d'objets [petits], détection d'objets [grands], imagerie médicale, conversion de la parole en texte et traitement du langage naturel [NLP]), qui ont été exécutées dans deux scénarios différents : hors ligne et flux unique.  Les résultats sont décrits dans les sections suivantes.
+
+
+
+=== Inférence de l'IA dans un scénario hors ligne pour EF
+
+Dans ce scénario, toutes les données étaient disponibles sur le serveur et le temps nécessaire au traitement de tous les échantillons a été mesuré.  Nous rapportons les bandes passantes en échantillons par seconde comme résultats des tests.  Pour les exécutions à nœud unique, nous rapportons la moyenne des deux serveurs, tandis que pour les exécutions à deux serveurs, nous rapportons la bande passante totale additionnée sur tous les serveurs.  Les résultats des cas d’utilisation sont présentés dans la figure ci-dessous.
+
+image:ai-edge-015.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]
+
+Les résultats montrent que le stockage réseau n’affecte pas négativement les performances : le changement est minime et pour certaines tâches, aucun n’est constaté.  Lors de l'ajout du deuxième serveur, la bande passante totale double exactement ou, au pire, le changement est inférieur à 1 %.
+
+
+
+=== Inférence de l'IA dans un scénario à flux unique pour EF
+
+Ce benchmark mesure la latence.  Dans tous les cas, nous signalons la latence moyenne sur tous les serveurs impliqués dans les exécutions.  Les résultats de la série de tâches sont donnés.
+
+image:ai-edge-016.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]
+
+Les résultats montrent à nouveau que le stockage réseau est suffisant pour gérer les tâches.  La différence entre le stockage local et le stockage réseau dans le cas d'un serveur unique est minime, voire nulle.  De même, lorsque deux serveurs utilisent le même stockage, la latence sur les deux serveurs reste la même ou change très légèrement.

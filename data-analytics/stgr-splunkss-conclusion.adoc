@@ -1,0 +1,33 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/stgr-splunkss-conclusion.html 
+keywords: conclusion, references 
+summary: 'Splunk Enterprise est la solution SIEM leader du marché qui génère des résultats pour les équipes de sécurité, d"informatique et de DevOps.' 
+---
+= Conclusion
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Splunk Enterprise est la solution SIEM leader du marché qui génère des résultats pour les équipes de sécurité, d'informatique et de DevOps.  L’utilisation de Splunk a considérablement augmenté dans les organisations de nos clients.  Il est donc nécessaire d’ajouter davantage de sources de données tout en conservant les données pendant une période plus longue, sollicitant ainsi l’infrastructure Splunk.
+
+La combinaison de Splunk SmartStore et de NetApp StorageGRID est conçue pour fournir une architecture évolutive permettant aux organisations d'obtenir des performances d'ingestion améliorées avec le stockage d'objets SmartStore et StorageGRID et une évolutivité accrue pour un environnement Splunk dans plusieurs régions géographiques.
+
+
+
+== Où trouver des informations supplémentaires
+
+Pour en savoir plus sur les informations décrites dans ce document, consultez les documents et/ou sites Web suivants :
+
+* https://docs.netapp.com/us-en/storagegrid-family/["Ressources de documentation NetApp StorageGRID"^]
+* https://docs.netapp.com["Documentation produit NetApp"^]
+* https://docs.splunk.com/Documentation/Splunk["Documentation de Splunk Enterprise"^]
+* https://docs.splunk.com/Documentation/Splunk/8.0.6/Indexer/AboutSmartStore["Splunk Enterprise À propos de SmartStore"^]
+* https://docs.splunk.com/Documentation/Splunk/8.0.6/Deploy/Distributedoverview["Manuel de déploiement distribué Splunk Enterprise"^]
+* https://docs.splunk.com/Documentation/Splunk/8.0.6/Indexer/Aboutindexesandindexers["Splunk Enterprise Gestion des indexeurs et des clusters d'indexeurs"^]
+

@@ -1,0 +1,76 @@
+---
+indexpage:
+  title: Solutions d'intelligence artificielle NetApp
+  summary: NetApp fournit des solutions d’IA complètes qui combinent une gestion des
+    données de niveau entreprise, des architectures de référence validées et des partenariats
+    stratégiques pour accélérer vos initiatives d’IA et soutenir les résultats commerciaux
+    critiques.  Du déploiement de l'infrastructure à l'automatisation MLOps, nos solutions
+    s'adaptent de manière transparente aux environnements de périphérie, de centre
+    de données et de cloud hybride.
+  lead: NetApp fournit des solutions d’IA complètes qui combinent une gestion des
+    données de niveau entreprise, des architectures de référence validées et des partenariats
+    stratégiques pour accélérer vos initiatives d’IA et soutenir les résultats commerciaux
+    critiques.  Du déploiement de l'infrastructure à l'automatisation MLOps, nos solutions
+    s'adaptent de manière transparente aux environnements de périphérie, de centre
+    de données et de cloud hybride.
+  tiles:
+  - title: Commencer
+    links:
+    - title: Quoi de neuf
+      url: "/whats-new.html"
+    - title: Blogs
+      url: "/blogs.html"
+    - title: Vidéos et démos
+      url: "/videos/ai-ml-videos.html"
+  - title: Infrastructure d'IA et systèmes convergés
+    links:
+    - title: NetApp AIPod avec systèmes NVIDIA DGX
+      url: "/infra/ai-aipod-nv-intro.html"
+    - title: NVIDIA DGX SuperPOD avec série EF
+      url: "/infra/ai-eseries-superpod.html"
+    - title: NetApp AIPod avec Lenovo pour NVIDIA OVX
+      url: "/infra/ai-aipod-lenovo-nva1172.html"
+    - title: Système de fichiers parallèle BeeGFS avec série E
+      url: "/infra/ai-eseries-beegfs.html"
+  - title: Cas d'utilisation et applications de l'IA
+    links:
+    - title: AIPod Mini pour l'inférence RAG
+      url: "/infra/ai-minipod.html"
+    - title: Inférence de l'IA à la périphérie
+      url: "/infra/ai-lenovo-edge-intro.html"
+    - title: Solutions de bases de données vectorielles
+      url: "/vector-db/ai-vdb-solution-with-netapp.html"
+    - title: Charges de travail liées à la conduite autonome
+      url: "/infra/ai-storagegrid-datalake-adas.html"
+    - title: Quantum StorNext avec série E
+      url: "/infra/ai-eseries-nva1150-design.html"
+  - title: MLOps et gestion des données
+    links:
+    - title: MLOps open source avec NetApp
+      url: "/software/ai-osmlops-intro.html"
+    - title: MLOps multicloud hybride avec Domino Data Lab
+      url: "/software/ai-hybrid-ddlnexus-intro.html"
+    - title: FSx ONTAP pour MLOps
+      url: "/cloud/ai-mlops-fsxn-intro.html"
+    - title: Boîte à outils NetApp DataOps
+      url: "/software/dataops-toolkit.html"
+  - title: Solutions d'IA Big Data et cloud hybride
+    links:
+    - title: Solutions de données cloud hybrides
+      url: "/data-analytics/hdcs-sh-solution-overview.html"
+    - title: Solutions Apache Spark
+      url: "/data-analytics/apache-spark-solution-overview.html"
+    - title: Confluent Kafka avec stockage NetApp ONTAP
+      url: "/data-analytics/kafka-ontap-overview.html"
+    - title: NetApp StorageGRID avec Splunk SmartStore
+      url: "/data-analytics/stgr-splunkss-introduction.html"
+    - title: Maison au bord du lac Dremio avec stockage NetApp
+      url: "/data-analytics/dremio-lakehouse-introduction.html"
+  - title: Demandes de solutions et commentaires
+    links:
+    - title: Automatisation des demandes
+      url: https://github.com/NetAppDocs/netapp-solutions/issues/new?body=[Request%20Automation]%0d%0a%0d%0aSolution%20Name:%20%0d%0aRequest%20Title:%20%0d%0aDescription:%0d%0aSuggestions:&title=Request%20Automation%20-%20%3Crequest_title%3E
+    - title: Proposer une nouvelle solution
+      url: https://github.com/NetAppDocs/netapp-solutions/issues/new?body=[Request%20Solution]%0d%0a%0d%0aSolution%20Use%20Case:%20%0d%0aSolution%20Description:%20%0d%0aAdditional%20Comments:&title=Request%20Solution%20-%20%3Csolution%3E
+    - title: Fournir un retour sur la solution
+      url: https://github.com/NetAppDocs/netapp-solutions/issues/new?body=[Solution%20Feedback]%0d%0a%0d%0aSolution%20Name:%20%0d%0aSolution%20Feedback:%20%0d%0aAdditional%20Comments:&title=Solution%20Feedback%20-%20%3Csolution%3E

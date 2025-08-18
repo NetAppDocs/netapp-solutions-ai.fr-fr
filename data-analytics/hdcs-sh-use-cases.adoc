@@ -1,0 +1,47 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/hdcs-sh-use-cases.html 
+keywords: summary, overview, backup, devtest, data protection 
+summary: 'Cette section fournit une description de haut niveau des cas d’utilisation de la protection des données, qui constituent l’objet de cet article.  Les sections restantes fournissent plus de détails pour chaque cas d"utilisation, tels que le problème client (scénario), les exigences et les défis, ainsi que les solutions.' 
+---
+= Aperçu des cas d'utilisation de la protection des données Hadoop
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Cette section fournit une description de haut niveau des cas d’utilisation de la protection des données, qui constituent l’objet de cet article.  Les sections restantes fournissent plus de détails pour chaque cas d'utilisation, tels que le problème client (scénario), les exigences et les défis, ainsi que les solutions.
+
+
+
+== Cas d'utilisation 1 : Sauvegarde des données Hadoop
+
+Pour ce cas d'utilisation, le volume NetApp NFS a aidé une grande institution financière à réduire la longue fenêtre de sauvegarde de plus de 24 heures à un peu moins de quelques heures.
+
+
+
+== Cas d'utilisation 2 : Sauvegarde et reprise après sinistre du cloud vers les locaux
+
+En utilisant la structure de données optimisée par NetApp comme éléments de base, une grande société de radiodiffusion a pu répondre à son exigence de sauvegarde des données cloud dans son centre de données sur site en fonction des différents modes de transfert de données, tels que la demande, l'instantané ou la charge du cluster Hadoop/Spark.
+
+
+
+== Cas d'utilisation 3 : Activation de DevTest sur des données Hadoop existantes
+
+Les solutions NetApp ont aidé un distributeur de musique en ligne à créer rapidement plusieurs clusters Hadoop peu encombrants dans différentes branches pour créer des rapports et exécuter des tâches DevTest quotidiennes à l'aide de politiques planifiées.
+
+
+
+== Cas d'utilisation 4 : Protection des données et connectivité multicloud
+
+Un grand fournisseur de services a utilisé la structure de données optimisée par NetApp pour fournir des analyses multicloud à ses clients à partir de différentes instances cloud.
+
+
+
+== Cas d'utilisation 5 : Accélérer les charges de travail analytiques
+
+L'une des plus grandes banques de services financiers et d'investissement a utilisé la solution de stockage en réseau NetApp pour réduire le temps d'attente des E/S et accélérer sa plateforme d'analyse financière quantitative.

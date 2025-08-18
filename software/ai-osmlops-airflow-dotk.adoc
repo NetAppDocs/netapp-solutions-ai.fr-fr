@@ -1,0 +1,19 @@
+---
+sidebar: sidebar 
+permalink: software/ai-osmlops-airflow-dotk.html 
+keywords: Apache Airflow 
+summary: 'MLOps Open Source avec NetApp : utilisez la boîte à outils NetApp DataOps avec Airflow' 
+---
+= Utilisez la boîte à outils NetApp DataOps avec Airflow
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Le https://github.com/NetApp/netapp-dataops-toolkit/tree/main/netapp_dataops_k8s["Boîte à outils NetApp DataOps pour Kubernetes"] peut être utilisé en conjonction avec Airflow.  L'utilisation de NetApp DataOps Toolkit avec Airflow vous permet d'intégrer des opérations de gestion de données NetApp , telles que la création d'instantanés et de clones, dans des flux de travail automatisés orchestrés par Airflow.
+
+Se référer à la https://github.com/NetApp/netapp-dataops-toolkit/tree/main/netapp_dataops_k8s/Examples/Airflow["Exemples de flux d'air"] section dans le référentiel GitHub NetApp DataOps Toolkit pour plus de détails sur l'utilisation de la boîte à outils avec Airflow.

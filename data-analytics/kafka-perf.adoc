@@ -1,0 +1,27 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/kafka-perf.html 
+keywords: performance, tests, scalability 
+summary: Nous avons effectué les tests de stockage à plusieurs niveaux avec trois à quatre nœuds pour les charges de travail de production et de consommation avec la configuration NetApp StorageGRID . 
+---
+= Tests de performance avec évolutivité
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Nous avons effectué les tests de stockage hiérarchisé avec trois à quatre nœuds pour les charges de travail des producteurs et des consommateurs avec la configuration NetApp StorageGRID .  Selon nos tests, le temps d’exécution et les résultats de performance étaient directement proportionnels au nombre de nœuds StorageGRID .  La configuration de StorageGRID nécessitait un minimum de trois nœuds.
+
+* Le temps nécessaire pour terminer l’opération de production et de consommation a diminué linéairement lorsque le nombre de nœuds de stockage a augmenté.
+
+
+image:confluent-kafka-009.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]
+
+* Les performances de l’opération de récupération s3 ont augmenté linéairement en fonction du nombre de nœuds StorageGRID .  StorageGRID prend en charge jusqu'à 200 nœuds StorgeGRID.
+
+
+image:confluent-kafka-010.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]

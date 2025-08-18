@@ -1,0 +1,70 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/dremio-lakehouse-solution.html 
+keywords: solution, architecture, details, hardware, software 
+summary: Cette section couvre le matériel et les logiciels utilisés pour la certification dremio.  Ces informations s’appliquent au déploiement de dremio avec le stockage NetApp . 
+---
+= Présentation de la solution
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+La solution Hybrid Iceberg Lakehouse offre des avantages uniques pour répondre aux défis auxquels sont confrontés les clients du lac de données.  En tirant parti de la plate-forme Dremio Unified Lakehouse et des solutions NetApp ONTAP, StorageGRID et NetApp Cloud, les entreprises peuvent ajouter une valeur significative à leurs opérations commerciales.  La solution fournit non seulement un accès à plusieurs sources de données, y compris les sources NetApp , mais améliore également les performances analytiques globales et aide les entreprises à générer des informations commerciales qui conduisent à la croissance de l'entreprise.
+
+
+
+== Présentation de NetApp
+
+* Les offres de NetApp, telles que ONTAP et StorageGRID, permettent la séparation du stockage et du calcul, permettant une utilisation optimale des ressources en fonction d'exigences spécifiques.  Cette flexibilité permet aux clients de faire évoluer leur stockage de manière indépendante à l'aide des solutions de stockage NetApp
+* En exploitant les contrôleurs de stockage de NetApp, les clients peuvent efficacement fournir des données à leur base de données vectorielle à l'aide des protocoles NFS et S3.  Ces protocoles facilitent le stockage des données client et gèrent l'index de la base de données vectorielle, éliminant ainsi le besoin de plusieurs copies de données accessibles via des méthodes de fichiers et d'objets.
+* NetApp ONTAP fournit une prise en charge native du stockage NAS et d'objets auprès des principaux fournisseurs de services cloud tels qu'AWS, Azure et Google Cloud.  Cette large compatibilité garantit une intégration transparente, permettant la mobilité des données client, l'accessibilité globale, la reprise après sinistre, l'évolutivité dynamique et des performances élevées.
+
+
+
+
+=== StorageGRID
+
+Notre stockage d'objets de pointe, storageGRID, offre un moteur de politique puissant pour le placement automatisé des données, des options de déploiement flexibles et une durabilité inégalée avec un codage d'effacement en couches.  Il dispose d'une architecture évolutive prenant en charge des milliards d'objets et des pétaoctets de données dans un seul espace de noms.  La solution permet l'intégration du cloud hybride, permettant la hiérarchisation des données vers les principales plates-formes cloud.  Il a été reconnu comme leader dans l'évaluation mondiale des fournisseurs basés sur les objets IDC Marketscape 2019.
+
+De plus, storageGRID excelle dans la gestion de données non structurées à grande échelle avec un stockage d'objets défini par logiciel, une géo-redondance et des capacités multisites.  Il intègre une gestion du cycle de vie des informations basée sur des politiques et offre des fonctionnalités d'intégration dans le cloud telles que la mise en miroir et la recherche.  Elle dispose de diverses certifications, notamment Common Criteria, NF203 Digital Safe Component, ISO/IEC 25051, KPMG et Cohasset Compliance Assessment.
+
+En résumé, NetApp storageGRID offre des fonctionnalités puissantes, une évolutivité, une intégration cloud hybride et des certifications de conformité pour une gestion efficace des données non structurées à grande échelle.
+
+
+
+=== NetApp ONTAP
+
+NetApp ONTAP est une solution de stockage robuste qui offre une large gamme de fonctionnalités d'entreprise.  Il inclut Snapshot, qui fournit des sauvegardes instantanées cohérentes avec les applications et inviolables.  SnapRestore permet une restauration quasi instantanée des sauvegardes à la demande, tandis que SnapMirror offre des fonctionnalités intégrées de sauvegarde à distance et de reprise après sinistre.  La solution intègre également la protection autonome contre les ransomwares (ARP), garantissant la sécurité des données avec des fonctionnalités telles que la vérification multi-administrateur, le cryptage des données au repos avec certification FIPS, le cryptage des données en transit, l'authentification multifacteur (MFA) et le contrôle d'accès basé sur les rôles (RBAC).  La journalisation complète, l'audit, la gestion des clés intégrées et externes, la purge sécurisée et la gestion sécurisée de plusieurs locataires améliorent encore la sécurité et la conformité des données.
+
+NetApp ONTAP propose également SnapLock, qui offre une conservation des données conforme à la réglementation avec des niveaux élevés d'intégrité, de performances et de conservation à un faible coût total de possession.  Il est entièrement intégré à NetApp ONTAP 9 et offre une protection contre les actes malveillants, les administrateurs malveillants et les ransomwares.
+
+La solution comprend le cryptage NSE/NVE pour le cryptage en vol et des données au repos, l'accès administrateur multifacteur et la vérification multi-administrateur.  Active IQ fournit des analyses prédictives et des mesures correctives basées sur l'IA, tandis que QoS garantit la qualité du contrôle de la charge de travail.  L'intégration de la gestion et de l'automatisation est intuitive via SysMgr/GUI/CLI/API.  FabricPool permet la hiérarchisation automatique des données et la solution offre une efficacité grâce à la compression, la déduplication et le compactage des données en ligne.  NetApp garantit l'atteinte des objectifs d'efficacité de la charge de travail sans frais pour le client.
+
+NetApp ONTAP prend en charge divers protocoles, notamment NVMe/FC, FC, NVMe/TCP, iSCSI, NFS, SMB et S3, ce qui en fait une solution de stockage unifiée.  Dans l’ensemble, NetApp ONTAP offre des fonctionnalités d’entreprise étendues, une sécurité robuste, une conformité, une efficacité et une polyvalence pour répondre à divers besoins de stockage.
+
+
+
+== Présentation de Dremio
+
+Dremio est la plateforme Lakehouse unifiée pour l'analyse en libre-service et l'IA.  La plateforme d'analyse unifiée Dremio rapproche les utilisateurs des données avec la flexibilité, l'évolutivité et les performances du Lakehouse à une fraction du coût des solutions d'entrepôt de données existantes.  Dremio permet des analyses « shift-left » pour éliminer l'intégration de données et l'ETL complexes et coûteux, offrant ainsi des analyses transparentes à l'échelle de l'entreprise sans aucun mouvement de données.  Dremio propose également :
+
+* Analyses en libre-service faciles à utiliser, activées grâce à une couche sémantique universelle et à un moteur de requête SQL hautement performant et étroitement intégré, facilitant la connexion, la gouvernance et l'analyse de toutes les données, à la fois dans le cloud et sur site.
+* Les capacités de gestion de lakehouse natives d'Apache Iceberg de Dremio simplifient la découverte de données et automatisent l'optimisation des données, offrant des analyses hautes performances avec un versionnage de données inspiré de Git.
+* Fondamentalement construit sur l'open source et les normes ouvertes, Dremio permet aux entreprises d'éviter le verrouillage et de rester positionnées pour l'innovation.  Les entreprises font confiance à Dremio comme étant la plateforme lakehouse la plus simple à utiliser avec le meilleur rapport qualité-prix pour toutes les charges de travail.
+
+
+
+
+== Quelle valeur la solution Dremio et NetApp Hybrid Iceberg Lakehouse apporte-t-elle aux clients ?
+
+* *Gestion et accessibilité des données améliorées* : Dremio est bien connu pour sa plateforme de data lakehouse qui permet aux organisations d'interroger les données directement à partir de leurs lacs de données à grande vitesse.  NetApp, quant à lui, est un fournisseur leader de services de données cloud et de solutions de stockage de données.  L'offre conjointe offre aux clients une solution complète pour stocker, gérer, accéder et analyser les données de leur entreprise de manière efficace et efficiente.
+* *Optimisation des performances* : Grâce à l'expertise de NetApp en matière de stockage de données et aux capacités de Dremio en matière de traitement et d'optimisation des données, le partenariat offre une solution qui améliore les performances des opérations de données, réduit la latence et augmente la vitesse d'accès aux informations commerciales.  Dremio a même apporté des avantages en termes de performances à l'infrastructure analytique informatique interne de NetApp.
+* *Évolutivité* : Dremio et NetApp proposent tous deux une solution conçue pour évoluer.  La solution commune offre aux clients des environnements de stockage de données, de gestion de données et d’analyse hautement évolutifs.  Dans un environnement Hybrid Iceberg Lakehouse, le moteur de requête Dremio SQL associé à NetApp StorageGRID offre une évolutivité, une concurrence et des performances de requête inégalées, capables de gérer les besoins analytiques de toute entreprise.
+* *Sécurité et gouvernance des données* : Les deux entreprises mettent fortement l’accent sur la sécurité et la gouvernance des données.  Ensemble, ils offrent des fonctionnalités robustes de sécurité et de gouvernance des données, garantissant que les données sont protégées et que les exigences de gouvernance des données sont respectées.  Des fonctionnalités telles que les contrôles d'accès basés sur les rôles et à granularité fine, l'audit complet, la lignée de données de bout en bout, la gestion unifiée des identités et l'authentification unique avec un cadre de conformité et de sécurité étendu garantissent que les environnements de données analytiques des entreprises sont sécurisés et gouvernés.
+* *Efficacité des coûts* : En intégrant le moteur de lac de données de Dremio aux solutions de stockage de NetApp, les clients peuvent réduire les coûts associés à la gestion et au déplacement des données.  Les organisations peuvent également passer d’environnements de lac de données hérités à une solution lakehouse plus moderne composée de NetApp et Dremio.  Cette solution Hybrid Iceberg Lakehouse offre des performances de requête à grande vitesse et une concurrence de requêtes à la pointe du marché qui réduit le coût total de possession et le temps d'analyse de l'entreprise.
+

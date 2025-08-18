@@ -1,0 +1,73 @@
+---
+sidebar: sidebar 
+permalink: software/ai-hybrid-ddlnexus-vols.html 
+keywords: NetApp AI, AI, Artificial Intelligence, ML, Machine Learning, NVIDIA, Hybrid, Hybrid Cloud, Hybrid Multicloud, Cloud, AWS, Amazon, Amazon Web Services, FSx ONTAP, FSx, NetApp ONTAP, FlexCache, SnapMirror, BlueXP 
+summary: 'MLOps multicloud hybride avec Domino Data Lab et NetApp : exposez les volumes NetApp existants à Domino' 
+---
+= Exposer les volumes NetApp existants à Domino
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Cette section décrit les tâches à effectuer pour exposer les volumes NetApp ONTAP NFS existants à la plate-forme Domino MLOps.  Ces mêmes étapes s’appliquent à la fois sur site et dans AWS.
+
+
+
+== Pourquoi exposer les volumes NetApp ONTAP à Domino ?
+
+L'utilisation des volumes NetApp conjointement avec Domino offre les avantages suivants :
+
+* Vous pouvez exécuter des charges de travail sur des ensembles de données extrêmement volumineux en tirant parti des capacités d'évolutivité horizontale de NetApp ONTAP.
+* Vous pouvez exécuter des charges de travail sur plusieurs nœuds de calcul sans avoir à copier vos données sur les nœuds individuels.
+* Vous pouvez profiter des capacités de déplacement et de synchronisation des données multicloud hybrides de NetApp afin d'accéder à vos données sur plusieurs centres de données et/ou clouds.
+* Vous souhaitez pouvoir créer rapidement et facilement un cache de vos données dans un autre centre de données ou cloud.
+
+
+
+
+== Exposer les volumes NFS existants qui n'ont pas été provisionnés par Trident
+
+Si votre volume NetApp ONTAP NFS existant n’a pas été provisionné par Trident, suivez les étapes décrites dans cette sous-section.
+
+
+
+=== Créer des PV et des PVC dans Kubernetes
+
+
+NOTE: Pour les volumes sur site, créez le PV et le PVC dans votre cluster Kubernetes sur site.  Pour les volumes Amazon FSx ONTAP , créez le PV et le PVC dans Amazon EKS.
+
+Tout d’abord, vous devez créer un volume persistant (PV) et une revendication de volume persistant (PVC) dans votre cluster Kubernetes.  Pour créer le PV et le PVC, utilisez lelink:https://docs.dominodatalab.com/en/latest/admin_guide/4cdae9/set-up-kubernetes-pv-and-pvc/#_nfs_pvpvc_example["Exemple NFS PV/PVC"] à partir du guide d'administration Domino et mettez à jour les valeurs pour refléter votre environnement.  Assurez-vous de spécifier les valeurs correctes pour le `namespace` , `nfs.path` , et `nfs.server` champs.  De plus, nous vous recommandons de donner à vos PV et PVC des noms uniques qui représentent la nature des données stockées sur le volume ONTAP NFS correspondant.  Par exemple, si le volume contient des images de défauts de fabrication, vous pouvez nommer le PV, `pv-mfg-defect-images` , et le PVC, `pvc-mfg-defect-images` .
+
+
+
+=== Enregistrer un volume de données externe dans Domino
+
+Ensuite, vous devez enregistrer un volume de données externe dans Domino.  Pour enregistrer un volume de données externe, reportez-vous à lalink:https://docs.dominodatalab.com/en/latest/admin_guide/9c3564/register-external-data-volumes/["instructions"] dans le guide d'administration Domino.  Lors de l'enregistrement du volume, assurez-vous de sélectionner « NFS » dans le menu déroulant « Type de volume ».  Après avoir sélectionné « NFS », vous devriez voir votre PVC dans la liste « Volumes disponibles ».
+
+image:ddlnexus-003.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]
+
+
+
+== Exposer les volumes existants qui ont été provisionnés par Trident
+
+Si votre volume existant a été provisionné par Trident, suivez les étapes décrites dans cette sous-section.
+
+
+
+=== Modifier le PVC existant
+
+Si votre volume a été provisionné par Trident, vous disposez déjà d'une réclamation de volume persistant (PVC) correspondant à votre volume.  Afin d'exposer ce volume à Domino, vous devez éditer le PVC et ajouter l'étiquette suivante à la liste des étiquettes dans le `metadata.labels` champ:
+
+....
+"dominodatalab.com/external-data-volume": "Generic"
+....
+
+
+=== Enregistrer un volume de données externe dans Domino
+
+Ensuite, vous devez enregistrer un volume de données externe dans Domino.  Pour enregistrer un volume de données externe, reportez-vous à lalink:https://docs.dominodatalab.com/en/latest/admin_guide/9c3564/register-external-data-volumes/["instructions"] dans le guide d'administration Domino.  Lors de l'enregistrement du volume, assurez-vous de sélectionner « Générique » dans le menu déroulant « Type de volume ».  Après avoir sélectionné « Générique », vous devriez voir votre PVC dans la liste « Volumes disponibles ».

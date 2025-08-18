@@ -1,0 +1,23 @@
+---
+sidebar: sidebar 
+permalink: software/ai-osmlops-kubeflow-dotk.html 
+keywords: Jupyter Notebook, Kubeflow Pipeline, NetApp DataOps Toolkit 
+summary: 'MLOps Open Source avec NetApp : utilisez la boîte à outils NetApp DataOps avec Kubeflow' 
+---
+= Utilisez la boîte à outils NetApp DataOps avec Kubeflow
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Le https://github.com/NetApp/netapp-dataops-toolkit/tree/main/netapp_dataops_k8s["Boîte à outils NetApp Data Science pour Kubernetes"] peut être utilisé en conjonction avec Kubeflow.  L'utilisation de NetApp Data Science Toolkit avec Kubeflow offre les avantages suivants :
+
+* Les scientifiques des données peuvent effectuer des opérations avancées de gestion des données NetApp , telles que la création d'instantanés et de clones, directement à partir d'un bloc-notes Jupyter.
+* Les opérations avancées de gestion des données NetApp , telles que la création d’instantanés et de clones, peuvent être intégrées dans des flux de travail automatisés à l’aide du framework Kubeflow Pipelines.
+
+
+Se référer à la https://github.com/NetApp/netapp-dataops-toolkit/tree/main/netapp_dataops_k8s/Examples/Kubeflow["Exemples de Kubeflow"] section dans le référentiel GitHub NetApp Data Science Toolkit pour plus de détails sur l'utilisation de la boîte à outils avec Kubeflow.

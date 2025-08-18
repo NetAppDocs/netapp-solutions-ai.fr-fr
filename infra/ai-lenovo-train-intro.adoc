@@ -1,0 +1,49 @@
+---
+sidebar: sidebar 
+permalink: infra/ai-lenovo-train-intro.html 
+keywords: tr4810, 4810, introduction, cluster architecture, lenovo, ai 
+summary: 'Cette solution se concentre sur l"architecture de cluster d"entrée et de milieu de gamme utilisant le stockage NetApp et les serveurs Lenovo optimisés pour les charges de travail d"intelligence artificielle.  Il est destiné aux équipes de petite et moyenne taille pour lesquelles la plupart des tâches de calcul sont mono-nœud (GPU unique ou multi-GPU) ou sont réparties sur quelques nœuds de calcul.  Il ne s’agit pas d’une limitation majeure, car la plupart des tâches quotidiennes de formation de l’IA concernent un seul nœud.' 
+---
+= TR-4810 : NetApp AFF A400 avec Lenovo ThinkSystem SR670 V2 pour la formation de modèles d'IA et de ML
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+Sathish Thyagarajan, David Arnette, NetApp Mircea Troaca, Lenovo
+
+[role="lead"]
+Cette solution présente une architecture de cluster de milieu de gamme utilisant le stockage NetApp et les serveurs Lenovo optimisés pour les charges de travail d'intelligence artificielle (IA).  Il est destiné aux petites et moyennes entreprises pour lesquelles la plupart des tâches de calcul sont à nœud unique (GPU unique ou multi-GPU) ou réparties sur quelques nœuds de calcul.  Cette solution s’aligne sur la plupart des tâches quotidiennes de formation à l’IA pour de nombreuses entreprises.
+
+Ce document couvre les tests et la validation d'une configuration de calcul et de stockage composée de huit serveurs Lenovo SR670V2 à GPU, d'un système de stockage NetApp AFF A400 de milieu de gamme et d'un commutateur d'interconnexion 100 GbE.  Pour mesurer les performances, nous avons utilisé ResNet50 avec l'ensemble de données ImageNet, une taille de lot de 408, une demi-précision, CUDA et cuDNN.  Cette architecture offre une solution efficace et rentable pour les petites et moyennes entreprises qui débutent avec des initiatives d'IA nécessitant les capacités de niveau entreprise du stockage de données connecté au cloud NetApp ONTAP .
+
+
+
+== Public cible
+
+Ce document est destiné aux publics suivants :
+
+* Scientifiques des données, ingénieurs des données, administrateurs de données et développeurs de systèmes d'IA
+* Architectes d'entreprise qui conçoivent des solutions pour le développement de modèles d'IA
+* Les scientifiques et ingénieurs de données qui recherchent des moyens efficaces pour atteindre les objectifs de développement de l'apprentissage profond (DL) et de l'apprentissage automatique (ML)
+* Les dirigeants d'entreprise et les décideurs OT/IT qui souhaitent obtenir le délai de mise sur le marché le plus rapide possible pour les initiatives d'IA
+
+
+
+
+== Architecture de la solution
+
+Cette solution avec serveurs Lenovo ThinkSystem et NetApp ONTAP avec stockage AFF est conçue pour gérer la formation de l'IA sur de grands ensembles de données en utilisant la puissance de traitement des GPU aux côtés des CPU traditionnels.  Cette validation démontre des performances élevées et une gestion optimale des données avec une architecture évolutive qui utilise un, deux ou quatre serveurs Lenovo SR670 V2 avec un seul système de stockage NetApp AFF A400 .  La figure suivante fournit un aperçu architectural.
+
+image:a400-thinksystem-002.png["Cette image représente un commutateur Ethernet entouré du serveur de gestion, de quatre SR670 V2 avec huit GPU chacun et d'un système de stockage NetApp ONTAP ."]
+
+Cette solution NetApp et Lenovo offre les principaux avantages suivants :
+
+* Performances hautement efficaces et rentables lors de l'exécution de plusieurs tâches de formation en parallèle
+* Performances évolutives basées sur différents nombres de serveurs Lenovo et différents modèles de contrôleurs de stockage NetApp
+* Protection robuste des données pour atteindre des objectifs de points de récupération (RPO) et de temps de récupération (RTO) faibles sans perte de données
+* Gestion optimisée des données avec des instantanés et des clones pour rationaliser les flux de travail de développement
+

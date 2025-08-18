@@ -1,0 +1,60 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/kafka-sc-solution.html 
+keywords: solution architecture, confluent platform, linux, Fujitsu primergy, intel xenon 
+summary: Cette section couvre le matériel et les logiciels utilisés pour la vérification des performances dans le déploiement de Confluent Platform avec NetApp ONTAP pour le stockage hiérarchisé.  Le tableau suivant couvre l’architecture de la solution et les composants de base. 
+---
+= Solution
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Les contrôleurs de stockage Confluent et NetApp AFF A900 optimisés par ONTAP sont des systèmes distribués conçus pour les flux de données.  Les deux sont évolutifs horizontalement, tolérants aux pannes et offrent d’excellentes performances sous charge.  Ils se complètent dans le streaming de données distribuées et le traitement de flux avec des coûts de stockage inférieurs grâce à des technologies de réduction des données qui minimisent l'empreinte des données.  Le contrôleur de stockage AFF A900 offre d'excellentes performances, tout en permettant le découplage des ressources de calcul et de stockage de données.  Cela simplifie l’administration du système et permet de faire évoluer les ressources de manière indépendante.
+
+image:kafka-sc-003.png["Image illustrant l'aperçu de la solution."]
+
+
+
+== Détails de l'architecture de la solution
+
+Cette section couvre le matériel et les logiciels utilisés pour la vérification des performances dans le déploiement de Confluent Platform avec NetApp ONTAP pour le stockage hiérarchisé.  Le tableau suivant couvre l’architecture de la solution et les composants de base.
+
+|===
+| Composant de la plateforme | Configuration de l'environnement 
+
+
+| Plateforme Confluent version 6.2  a| 
+* 3 x gardiens de zoo
+* 8 x serveurs de courtage
+* 5 x serveurs d'outils
+* 1 x Grafana
+* 1 x centre de contrôle
+
+
+
+
+| Système d'exploitation sur tous les nœuds | Linux (Ubuntu 18.04) 
+
+
+| NetApp ONTAP pour les buckets chauds  a| 
+* 1 paire AFF A900 haute disponibilité (HA)
+* 4 x 24 x 800 SSD
+* Protocole S3
+* 100GbE
+
+
+
+
+| 15 serveurs Fujitsu PRIMERGY RX2540  a| 
+* 2 processeurs ; 16 cœurs physiques au total
+* Intel Xeon
+* 256 Go de mémoire physique
+* Port double 100 GbE
+
+
+|===

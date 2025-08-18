@@ -1,0 +1,63 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/stgr-splunkss-storagegrid-feat.html 
+keywords: ILM policies, Grid Manager, performance, Load Balancer, endpoint configuration 
+summary: 'StorageGRID dispose d"une grande variété de fonctionnalités que les utilisateurs peuvent exploiter et personnaliser pour leur environnement en constante évolution.' 
+---
+= Fonctionnalités flexibles de StorageGRID pour Splunk SmartStore
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+StorageGRID dispose d'une grande variété de fonctionnalités que les utilisateurs peuvent exploiter et personnaliser pour leur environnement en constante évolution.  Du déploiement à la mise à l'échelle de votre Splunk SmartStore, votre environnement exige une adoption rapide des changements et ne doit pas perturber Splunk.  Les politiques de gestion des données flexibles (ILM) et les classificateurs de trafic (QoS) de StorageGRID vous permettent de planifier et de vous adapter à votre environnement.
+
+
+
+== Gestion simple avec Grid Manager
+
+Grid Manager est l'interface graphique basée sur un navigateur qui vous permet de configurer, de gérer et de surveiller votre système StorageGRID sur des emplacements distribués à l'échelle mondiale dans un seul volet de verre, comme illustré dans l'image suivante.
+
+image:stgr-splunkss-003.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]
+
+Effectuez les tâches suivantes avec l’interface Grid Manager :
+
+* Gérez des référentiels d'objets distribués à l'échelle mondiale et à l'échelle du pétaoctet, tels que des images, des vidéos et des enregistrements.
+* Surveillez les nœuds et les services de la grille pour garantir la disponibilité des objets.
+* Gérez le placement des données d'objet au fil du temps à l'aide de règles de gestion du cycle de vie des informations (ILM).  Ces règles régissent ce qui arrive aux données d'un objet après son ingestion, comment elles sont protégées contre la perte, où les données de l'objet sont stockées et pendant combien de temps.
+* Surveiller les transactions, les performances et les opérations au sein du système.
+
+
+
+
+== Application NetApp StorageGRID pour Splunk
+
+L'application NetApp StorageGRID pour Splunk est une application spécifique à Splunk Enterprise.  Cette application fonctionne en conjonction avec le module complémentaire NetApp StorageGRID pour Splunk.  Il offre une visibilité sur l'état de StorageGRID , les informations d'utilisation du compte, les détails de l'audit de sécurité, l'utilisation et la surveillance des ressources, etc.
+
+L'image suivante montre l'application StorageGRID pour Splunk.
+
+image:stgr-splunkss-004.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]
+
+
+
+== Politiques ILM
+
+StorageGRID dispose de politiques de gestion des données flexibles qui incluent la conservation de plusieurs copies de vos objets et l'utilisation de schémas EC (codage d'effacement) tels que 2+1 et 4+2 (et bien d'autres) pour stocker vos objets en fonction des exigences spécifiques de performances et de protection des données.  À mesure que les charges de travail et les exigences évoluent au fil du temps, il est courant que les politiques ILM doivent également évoluer au fil du temps.  La modification des politiques ILM est une fonctionnalité essentielle, permettant aux clients de StorageGRID de s'adapter rapidement et facilement à leur environnement en constante évolution.
+
+
+
+== Performances
+
+StorageGRID adapte les performances en ajoutant davantage de nœuds, qui peuvent être des machines virtuelles, des appareils bare metal ou des appliances spécialement conçues comme les SG5712, SG5760, SG6060 ou SGF6024.  Lors de nos tests, nous avons dépassé les exigences de performances clés de SmartStore avec une grille à trois nœuds de taille minimale en utilisant l'appliance SG6060.  À mesure que les clients font évoluer leur infrastructure Splunk avec des indexeurs supplémentaires, ils peuvent ajouter davantage de nœuds de stockage pour augmenter les performances et la capacité.
+
+
+
+== Configuration de l'équilibreur de charge et du point de terminaison
+
+Les nœuds d'administration de StorageGRID fournissent l'interface utilisateur de Grid Manager et le point de terminaison de l'API REST pour afficher, configurer et gérer votre système StorageGRID , ainsi que des journaux d'audit pour suivre l'activité du système.  Pour fournir un point de terminaison S3 hautement disponible pour le stockage à distance Splunk SmartStore, nous avons implémenté l'équilibreur de charge StorageGRID , qui s'exécute en tant que service sur les nœuds d'administration et les nœuds de passerelle.  De plus, l'équilibreur de charge gère également le trafic local et communique avec le GSLB (Global Server Load Balancing) pour faciliter la reprise après sinistre.
+
+Pour améliorer davantage la configuration des points de terminaison, StorageGRID fournit des stratégies de classification du trafic intégrées au nœud d'administration, vous permet de surveiller le trafic de votre charge de travail et d'appliquer diverses limites de qualité de service (QoS) à vos charges de travail.  Les stratégies de classification du trafic sont appliquées aux points de terminaison sur le service StorageGRID Load Balancer pour les nœuds de passerelle et les nœuds d'administration.  Ces politiques peuvent aider à limiter et à surveiller le trafic.

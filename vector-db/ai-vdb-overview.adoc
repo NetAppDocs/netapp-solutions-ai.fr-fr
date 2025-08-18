@@ -1,0 +1,33 @@
+---
+sidebar: sidebar 
+permalink: vector-db/ai-vdb-overview.html 
+keywords: Solution Overview vector database 
+summary: Présentation de la solution de base de données vectorielle pour NetApp 
+---
+= Présentation de la solution
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Cette section fournit un aperçu de la solution de base de données vectorielle NetApp .
+
+
+
+== Présentation de la solution
+
+Cette solution présente les avantages et les capacités distinctifs que NetApp apporte pour relever les défis auxquels sont confrontés les clients de bases de données vectorielles.  En tirant parti de NetApp ONTAP, StorageGRID, des solutions cloud de NetApp et de SnapCenter, les clients peuvent ajouter une valeur significative à leurs opérations commerciales.  Ces outils non seulement répondent aux problèmes existants, mais améliorent également l’efficacité et la productivité, contribuant ainsi à la croissance globale de l’entreprise.
+
+
+
+=== Pourquoi NetApp?
+
+* Les offres de NetApp, telles que ONTAP et StorageGRID, permettent la séparation du stockage et du calcul, permettant une utilisation optimale des ressources en fonction d'exigences spécifiques.  Cette flexibilité permet aux clients de faire évoluer leur stockage de manière indépendante à l’aide des solutions de stockage NetApp .
+* En exploitant les contrôleurs de stockage de NetApp, les clients peuvent efficacement fournir des données à leur base de données vectorielle à l'aide des protocoles NFS et S3.  Ces protocoles facilitent le stockage des données client et gèrent l'index de la base de données vectorielle, éliminant ainsi le besoin de plusieurs copies de données accessibles via des méthodes de fichiers et d'objets.
+* NetApp ONTAP fournit une prise en charge native du stockage NAS et d'objets auprès des principaux fournisseurs de services cloud tels qu'AWS, Azure et Google Cloud.  Cette large compatibilité garantit une intégration transparente, permettant la mobilité des données client, l'accessibilité globale, la reprise après sinistre, l'évolutivité dynamique et des performances élevées.
+* Grâce aux solides capacités de gestion des données de NetApp, les clients peuvent être assurés que leurs données sont bien protégées contre les risques et menaces potentiels.  NetApp accorde la priorité à la sécurité des données, offrant ainsi aux clients la tranquillité d'esprit quant à la sécurité et à l'intégrité de leurs précieuses informations.
+

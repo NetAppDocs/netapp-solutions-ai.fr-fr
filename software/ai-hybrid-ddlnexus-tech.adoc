@@ -1,0 +1,111 @@
+---
+sidebar: sidebar 
+permalink: software/ai-hybrid-ddlnexus-tech.html 
+keywords: NetApp AI, AI, Artificial Intelligence, ML, Machine Learning, NVIDIA, Hybrid, Hybrid Cloud, Hybrid Multicloud, Cloud, AWS, Amazon, Amazon Web Services, FSx ONTAP, FSx, NetApp ONTAP, FlexCache, SnapMirror, BlueXP 
+summary: MLOps multicloud hybride avec Domino Data Lab et NetApp - Présentation technologique 
+---
+= Aperçu de la technologie
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Cette section fournit un aperçu technologique pour Hybrid Multicloud MLOps avec Domino Data Lab et NetApp.
+
+
+
+== Laboratoire de données Domino
+
+Domino Data Lab alimente les entreprises axées sur les modèles avec sa plateforme d'IA d'entreprise de premier plan, à laquelle font confiance plus de 20 % des entreprises du Fortune 100.  Domino accélère le développement et le déploiement des travaux de science des données tout en augmentant la collaboration et la gouvernance.  Avec Domino, les entreprises du monde entier peuvent développer de meilleurs médicaments, cultiver des cultures plus productives, construire de meilleures voitures et bien plus encore.  Fondée en 2013, Domino est soutenue par Coatue Management, Great Hill Partners, Highland Capital, Sequoia Capital et d'autres investisseurs de premier plan.
+
+Domino permet aux entreprises et à leurs data scientists de créer, déployer et gérer l'IA sur une plateforme unifiée de bout en bout, rapidement, de manière responsable et rentable.  Les équipes peuvent accéder à toutes les données, outils, calculs, modèles et projets dont elles ont besoin dans n'importe quel environnement, afin de pouvoir collaborer, réutiliser les travaux antérieurs, suivre les modèles en production pour améliorer la précision, standardiser avec les meilleures pratiques et rendre l'IA responsable et gouvernée.
+
+* *Ouvert et flexible :* accédez au plus vaste écosystème d'outils et d'infrastructures open source et commerciaux pour les meilleures innovations et sans dépendance envers un fournisseur.
+* *Système d'enregistrement :* plateforme centrale pour les opérations et les connaissances en matière d'IA dans toute l'entreprise, permettant les meilleures pratiques, la collaboration interfonctionnelle, une innovation plus rapide et une efficacité accrue.
+* *Intégré :* les flux de travail et l'automatisation intégrés, conçus pour les processus, les contrôles et la gouvernance de l'entreprise, répondent à vos besoins en matière de conformité et de réglementation.
+* *Multicloud hybride :* exécutez des charges de travail d'IA à proximité de vos données n'importe où (sur site, hybride, n'importe quel cloud ou multicloud) pour un coût réduit, des performances optimales et une conformité optimale.
+
+
+image:ddlnexus-002.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]
+
+
+
+== Domino Nexus
+
+Domino Nexus est un panneau de contrôle unique qui vous permet d'exécuter des charges de travail de science des données et d'apprentissage automatique sur n'importe quel cluster de calcul, dans n'importe quel cloud, région ou sur site.  Il unifie les silos de science des données dans toute l'entreprise, vous permettant ainsi de créer, de déployer et de surveiller des modèles en un seul endroit.
+
+
+
+== NetApp BlueXP
+
+NetApp BlueXP unifie tous les services de stockage et de données de NetApp dans un seul outil qui vous permet de créer, de protéger et de gérer votre parc de données multicloud hybride.  Il offre une expérience unifiée pour les services de stockage et de données dans les environnements sur site et dans le cloud, et permet une simplicité opérationnelle grâce à la puissance d'AIOps, avec les paramètres de consommation flexibles et la protection intégrée requis pour le monde actuel axé sur le cloud.
+
+
+
+== NetApp ONTAP
+
+ONTAP 9, la dernière génération de logiciel de gestion du stockage de NetApp, permet aux entreprises de moderniser leur infrastructure et de passer à un centre de données prêt pour le cloud.  En s'appuyant sur des capacités de gestion de données de pointe, ONTAP permet la gestion et la protection des données avec un seul ensemble d'outils, quel que soit l'endroit où résident ces données.  Vous pouvez également déplacer librement les données là où elles sont nécessaires : vers la périphérie, le cœur ou le cloud.  ONTAP 9 inclut de nombreuses fonctionnalités qui simplifient la gestion des données, accélèrent et protègent les données critiques et permettent des capacités d'infrastructure de nouvelle génération dans les architectures de cloud hybride.
+
+
+
+=== Simplifier la gestion des données
+
+La gestion des données est essentielle pour les opérations informatiques de l’entreprise et les scientifiques des données afin que les ressources appropriées soient utilisées pour les applications d’IA et la formation des ensembles de données d’IA/ML.  Les informations supplémentaires suivantes sur les technologies NetApp ne sont pas couvertes par cette validation, mais peuvent être pertinentes en fonction de votre déploiement.
+
+Le logiciel de gestion des données ONTAP comprend les fonctionnalités suivantes pour rationaliser et simplifier les opérations et réduire votre coût total d'exploitation :
+
+* Compactage des données en ligne et déduplication étendue.  La compaction des données réduit l’espace gaspillé à l’intérieur des blocs de stockage et la déduplication augmente considérablement la capacité effective.  Cela s’applique aux données stockées localement et aux données hiérarchisées vers le cloud.
+* Qualité de service minimale, maximale et adaptative (AQoS).  Les contrôles granulaires de qualité de service (QoS) aident à maintenir les niveaux de performances des applications critiques dans les environnements hautement partagés.
+* FabricPool NetApp .  Fournit une hiérarchisation automatique des données froides vers des options de stockage cloud publiques et privées, notamment Amazon Web Services (AWS), Azure et la solution de stockage NetApp StorageGRID .  Pour plus d'informations sur FabricPool, voir https://www.netapp.com/pdf.html?item=/media/17239-tr4598pdf.pdf["TR-4598 : Bonnes pratiques FabricPool"^] .
+
+
+
+
+=== Accélérer et protéger les données
+
+ONTAP offre des niveaux supérieurs de performance et de protection des données et étend ces capacités des manières suivantes :
+
+* Performances et latence réduite.  ONTAP offre le débit le plus élevé possible avec la latence la plus faible possible.
+* Protection des données.  ONTAP fournit des fonctionnalités de protection des données intégrées avec une gestion commune sur toutes les plates-formes.
+* Chiffrement de volume NetApp (NVE).  ONTAP offre un cryptage natif au niveau du volume avec prise en charge de la gestion des clés intégrée et externe.
+* Authentification multi-locataire et multifactorielle.  ONTAP permet le partage des ressources d'infrastructure avec les plus hauts niveaux de sécurité.
+
+
+
+
+=== Une infrastructure à l'épreuve du temps
+
+ONTAP permet de répondre aux besoins commerciaux exigeants et en constante évolution grâce aux fonctionnalités suivantes :
+
+* Mise à l’échelle transparente et opérations non perturbatrices.  ONTAP prend en charge l'ajout non perturbateur de capacité aux contrôleurs existants et aux clusters évolutifs.  Les clients peuvent passer aux dernières technologies, telles que NVMe et FC 32 Go, sans migrations de données ni pannes coûteuses.
+* Connexion au Cloud.  ONTAP est le logiciel de gestion de stockage le plus connecté au cloud, avec des options de stockage défini par logiciel et des instances cloud natives dans tous les clouds publics.
+* Intégration avec les applications émergentes.  ONTAP propose des services de données de niveau entreprise pour les plates-formes et applications de nouvelle génération, telles que les véhicules autonomes, les villes intelligentes et l'industrie 4.0, en utilisant la même infrastructure qui prend en charge les applications d'entreprise existantes.
+
+
+
+
+== Amazon FSx for NetApp ONTAP (FSx ONTAP)
+
+Amazon FSx ONTAP est un service AWS propriétaire entièrement géré qui fournit un stockage de fichiers hautement fiable, évolutif, performant et riche en fonctionnalités, basé sur le système de fichiers ONTAP populaire de NetApp. FSx ONTAP combine les fonctionnalités, les performances, les capacités et les opérations API familières des systèmes de fichiers NetApp avec l'agilité, l'évolutivité et la simplicité d'un service AWS entièrement géré.
+
+
+
+== NetApp Trident
+
+Trident permet la consommation et la gestion des ressources de stockage sur toutes les plates-formes de stockage NetApp populaires, dans le cloud public ou sur site, y compris ONTAP (AFF, FAS, Select, Cloud, Amazon FSx ONTAP), le logiciel Element (NetApp HCI, SolidFire), le service Azure NetApp Files et Google Cloud NetApp Volumes sur Google Cloud.  Trident est un orchestrateur de stockage dynamique compatible Container Storage Interface (CSI) qui s'intègre nativement à Kubernetes.
+
+
+
+== Kubernetes
+
+Kubernetes est une plate-forme d'orchestration de conteneurs open source et distribuée, conçue à l'origine par Google et désormais maintenue par la Cloud Native Computing Foundation (CNCF).  Kubernetes permet l'automatisation des fonctions de déploiement, de gestion et de mise à l'échelle des applications conteneurisées et constitue la plate-forme d'orchestration de conteneurs dominante dans les environnements d'entreprise.
+
+
+
+== Amazon Elastic Kubernetes Service (EKS)
+
+Amazon Elastic Kubernetes Service (Amazon EKS) est un service Kubernetes géré dans le cloud AWS.  Amazon EKS gère automatiquement la disponibilité et l'évolutivité des nœuds du plan de contrôle Kubernetes responsables de la planification des conteneurs, de la gestion de la disponibilité des applications, du stockage des données de cluster et d'autres tâches clés.  Avec Amazon EKS, vous pouvez profiter de toutes les performances, de l'évolutivité, de la fiabilité et de la disponibilité de l'infrastructure AWS, ainsi que des intégrations avec les services de réseau et de sécurité AWS.

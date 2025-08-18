@@ -1,0 +1,30 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/cdm-fod-conclusion.html 
+keywords: conclusion 
+summary: Sur la base de cette validation, les scientifiques et ingénieurs des données peuvent accéder aux données NFS des notebooks AWS SageMaker Jupyter via les buckets S3 de NetApp Cloud Volumes ONTAP.  Cette approche permet un accès et un partage faciles des mêmes données à partir de NFS et de S3 sans avoir besoin de logiciel supplémentaire. 
+---
+= Conclusion
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sur la base de cette validation, les scientifiques et ingénieurs des données peuvent accéder aux données NFS des notebooks AWS SageMaker Jupyter via les buckets S3 de NetApp Cloud Volumes ONTAP.  Cette approche permet un accès et un partage faciles des mêmes données à partir de NFS et de S3 sans avoir besoin de logiciel supplémentaire.
+
+
+
+== Où trouver des informations supplémentaires
+
+Pour en savoir plus sur les informations décrites dans ce document, consultez les documents et/ou sites Web suivants :
+
+* Classification de texte avec SageMaker BlazingText
+* Prise en charge de la version ONTAP pour le stockage d'objets S3
++
+https://docs.netapp.com/us-en/ontap/s3-config/ontap-version-support-s3-concept.html["https://docs.netapp.com/us-en/ontap/s3-config/ontap-version-support-s3-concept.html"^]
+
+

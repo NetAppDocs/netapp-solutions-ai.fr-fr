@@ -1,0 +1,67 @@
+---
+sidebar: sidebar 
+permalink: infra/ai-aipod-nv-architecture.html 
+keywords: NetApp AI, AI, Artificial Intelligence, ML, Machine Learning, NVIDIA, NVIDIA AI Enterprise, NVIDIA BasePOD, NVIDIA DGX 
+summary: NetApp AIPod avec systèmes NVIDIA DGX - Architecture 
+---
+= Architecture de la solution NetApp AIPod NVA-1173 avec systèmes NVIDIA DGX H100
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Cette section se concentre sur l’architecture du NetApp AIPod avec les systèmes NVIDIA DGX.
+
+
+
+== NetApp AIPod avec systèmes DGX
+
+Cette architecture de référence exploite des structures distinctes pour l'interconnexion des clusters de calcul et l'accès au stockage, avec une connectivité InfiniBand (IB) de 400 Gb/s entre les nœuds de calcul.  Le dessin ci-dessous montre la topologie globale de la solution NetApp AIPod avec les systèmes DGX H100.
+
+_Topologie de la solution NetApp AIpod_
+
+image:aipod-nv-a90-topo.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]
+
+
+
+== Conception de réseau
+
+Dans cette configuration, la structure du cluster de calcul utilise une paire de commutateurs IB QM9700 400 Gb/s, qui sont connectés ensemble pour une haute disponibilité.  Chaque système DGX H100 est connecté aux commutateurs à l'aide de huit connexions, avec des ports pairs connectés à un commutateur et des ports impairs connectés à l'autre commutateur.
+
+Pour l'accès au système de stockage, la gestion en bande et l'accès client, une paire de commutateurs Ethernet SN4600 est utilisée.  Les commutateurs sont connectés avec des liaisons inter-commutateurs et configurés avec plusieurs VLAN pour isoler les différents types de trafic.  Le routage L3 de base est activé entre des VLAN spécifiques pour permettre plusieurs chemins entre les interfaces client et de stockage sur le même commutateur ainsi qu'entre les commutateurs pour une haute disponibilité.  Pour les déploiements plus importants, le réseau Ethernet peut être étendu à une configuration feuille-épine en ajoutant des paires de commutateurs supplémentaires pour les commutateurs de colonne vertébrale et des feuilles supplémentaires selon les besoins.
+
+En plus de l'interconnexion informatique et des réseaux Ethernet haut débit, tous les périphériques physiques sont également connectés à un ou plusieurs commutateurs Ethernet SN2201 pour la gestion hors bande.  Veuillez consulter lelink:ai-aipod-nv-deploy.html["détails du déploiement"] page pour plus d'informations sur la configuration du réseau.
+
+
+
+== Présentation de l'accès au stockage pour les systèmes DGX H100
+
+Chaque système DGX H100 est équipé de deux adaptateurs ConnectX-7 à double port pour le trafic de gestion et de stockage, et pour cette solution, les deux ports de chaque carte sont connectés au même commutateur.  Un port de chaque carte est ensuite configuré dans une liaison LACP MLAG avec un port connecté à chaque commutateur, et les VLAN pour la gestion en bande, l'accès client et l'accès au stockage au niveau utilisateur sont hébergés sur cette liaison.
+
+L'autre port de chaque carte est utilisé pour la connectivité aux systèmes de stockage AFF A90 et peut être utilisé dans plusieurs configurations en fonction des exigences de charge de travail.  Pour les configurations utilisant NFS sur RDMA pour prendre en charge NVIDIA Magnum IO GPUDirect Storage, les ports sont utilisés individuellement avec des adresses IP dans des VLAN distincts.  Pour les déploiements qui ne nécessitent pas RDMA, les interfaces de stockage peuvent également être configurées avec la liaison LACP pour offrir une haute disponibilité et une bande passante supplémentaire.  Avec ou sans RDMA, les clients peuvent monter le système de stockage à l'aide de NFS v4.1 pNFS et de la jonction de session pour permettre l'accès parallèle à tous les nœuds de stockage du cluster.  Veuillez consulter lelink:ai-aipod-nv-deploy.html["détails du déploiement"] page pour plus d'informations sur la configuration du client.
+
+Pour plus de détails sur la connectivité du système DGX H100, veuillez vous référer aulink:https://nvdam.widen.net/s/nfnjflmzlj/nvidia-dgx-basepod-reference-architecture["Documentation NVIDIA BasePOD"] .
+
+
+
+== Conception du système de stockage
+
+Chaque système de stockage AFF A90 est connecté à l'aide de six ports 200 GbE de chaque contrôleur.  Quatre ports de chaque contrôleur sont utilisés pour l'accès aux données de charge de travail à partir des systèmes DGX, et deux ports de chaque contrôleur sont configurés en tant que groupe d'interfaces LACP pour prendre en charge l'accès à partir des serveurs du plan de gestion pour les artefacts de gestion de cluster et les répertoires personnels des utilisateurs.  Tous les accès aux données du système de stockage sont fournis via NFS, avec une machine virtuelle de stockage (SVM) dédiée à l'accès à la charge de travail de l'IA et une SVM distincte dédiée aux utilisations de gestion des clusters.
+
+Le SVM de gestion ne nécessite qu'un seul LIF, qui est hébergé sur les groupes d'interfaces à 2 ports configurés sur chaque contrôleur.  D'autres volumes FlexGroup sont provisionnés sur la SVM de gestion pour héberger des artefacts de gestion de cluster tels que des images de nœuds de cluster, des données historiques de surveillance du système et des répertoires personnels des utilisateurs finaux.  Le dessin ci-dessous montre la configuration logique du système de stockage.
+
+_Configuration logique du cluster de stockage NetApp A90_
+
+image:aipod-nv-a90-logical.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]
+
+
+
+== Serveurs de plan de gestion
+
+Cette architecture de référence comprend également cinq serveurs basés sur CPU pour les utilisations du plan de gestion.  Deux de ces systèmes sont utilisés comme nœuds principaux pour NVIDIA Base Command Manager pour le déploiement et la gestion des clusters.  Les trois autres systèmes sont utilisés pour fournir des services de cluster supplémentaires tels que des nœuds maîtres Kubernetes ou des nœuds de connexion pour les déploiements utilisant Slurm pour la planification des tâches.  Les déploiements utilisant Kubernetes peuvent exploiter le pilote NetApp Trident CSI pour fournir des services de provisionnement et de données automatisés avec un stockage persistant pour les charges de travail de gestion et d'IA sur le système de stockage AFF A900 .
+
+Chaque serveur est physiquement connecté aux commutateurs IB et aux commutateurs Ethernet pour permettre le déploiement et la gestion du cluster, et configuré avec des montages NFS sur le système de stockage via le SVM de gestion pour le stockage des artefacts de gestion du cluster comme décrit précédemment.

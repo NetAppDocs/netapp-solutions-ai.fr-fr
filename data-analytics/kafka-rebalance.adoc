@@ -1,0 +1,21 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/kafka-rebalance.html 
+keywords: rebalance, test, self balancing, brokers 
+summary: 'Ce test est basé sur la fonctionnalité de clusters auto-équilibrés, qui automatise le rééquilibrage en fonction des changements de topologie du cluster ou d"une charge inégale.' 
+---
+= Clusters auto-équilibrés confluents
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Si vous avez déjà géré un cluster Kafka, vous connaissez probablement les défis liés à la réaffectation manuelle de partitions à différents courtiers pour garantir que la charge de travail est équilibrée sur l'ensemble du cluster.  Pour les organisations disposant de déploiements Kafka importants, la réorganisation de grandes quantités de données peut être intimidante, fastidieuse et risquée, en particulier si des applications critiques sont construites sur le cluster.  Cependant, même pour les plus petits cas d’utilisation de Kafka, le processus prend du temps et est sujet à des erreurs humaines.
+
+Dans notre laboratoire, nous avons testé la fonctionnalité de clusters auto-équilibrés de Confluent, qui automatise le rééquilibrage en fonction des changements de topologie du cluster ou d'une charge inégale.  Le test de rééquilibrage Confluent permet de mesurer le temps nécessaire pour ajouter un nouveau courtier lorsque la défaillance du nœud ou le nœud de mise à l'échelle nécessite un rééquilibrage des données entre les courtiers.  Dans les configurations Kafka classiques, la quantité de données à rééquilibrer augmente à mesure que le cluster se développe, mais, dans le stockage hiérarchisé, le rééquilibrage est limité à une petite quantité de données.  D'après notre validation, le rééquilibrage du stockage hiérarchisé prend quelques secondes ou minutes dans une architecture Kafka classique et augmente de manière linéaire à mesure que le cluster se développe.
+
+Dans les clusters à équilibrage automatique, les rééquilibrages de partition sont entièrement automatisés pour optimiser le débit de Kafka, accélérer la mise à l'échelle du courtier et réduire la charge opérationnelle liée à l'exécution d'un grand cluster.  À l'état stable, les clusters auto-équilibrés surveillent l'asymétrie des données entre les courtiers et réaffectent en permanence les partitions pour optimiser les performances du cluster.  Lors de la mise à l'échelle de la plate-forme vers le haut ou vers le bas, les clusters auto-équilibrés reconnaissent automatiquement la présence de nouveaux courtiers ou la suppression d'anciens courtiers et déclenchent une réaffectation de partition ultérieure.  Cela vous permet d'ajouter et de désactiver facilement des courtiers, rendant vos clusters Kafka fondamentalement plus élastiques.  Ces avantages sont offerts sans aucune intervention manuelle, sans calculs complexes ni risque d’erreur humaine que les réaffectations de partitions impliquent généralement.  Par conséquent, les rééquilibrages de données sont effectués en beaucoup moins de temps et vous êtes libre de vous concentrer sur des projets de diffusion d'événements à plus forte valeur ajoutée plutôt que de devoir superviser en permanence vos clusters.

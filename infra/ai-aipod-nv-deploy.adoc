@@ -1,0 +1,393 @@
+---
+sidebar: sidebar 
+permalink: infra/ai-aipod-nv-deploy.html 
+keywords: NetApp AI, AI, Artificial Intelligence, ML, Machine Learning, NVIDIA, NVIDIA AI Enterprise, NVIDIA BasePOD, NVIDIA DGX 
+summary: NetApp AIPod avec systèmes NVIDIA DGX - Déploiement 
+---
+= NetApp AIPod NVA-1173 avec systèmes NVIDIA DGX - Détails du déploiement
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Cette section décrit les détails de déploiement utilisés lors de la validation de cette solution.  Les adresses IP utilisées sont des exemples et doivent être modifiées en fonction de l'environnement de déploiement.  Pour plus d'informations sur les commandes spécifiques utilisées dans la mise en œuvre de cette configuration, veuillez vous référer à la documentation produit appropriée.
+
+Le diagramme ci-dessous présente des informations détaillées sur le réseau et la connectivité pour 1 système DGX H100 et 1 paire HA de contrôleurs AFF A90 .  Les instructions de déploiement dans les sections suivantes sont basées sur les détails de ce diagramme.
+
+_Configuration du réseau NetApp AIpod_
+
+image:aipod-nv-a90-netdetail.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]
+
+Le tableau suivant présente des exemples d'affectations de câblage pour un maximum de 16 systèmes DGX et 2 paires AFF A90 HA.
+
+|===
+| Commutateur et port | Appareil | Port de l'appareil 
+
+
+| ports 1 à 16 du commutateur 1 | DGX-H100-01 à -16 | enp170s0f0np0, emplacement 1 port 1 
+
+
+| ports 17-32 du commutateur 1 | DGX-H100-01 à -16 | enp170s0f1np1, emplacement 1 port 2 
+
+
+| ports 33-36 du commutateur 1 | AFF-A90-01 à -04 | port e6a 
+
+
+| ports 37-40 du commutateur 1 | AFF-A90-01 à -04 | port e11a 
+
+
+| ports 41-44 du commutateur 1 | AFF-A90-01 à -04 | port e2a 
+
+
+| ports 57-64 du commutateur 1 | ISL vers switch2 | ports 57-64 
+
+
+|  |  |  
+
+
+| commutateur 2 ports 1-16 | DGX-H100-01 à -16 | enp41s0f0np0, emplacement 2 port 1 
+
+
+| commutateur 2 ports 17-32 | DGX-H100-01 à -16 | enp41s0f1np1, emplacement 2 port 2 
+
+
+| commutateur 2 ports 33-36 | AFF-A90-01 à -04 | port e6b 
+
+
+| commutateur 2 ports 37-40 | AFF-A90-01 à -04 | port e11b 
+
+
+| commutateur 2 ports 41-44 | AFF-A90-01 à -04 | port e2b 
+
+
+| commutateur 2 ports 57-64 | ISL vers switch1 | ports 57-64 
+|===
+Le tableau suivant présente les versions logicielles des différents composants utilisés dans cette validation.
+
+|===
+| Appareil | Version du logiciel 
+
+
+| Commutateurs NVIDIA SN4600 | Cumulus Linux v5.9.1 
+
+
+| Système NVIDIA DGX | Système d'exploitation DGX v6.2.1 (Ubuntu 22.04 LTS) 
+
+
+| Mellanox OFED | 24,01 
+
+
+| NetApp AFF A90 | NetApp ONTAP 9.14.1 
+|===
+
+
+== Configuration du réseau de stockage
+
+Cette section décrit les détails clés de la configuration du réseau de stockage Ethernet.  Pour plus d'informations sur la configuration du réseau informatique InfiniBand, veuillez consulter lelink:https://nvdam.widen.net/s/nfnjflmzlj/nvidia-dgx-basepod-reference-architecture["Documentation NVIDIA BasePOD"] .  Pour plus de détails sur la configuration du commutateur, veuillez vous référer aulink:https://docs.nvidia.com/networking-ethernet-software/cumulus-linux-59/["Documentation de NVIDIA Cumulus Linux"] .
+
+Les étapes de base utilisées pour configurer les commutateurs SN4600 sont décrites ci-dessous.  Ce processus suppose que le câblage et la configuration de base du commutateur (adresse IP de gestion, licence, etc.) sont terminés.
+
+. Configurer la liaison ISL entre les commutateurs pour activer l'agrégation multi-liens (MLAG) et le trafic de basculement
++
+** Cette validation a utilisé 8 liens pour fournir une bande passante plus que suffisante pour la configuration de stockage testée
+** Pour des instructions spécifiques sur l'activation de MLAG, veuillez vous référer à la documentation de Cumulus Linux.
+
+
+. Configurer LACP MLAG pour chaque paire de ports client et de ports de stockage sur les deux commutateurs
++
+** port swp17 sur chaque commutateur pour DGX-H100-01 (enp170s0f1np1 et enp41s0f1np1), port swp18 pour DGX-H100-02, etc. (bond1-16)
+** port swp41 sur chaque commutateur pour AFF-A90-01 (e2a et e2b), port swp42 pour AFF-A90-02, etc. (bond17-20)
+** nv set interface bondX membre de liaison swpX
+** nv set interface bondx bond mlag id X
+
+
+. Ajoutez tous les ports et liaisons MLAG au domaine de pont par défaut
++
+** nv set int swp1-16,33-40 domaine de pont br_default
+** nv set int bond1-20 domaine de pont br_default
+
+
+. Activer RoCE sur chaque commutateur
++
+** nv set roce mode sans perte
+
+
+. Configurer les VLAN : 2 pour les ports clients, 2 pour les ports de stockage, 1 pour la gestion, 1 pour le commutateur L3 vers le commutateur
++
+** interrupteur 1-
++
+*** VLAN 3 pour le routage du commutateur L3 vers le commutateur en cas de défaillance de la carte réseau client
+*** VLAN 101 pour le port de stockage 1 sur chaque système DGX (enp170s0f0np0, slot1 port 1)
+*** VLAN 102 pour les ports e6a et e11a sur chaque contrôleur de stockage AFF A90
+*** VLAN 301 pour la gestion à l'aide des interfaces MLAG de chaque système DGX et contrôleur de stockage
+
+
+** interrupteur 2-
++
+*** VLAN 3 pour le routage du commutateur L3 vers le commutateur en cas de défaillance de la carte réseau client
+*** VLAN 201 pour le port de stockage 2 sur chaque système DGX (enp41s0f0np0, slot2 port 1)
+*** VLAN 202 pour les ports e6b et e11b sur chaque contrôleur de stockage AFF A90
+*** VLAN 301 pour la gestion à l'aide des interfaces MLAG de chaque système DGX et contrôleur de stockage
+
+
+
+
+. Attribuez des ports physiques à chaque VLAN selon le cas, par exemple des ports clients dans les VLAN clients et des ports de stockage dans les VLAN de stockage
++
+** nv set int <swpX> domaine de pont br_default accès <id vlan>
+** Les ports MLAG doivent rester des ports de jonction pour activer plusieurs VLAN sur les interfaces liées selon les besoins.
+
+
+. Configurer les interfaces virtuelles de commutateur (SVI) sur chaque VLAN pour agir comme une passerelle et activer le routage L3
++
+** interrupteur 1-
++
+*** nv set int vlan3 adresse IP 100.127.0.0/31
+*** nv set int vlan101 adresse IP 100.127.101.1/24
+*** nv set int vlan102 adresse IP 100.127.102.1/24
+
+
+** interrupteur 2-
++
+*** nv set int vlan3 adresse IP 100.127.0.1/31
+*** nv set int vlan201 adresse IP 100.127.201.1/24
+*** nv set int vlan202 adresse IP 100.127.202.1/24
+
+
+
+
+. Créer des itinéraires statiques
++
+** Les routes statiques sont automatiquement créées pour les sous-réseaux sur le même commutateur
+** Des routes statiques supplémentaires sont nécessaires pour le routage de commutateur à commutateur en cas de défaillance d'une liaison client
++
+*** interrupteur 1-
++
+**** nv set vrf routeur par défaut statique 100.127.128.0/17 via 100.127.0.1
+
+
+*** interrupteur 2-
++
+**** nv set vrf routeur par défaut statique 100.127.0.0/17 via 100.127.0.0
+
+
+
+
+
+
+
+
+
+
+== Configuration du système de stockage
+
+Cette section décrit les détails clés de la configuration du système de stockage A90 pour cette solution.  Pour plus de détails sur la configuration des systèmes ONTAP , veuillez vous référer aulink:https://docs.netapp.com/us-en/ontap/index.html["Documentation ONTAP"] .  Le schéma ci-dessous montre la configuration logique du système de stockage.
+
+_Configuration logique du cluster de stockage NetApp A90_
+
+image:aipod-nv-a90-logical.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]
+
+Les étapes de base utilisées pour configurer le système de stockage sont décrites ci-dessous.  Ce processus suppose que l’installation du cluster de stockage de base a été effectuée.
+
+. Configurez 1 agrégat sur chaque contrôleur avec toutes les partitions disponibles moins 1 de rechange
++
+** aggr create -node <nœud> -aggregate <nœud>_data01 -diskcount <47>
+
+
+. Configurer ifgrps sur chaque contrôleur
++
+** port net ifgrp create -node <nœud> -ifgrp a1a -mode multimode_lacp -distr-function port
+** port réseau ifgrp add-port -node <nœud> -ifgrp <ifgrp> -ports <nœud>:e2a,<nœud>:e2b
+
+
+. Configurer le port VLAN de gestion sur ifgrp sur chaque contrôleur
++
+** création d'un port réseau vlan -node aff-a90-01 -port a1a -vlan-id 31
+** création d'un port réseau vlan -node aff-a90-02 -port a1a -vlan-id 31
+** création d'un port réseau vlan -node aff-a90-03 -port a1a -vlan-id 31
+** création d'un port réseau vlan -node aff-a90-04 -port a1a -vlan-id 31
+
+
+. Créer des domaines de diffusion
++
+** domaine de diffusion créer -domaine de diffusion vlan21 -mtu 9000 -ports aff-a90-01:e6a,aff-a90-01:e11a,aff-a90-02:e6a,aff-a90-02:e11a,aff-a90-03:e6a,aff-a90-03:e11a,aff-a90-04:e6a,aff-a90-04:e11a
+** domaine de diffusion créer -domaine de diffusion vlan22 -mtu 9000 -ports aaff-a90-01:e6b,aff-a90-01:e11b,aff-a90-02:e6b,aff-a90-02:e11b,aff-a90-03:e6b,aff-a90-03:e11b,aff-a90-04:e6b,aff-a90-04:e11b
+** domaine de diffusion créer -domaine de diffusion vlan31 -mtu 9000 -ports aff-a90-01:a1a-31,aff-a90-02:a1a-31,aff-a90-03:a1a-31,aff-a90-04:a1a-31
+
+
+. Créer une SVM de gestion *
+. Configurer la gestion SVM
++
+** créer un LIF
++
+*** net int create -vserver basepod-mgmt -lif vlan31-01 -home-node aff-a90-01 -home-port a1a-31 -address 192.168.31.X -netmask 255.255.255.0
+
+
+** créer des volumes FlexGroup
++
+*** vol create -vserver basepod-mgmt -volume home -size 10T -auto-provision-as flexgroup -junction-path /home
+*** vol create -vserver basepod-mgmt -volume cm -size 10T -auto-provision-as flexgroup -junction-path /cm
+
+
+** créer une politique d'exportation
++
+*** créer une règle de stratégie d'exportation -vserver basepod-mgmt -policy default -client-match 192.168.31.0/24 -rorule sys -rwrule sys -superuser sys
+
+
+
+
+. Créer des données SVM *
+. Configurer les données SVM
++
+** configurer SVM pour la prise en charge RDMA
++
+*** vserver nfs modifier -vserver basepod-data -rdma activé
+
+
+** créer des LIF
++
+*** net int create -vserver basepod-data -lif c1-6a-lif1 -home-node aff-a90-01 -home-port e6a -address 100.127.102.101 -netmask 255.255.255.0
+*** net int create -vserver basepod-data -lif c1-6a-lif2 -home-node aff-a90-01 -home-port e6a -address 100.127.102.102 -netmask 255.255.255.0
+*** net int create -vserver basepod-data -lif c1-6b-lif1 -home-node aff-a90-01 -home-port e6b -address 100.127.202.101 -netmask 255.255.255.0
+*** net int create -vserver basepod-data -lif c1-6b-lif2 -home-node aff-a90-01 -home-port e6b -address 100.127.202.102 -netmask 255.255.255.0
+*** net int create -vserver basepod-data -lif c1-11a-lif1 -home-node aff-a90-01 -home-port e11a -address 100.127.102.103 -netmask 255.255.255.0
+*** net int create -vserver basepod-data -lif c1-11a-lif2 -home-node aff-a90-01 -home-port e11a -address 100.127.102.104 -netmask 255.255.255.0
+*** net int create -vserver basepod-data -lif c1-11b-lif1 -home-node aff-a90-01 -home-port e11b -address 100.127.202.103 -netmask 255.255.255.0
+*** net int create -vserver basepod-data -lif c1-11b-lif2 -home-node aff-a90-01 -home-port e11b -address 100.127.202.104 -netmask 255.255.255.0
+*** net int create -vserver basepod-data -lif c2-6a-lif1 -home-node aff-a90-02 -home-port e6a -address 100.127.102.105 -netmask 255.255.255.0
+*** net int create -vserver basepod-data -lif c2-6a-lif2 -home-node aff-a90-02 -home-port e6a -address 100.127.102.106 -netmask 255.255.255.0
+*** net int create -vserver basepod-data -lif c2-6b-lif1 -home-node aff-a90-02 -home-port e6b -address 100.127.202.105 -netmask 255.255.255.0
+*** net int create -vserver basepod-data -lif c2-6b-lif2 -home-node aff-a90-02 -home-port e6b -address 100.127.202.106 -netmask 255.255.255.0
+*** net int create -vserver basepod-data -lif c2-11a-lif1 -home-node aff-a90-02 -home-port e11a -address 100.127.102.107 -netmask 255.255.255.0
+*** net int create -vserver basepod-data -lif c2-11a-lif2 -home-node aff-a90-02 -home-port e11a -address 100.127.102.108 -netmask 255.255.255.0
+*** net int create -vserver basepod-data -lif c2-11b-lif1 -home-node aff-a90-02 -home-port e11b -address 100.127.202.107 -netmask 255.255.255.0
+*** net int create -vserver basepod-data -lif c2-11b-lif2 -home-node aff-a90-02 -home-port e11b -address 100.127.202.108 -netmask 255.255.255.0
+
+
+
+
+. Configurer les LIF pour l'accès RDMA
++
+** Pour les déploiements avec ONTAP 9.15.1, la configuration RoCE QoS pour les informations physiques nécessite des commandes au niveau du système d'exploitation qui ne sont pas disponibles dans l'interface de ligne de commande ONTAP .  Veuillez contacter le support NetApp pour obtenir de l'aide sur la configuration des ports pour la prise en charge RoCE.  NFS sur RDMA fonctionne sans problème
+** À partir d' ONTAP 9.16.1, les interfaces physiques seront automatiquement configurées avec les paramètres appropriés pour la prise en charge RoCE de bout en bout.
+** net int modifier -vserver basepod-data -lif * -rdma-protocols roce
+
+
+. Configurer les paramètres NFS sur le SVM de données
++
+** nfs modifier -vserver basepod-data -v4.1 activé -v4.1-pnfs activé -v4.1-trunking activé -tcp-max-transfer-size 262144
+
+
+. Créer des volumes FlexGroup
++
+** vol create -vserver basepod-data -volume data -size 100T -auto-provision-as flexgroup -junction-path /data
+
+
+. Créer une politique d'exportation
++
+** créer une règle de politique d'exportation -vserver basepod-data -policy default -client-match 100.127.101.0/24 -rorule sys -rwrule sys -superuser sys
+** créer une règle de politique d'exportation -vserver basepod-data -policy default -client-match 100.127.201.0/24 -rorule sys -rwrule sys -superuser sys
+
+
+. créer des itinéraires
++
+** route ajouter -vserver basepod_data -destination 100.127.0.0/17 -gateway 100.127.102.1 métrique 20
+** route ajouter -vserver basepod_data -destination 100.127.0.0/17 -gateway 100.127.202.1 métrique 30
+** route ajouter -vserver basepod_data -destination 100.127.128.0/17 -gateway 100.127.202.1 métrique 20
+** route add -vserver basepod_data -destination 100.127.128.0/17 -gateway 100.127.102.1 metric 30
+
+
+
+
+
+
+=== Configuration DGX H100 pour l'accès au stockage RoCE
+
+Cette section décrit les détails clés de la configuration des systèmes DGX H100.  Bon nombre de ces éléments de configuration peuvent être inclus dans l’image du système d’exploitation déployée sur les systèmes DGX ou implémentés par Base Command Manager au démarrage.  Ils sont répertoriés ici à titre de référence. Pour plus d'informations sur la configuration des nœuds et des images logicielles dans BCM, veuillez consulter lelink:https://docs.nvidia.com/base-command-manager/index.html#overview["Documentation BCM"] .
+
+. Installer des packages supplémentaires
++
+** ipmitool
+** python3-pip
+
+
+. Installer les packages Python
++
+** paramiko
+** matplotlib
+
+
+. Reconfigurer dpkg après l'installation du package
++
+** dpkg --configure -a
+
+
+. Installer MOFED
+. Définir les valeurs mst pour le réglage des performances
++
+** mstconfig -y -d <aa:00.0,29:00.0> set ADVANCED_PCI_SETTINGS=1 NOMBRE_DE_VFS=0 LECTURE_MAX_ACC_OUT=44
+
+
+. Réinitialiser les adaptateurs après avoir modifié les paramètres
++
+** mlxfwreset -d <aa:00.0,29:00.0> -y réinitialiser
+
+
+. Définir MaxReadReq sur les périphériques PCI
++
+** setpci -s <aa:00.0,29:00.0> 68.W=5957
+
+
+. Définir la taille du tampon annulaire RX et TX
++
+** ethtool -G <enp170s0f0np0,enp41s0f0np0> rx 8192 tx 8192
+
+
+. Définir PFC et DSCP à l'aide de mlnx_qos
++
+** mlnx_qos -i <enp170s0f0np0,enp41s0f0np0> --pfc 0,0,0,1,0,0,0,0 --trust=dscp --cable_len=3
+
+
+. Définir les conditions de service pour le trafic RoCE sur les ports réseau
++
+** echo 106 > /sys/class/infiniband/<mlx5_7,mlx5_1>/tc/1/traffic_class
+
+
+. Configurez chaque carte réseau de stockage avec une adresse IP sur le sous-réseau approprié
++
+** 100.127.101.0/24 pour la carte réseau de stockage 1
+** 100.127.201.0/24 pour le stockage NIC 2
+
+
+. Configurer les ports réseau en bande pour la liaison LACP (enp170s0f1np1,enp41s0f1np1)
+. configurer des routes statiques pour les chemins principaux et secondaires vers chaque sous-réseau de stockage
++
+** route add –net 100.127.0.0/17 gw 100.127.101.1 métrique 20
+** route add –net 100.127.0.0/17 gw 100.127.201.1 métrique 30
+** route add –net 100.127.128.0/17 gw 100.127.201.1 métrique 20
+** route ajouter –net 100.127.128.0/17 gw 100.127.101.1 métrique 30
+
+
+. Monter / volume d'accueil
++
+** mount -o vers=3,nconnect=16,rsize=262144,wsize=262144 192.168.31.X:/home /home
+
+
+. Monter /volume de données
++
+** Les options de montage suivantes ont été utilisées lors du montage du volume de données :
++
+*** vers=4.1 # active pNFS pour l'accès parallèle à plusieurs nœuds de stockage
+*** proto=rdma # définit le protocole de transfert sur RDMA au lieu du protocole TCP par défaut
+*** max_connect=16 # active la jonction de session NFS pour agréger la bande passante du port de stockage
+*** write=eager # améliore les performances d'écriture des écritures en mémoire tampon
+*** rsize=262144,wsize=262144 # définit la taille de transfert d'E/S à 256 Ko
+
+
+
+
+

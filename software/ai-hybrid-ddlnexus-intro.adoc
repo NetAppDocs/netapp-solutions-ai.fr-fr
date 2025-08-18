@@ -1,0 +1,25 @@
+---
+sidebar: sidebar 
+permalink: software/ai-hybrid-ddlnexus-intro.html 
+keywords: NetApp AI, AI, Artificial Intelligence, ML, Machine Learning, NVIDIA, Hybrid, Hybrid Cloud, Hybrid Multicloud, Cloud, AWS, Amazon, Amazon Web Services, FSx ONTAP, FSx, NetApp ONTAP, FlexCache, SnapMirror, BlueXP 
+summary: 'Domino Nexus est un panneau de contrôle unique qui vous permet d"exécuter des charges de travail de science des données et d"apprentissage automatique sur n"importe quel cluster de calcul, dans n"importe quel cloud, région ou sur site.' 
+---
+= MLOps multicloud hybride avec Domino Data Lab et NetApp
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+Mike Oglesby, NetApp
+
+[role="lead"]
+Les organisations du monde entier adoptent actuellement l’IA pour transformer leurs activités et leurs processus.  De ce fait, l’infrastructure informatique prête pour l’IA est souvent rare.  Les entreprises adoptent des architectures MLOps multicloud hybrides afin de tirer parti des environnements de calcul disponibles dans différentes régions, centres de données et clouds, en équilibrant les coûts, la disponibilité et les performances.
+
+Domino Nexus, de Domino Data Lab, est un plan de contrôle MLOps unifié qui vous permet d'exécuter des charges de travail de science des données et d'apprentissage automatique sur n'importe quel cluster de calcul, dans n'importe quel cloud, région ou sur site.  Il unifie les silos de science des données dans toute l'entreprise, vous permettant ainsi de créer, de déployer et de surveiller des modèles en un seul endroit.  De même, les capacités de gestion des données de cloud hybride de NetApp vous permettent d'apporter vos données à vos tâches et espaces de travail, quel que soit l'endroit où elles s'exécutent.  Lorsque vous associez Domino Nexus à NetApp, vous avez la possibilité de planifier des charges de travail sur plusieurs environnements sans avoir à vous soucier de la disponibilité des données.  En d’autres termes, vous avez la possibilité d’envoyer vos charges de travail et vos données vers l’environnement de calcul approprié, ce qui vous permet d’accélérer vos déploiements d’IA tout en respectant les réglementations relatives à la confidentialité et à la souveraineté des données.
+
+Cette solution démontre le déploiement d'un plan de contrôle MLOps unifié intégrant un cluster Kubernetes sur site et un cluster Elastic Kubernetes Service (EKS) exécuté dans Amazon Web Services (AWS).
+
+image:ddlnexus-001.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]

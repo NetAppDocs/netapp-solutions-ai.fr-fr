@@ -1,0 +1,61 @@
+---
+sidebar: sidebar 
+permalink: software/ai-conf-protopia-accuracy.html 
+keywords: faceboxes, alpha value, accuracy, comparison 
+summary: 'Pour cette validation, nous avons effectué des inférences pour un cas d’utilisation de détection d’images en utilisant un ensemble d’images brutes.  Nous avons ensuite effectué la même tâche d’inférence sur le même ensemble d’images avec l’obfuscation Protopia ajoutée avant l’inférence.  Nous avons répété la tâche en utilisant différentes valeurs d"ALPHA pour le composant d"obfuscation Protopia.' 
+---
+= Comparaison de la précision des inférences
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Pour cette validation, nous avons effectué des inférences pour un cas d’utilisation de détection d’images en utilisant un ensemble d’images brutes.  Nous avons ensuite effectué la même tâche d’inférence sur le même ensemble d’images avec l’obfuscation Protopia ajoutée avant l’inférence.  Nous avons répété la tâche en utilisant différentes valeurs d'ALPHA pour le composant d'obfuscation Protopia.  Dans le contexte de l'obfuscation Protopia, la valeur ALPHA représente la quantité d'obfuscation appliquée, une valeur ALPHA plus élevée représentant un niveau d'obfuscation plus élevé.  Nous avons ensuite comparé la précision des inférences entre ces différentes exécutions.
+
+Les deux tableaux suivants fournissent des détails sur notre cas d’utilisation et décrivent les résultats.
+
+Protopia travaille directement avec les clients pour déterminer la valeur ALPHA appropriée pour un cas d'utilisation spécifique.
+
+|===
+| Composant | Détails 
+
+
+| Modèle | FaceBoxes (PyTorch) - 
+
+
+| Ensemble de données | Ensemble de données FDDB 
+|===
+|===
+| Obfuscation de Protopia | ALPHA | Précision 
+
+
+| Non | S/O | 0,9337148153739079 
+
+
+| Oui | 0,05 | 0,9028766627325002 
+
+
+| Oui | 0,1 | 0,9024301009661478 
+
+
+| Oui | 0,2 | 0,9081836283186224 
+
+
+| Oui | 0,4 | 0,9073066107482036 
+
+
+| Oui | 0,6 | 0,8847816568680239 
+
+
+| Oui | 0,8 | 0,8841195749171925 
+
+
+| Oui | 0,9 | 0,8455427675252052 
+
+
+| Oui | 0,95 | 0,8455427675252052 
+|===

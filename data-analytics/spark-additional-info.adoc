@@ -1,0 +1,73 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/spark-additional-info.html 
+keywords:  
+summary:  
+---
+= Où trouver des informations supplémentaires
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Les références suivantes ont été utilisées dans ce TR :
+
+* Architecture et composants d'Apache Spark
++
+http://spark.apache.org/docs/latest/cluster-overview.html["http://spark.apache.org/docs/latest/cluster-overview.html"^]
+
+* Cas d'utilisation d'Apache Spark
++
+https://www.qubole.com/blog/big-data/apache-spark-use-cases/["https://www.qubole.com/blog/big-data/apache-spark-use-cases/"^]
+
+* Spark PNL
++
+https://www.johnsnowlabs.com/spark-nlp/["https://www.johnsnowlabs.com/spark-nlp/"^]
+
+* BERT
++
+https://arxiv.org/abs/1810.04805["https://arxiv.org/abs/1810.04805"^]
+
+* Réseau profond et croisé pour les prévisions de clics publicitaires
++
+https://arxiv.org/abs/1708.05123["https://arxiv.org/abs/1708.05123"^]
+
+* FlexGroup
++
+https://www.netapp.com/pdf.html?item=/media/7337-tr4557pdf.pdf[]
+
+* ETL en continu
++
+https://www.infoq.com/articles/apache-spark-streaming["https://www.infoq.com/articles/apache-spark-streaming"^]
+
+* Solutions NetApp E-Series pour Hadoop
++
+https://www.netapp.com/media/16420-tr-3969.pdf["https://www.netapp.com/media/16420-tr-3969.pdf"^]
+
+
+
+* Solutions d'analyse de données modernes NetApp
++
+link:index.html["Solutions d'analyse de données"]
+
+* SnapMirror
++
+https://docs.netapp.com/us-en/ontap/data-protection/snapmirror-replication-concept.html["https://docs.netapp.com/us-en/ontap/data-protection/snapmirror-replication-concept.html"^]
+
+* XCP
++
+https://mysupport.netapp.com/documentation/docweb/index.html?productID=63942&language=en-US["https://mysupport.netapp.com/documentation/docweb/index.html?productID=63942&language=en-US"^]
+
+* Copie et synchronisation BlueXP
++
+https://cloud.netapp.com/cloud-sync-service["https://cloud.netapp.com/cloud-sync-service"^]
+
+* Boîte à outils DataOps
++
+https://github.com/NetApp/netapp-dataops-toolkit["https://github.com/NetApp/netapp-dataops-toolkit"^]
+
+

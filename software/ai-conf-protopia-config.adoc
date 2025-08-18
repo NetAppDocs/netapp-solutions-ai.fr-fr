@@ -1,0 +1,33 @@
+---
+sidebar: sidebar 
+permalink: software/ai-conf-protopia-config.html 
+keywords: test, configuration, Kubernetes, trident, dataops, toolkit, nvidia 
+summary: Cette section décrit l’environnement de validation de la conception de la solution. 
+---
+= Configuration de test
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Le tableau suivant décrit l’environnement de validation de la conception de la solution.
+
+|===
+| Composant | Version 
+
+
+| Kubernetes | 1.21.6 
+
+
+| Pilote CSI NetApp Trident | 22.01.0 
+
+
+| Boîte à outils NetApp DataOps pour Kubernetes | 2.3.0 
+
+
+| Serveur d'inférence NVIDIA Triton | 21.11-py3 
+|===

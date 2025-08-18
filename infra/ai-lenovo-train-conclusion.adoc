@@ -1,0 +1,65 @@
+---
+sidebar: sidebar 
+permalink: infra/ai-lenovo-train-conclusion.html 
+keywords: acknowledgements, additional information 
+summary: Cette solution NetApp et Lenovo est une architecture évolutive flexible, idéale pour l’entrée dans l’IA d’entreprise de niveau intermédiaire.  Le stockage NetApp offre des performances identiques ou supérieures à celles du stockage SSD local et offre les avantages suivants aux scientifiques des données, aux ingénieurs de données et aux décideurs informatiques. 
+---
+= Conclusion
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+La solution NetApp et Lenovo validée ici est une architecture évolutive flexible, idéale pour l’entrée dans l’IA d’entreprise de niveau intermédiaire.
+
+Le stockage NetApp offre des performances identiques ou supérieures à celles du stockage SSD local et offre les avantages suivants aux scientifiques des données, aux ingénieurs de données et aux décideurs informatiques :
+
+* Partage de données sans effort entre les systèmes d’IA, les analyses et d’autres systèmes commerciaux critiques.  Ce partage de données réduit les frais généraux de l’infrastructure, améliore les performances et rationalise la gestion des données dans l’ensemble de l’entreprise.
+* Calcul et stockage évolutifs indépendamment pour minimiser les coûts et améliorer l'utilisation des ressources.
+* Flux de travail de développement et de déploiement rationalisés à l'aide d'instantanés et de clones intégrés pour des espaces de travail utilisateur instantanés et peu encombrants, un contrôle de version intégré et un déploiement automatisé.
+* Protection des données de niveau entreprise pour la reprise après sinistre et la continuité des activités.
+
+
+
+
+== Remerciements
+
+* Karthikeyan Nagalingam, ingénieur marketing technique, NetApp
+* Jarrett Upton, administrateur, systèmes de laboratoire d'IA, Lenovo
+
+
+
+
+== Où trouver des informations supplémentaires
+
+Pour en savoir plus sur les informations décrites dans ce document, reportez-vous aux documents et/ou sites Web suivants :
+
+* Page produit des baies NetApp All Flash
++
+https://www.netapp.com/us/products/storage-systems/all-flash-array/aff-a-series.aspx["https://www.netapp.com/us/products/storage-systems/all-flash-array/aff-a-series.aspx"^]
+
+* Page NetApp AFF A400
++
+https://docs.netapp.com/us-en/ontap-systems/a400/index.html["https://docs.netapp.com/us-en/ontap-systems/a400/index.html"]
+
+* Page produit du logiciel de gestion de données NetApp ONTAP
++
+http://www.netapp.com/us/products/data-management-software/ontap.aspx["http://www.netapp.com/us/products/data-management-software/ontap.aspx"^]
+
+* MLPerf
++
+https://mlperf.org/["https://mlperf.org"^]
+
+* Test de référence TensorFlow
++
+https://github.com/tensorflow/benchmarks["https://github.com/tensorflow/benchmarks"^]
+
+* NVIDIA SMI (nvidia-smi)
++
+https://developer.nvidia.com/nvidia-system-management-interface["https://developer.nvidia.com/nvidia-system-management-interface"]
+
+

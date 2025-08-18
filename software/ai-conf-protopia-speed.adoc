@@ -1,0 +1,19 @@
+---
+sidebar: sidebar 
+permalink: software/ai-conf-protopia-speed.html 
+keywords: speed, obfuscation, pytorch 
+summary: 'Pour cette validation, nous avons appliqué l"obfuscation Protopia à une image de 1920 x 1080 pixels cinq fois et mesuré le temps nécessaire à l"étape d"obfuscation à chaque fois.' 
+---
+= Vitesse d'obscurcissement
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Pour cette validation, nous avons appliqué l'obfuscation Protopia à une image de 1920 x 1080 pixels cinq fois et mesuré le temps nécessaire à l'étape d'obfuscation à chaque fois.
+
+Nous avons utilisé PyTorch exécuté sur un seul GPU NVIDIA V100 pour appliquer l'obfuscation, et nous avons vidé le cache du GPU entre les exécutions.  L'étape d'obscurcissement a pris respectivement 5,47 ms, 5,27 ms, 4,54 ms, 5,24 ms et 4,84 ms pour être terminée sur les cinq exécutions.  La vitesse moyenne était de 5,072 ms.

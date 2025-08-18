@@ -1,0 +1,24 @@
+---
+sidebar: sidebar 
+permalink: vector-db/ai-vdb-verification.html 
+keywords: Solution Overview vector database 
+summary: Présentation de la vérification de la solution - Solution de base de données vectorielle pour NetApp 
+---
+= Présentation de la solution
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Nous avons réalisé une validation complète de la solution axée sur cinq domaines clés, dont les détails sont décrits ci-dessous.  Chaque section examine les défis auxquels sont confrontés les clients, les solutions fournies par NetApp et les avantages qui en découlent pour le client.
+
+. link:ai-vdb-milvus-setup.html["Configuration du cluster Milvus avec Kubernetes sur site"]Les défis des clients sont de pouvoir évoluer de manière indépendante en matière de stockage et de calcul, de gestion efficace des infrastructures et de gestion des données.  Dans cette section, nous détaillons le processus d’installation d’un cluster Milvus sur Kubernetes, en utilisant un contrôleur de stockage NetApp pour les données du cluster et les données client.
+. lien:vector-database-milvus-with-Amazon-FSx ONTAP-for- NetApp- ONTAP.html[Milvus avec Amazon FSx ONTAP pour NetApp ONTAP – dualité fichier et objet] Dans cette section, pourquoi nous devons déployer une base de données vectorielle dans le cloud ainsi que les étapes pour déployer une base de données vectorielle (milvus autonome) dans Amazon FSx ONTAP pour NetApp ONTAP dans des conteneurs Docker.
+. link:ai-vdb-dp-snapcenter.html["Protection de base de données vectorielle à l'aide de NetApp SnapCenter."]Dans cette section, nous examinons comment SnapCenter protège les données de la base de données vectorielle et les données Milvus résidant dans ONTAP.  Pour cet exemple, nous avons utilisé un bucket NAS (milvusdbvol1) dérivé d'un volume NFS ONTAP (vol1) pour les données client et un volume NFS distinct (vectordbpv) pour les données de configuration du cluster Milvus.
+. link:ai-vdb-dr-snapmirror.html["Reprise après sinistre avec NetApp SnapMirror"]Dans cette section, nous discutons de l'importance de la reprise après sinistre (DR) pour la base de données vectorielle et de la manière dont le produit de reprise après sinistre NetApp Snapmirror fournit une solution DR à la base de données vectorielle.
+. link:ai-vdb-perf-validation.html["Validation des performances"]Dans cette section, nous visons à approfondir la validation des performances des bases de données vectorielles, telles que Milvus et pgvecto.rs, en nous concentrant sur leurs caractéristiques de performances de stockage telles que le profil d'E/S et le comportement du contrôleur de stockage NetApp à la prise en charge des charges de travail RAG et d'inférence au sein du cycle de vie LLM.  Nous évaluerons et identifierons les différenciateurs de performances lorsque ces bases de données seront combinées avec la solution de stockage ONTAP .  Notre analyse sera basée sur des indicateurs de performance clés, tels que le nombre de requêtes traitées par seconde (QPS).
+

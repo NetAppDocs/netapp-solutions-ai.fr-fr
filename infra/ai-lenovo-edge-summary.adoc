@@ -1,0 +1,17 @@
+---
+sidebar: sidebar 
+permalink: infra/ai-lenovo-edge-summary.html 
+keywords:  
+summary:  
+---
+= Résumé
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Plusieurs scénarios d’application émergents, tels que les systèmes avancés d’assistance à la conduite (ADAS), l’industrie 4.0, les villes intelligentes et l’Internet des objets (IoT), nécessitent le traitement de flux de données continus avec une latence proche de zéro.  Ce document décrit une architecture de calcul et de stockage pour déployer l'inférence d'intelligence artificielle (IA) basée sur le GPU sur les contrôleurs de stockage NetApp et les serveurs Lenovo ThinkSystem dans un environnement de périphérie qui répond à ces exigences.  Ce document fournit également des données de performances pour le benchmark d'inférence MLPerf standard de l'industrie, évaluant diverses tâches d'inférence sur des serveurs Edge équipés de GPU NVIDIA T4.  Nous étudions les performances des scénarios d'inférence hors ligne, à flux unique et à flux multiples et montrons que l'architecture avec un système de stockage en réseau partagé rentable est très performante et fournit un point central pour la gestion des données et des modèles pour plusieurs serveurs périphériques.

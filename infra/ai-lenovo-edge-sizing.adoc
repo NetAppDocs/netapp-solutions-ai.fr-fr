@@ -1,0 +1,31 @@
+---
+sidebar: sidebar 
+permalink: infra/ai-lenovo-edge-sizing.html 
+keywords: architecture, sizing, computer server, shared storage 
+summary: 'Vous pouvez ajuster la configuration utilisée pour la validation afin de l"adapter à d"autres cas d"utilisation.' 
+---
+= Options de dimensionnement de l'architecture
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Vous pouvez ajuster la configuration utilisée pour la validation afin de l'adapter à d'autres cas d'utilisation.
+
+
+
+== serveur de calcul
+
+Nous avons utilisé un processeur Intel Xeon D-2123IT, qui est le niveau de processeur le plus bas pris en charge dans SE350, avec quatre cœurs physiques et un TDP de 60 W.  Bien que le serveur ne prenne pas en charge le remplacement des processeurs, il peut être commandé avec un processeur plus puissant.  Le processeur le plus pris en charge est l'Intel Xeon D-2183IT avec 16 cœurs, 100 W fonctionnant à 2,20 GHz.  Cela augmente considérablement la capacité de calcul du processeur.  Bien que le processeur ne soit pas un goulot d’étranglement pour l’exécution des charges de travail d’inférence elles-mêmes, il aide au traitement des données et à d’autres tâches liées à l’inférence.  À l’heure actuelle, NVIDIA T4 est le seul GPU disponible pour les cas d’utilisation de pointe ; par conséquent, il n’existe actuellement aucune possibilité de mettre à niveau ou de rétrograder le GPU.
+
+
+
+== Stockage partagé
+
+Pour les tests et la validation, le système NetApp AFF C190 , qui dispose d'une capacité de stockage maximale de 50,5 To, d'un débit de 4,4 Gbit/s pour les lectures séquentielles et de 230 000 IOPS pour les petites lectures aléatoires, a été utilisé dans le cadre de ce document et s'est avéré bien adapté aux charges de travail d'inférence de périphérie.
+
+Toutefois, si vous avez besoin d'une plus grande capacité de stockage ou de vitesses de réseau plus rapides, vous devez utiliser les systèmes de stockage NetApp AFF A220 ou NetApp AFF A250 .  De plus, le système NetApp EF280, doté d'une capacité maximale de 1,5 Po et d'une bande passante de 10 Gbit/s, a également été utilisé pour la validation de cette solution.  Si vous préférez une plus grande capacité de stockage avec une bande passante plus élevée, https://www.netapp.com/pdf.html?item=/media/19339-DS-4082.pdf&v=2021691654["NetApp EF300"^] peut être utilisé.

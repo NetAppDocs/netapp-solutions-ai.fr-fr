@@ -1,0 +1,25 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/kafka-ontap-overview.html 
+keywords: tr4941, 4941, introduction 
+summary: 'Ce document décrit les tests de performances de la plateforme Confluent sur NetApp ONTAP à l"aide d"un kit d"analyse comparative de stockage à plusieurs niveaux.' 
+---
+= TR-4941 : Confluent avec les contrôleurs de stockage NetApp ONTAP
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+Karthikeyan Nagalingam, Joe Scott, NetApp Rankesh Kumar, Confluent
+
+[role="lead"]
+Pour rendre la plateforme Confluent plus évolutive et élastique, elle doit être capable de faire évoluer et d’équilibrer les charges de travail très rapidement.  Le stockage hiérarchisé permet de gérer le stockage d’énormes volumes de données dans Confluent en réduisant cette charge opérationnelle.
+
+L’idée fondamentale est de séparer le stockage des données du traitement des données, ce qui facilite grandement la mise à l’échelle indépendante de chacun.
+
+Doté d'innovations de pointe, le logiciel de gestion de données NetApp ONTAP offre à Confluent de nombreux avantages partout où se trouvent les données.
+
+Ce document décrit les tests de performances de la plateforme Confluent sur NetApp ONTAP à l'aide d'un kit d'analyse comparative de stockage à plusieurs niveaux.

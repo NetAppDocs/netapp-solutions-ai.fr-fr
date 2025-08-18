@@ -1,0 +1,49 @@
+---
+sidebar: sidebar 
+permalink: software/ai-conf-protopia-usecases.html 
+keywords: environmental intelligence, edge device wearables, noncombatant evacuation operations, cloud migration of analytics 
+summary: 'Le traitement d’images numériques présente de nombreux avantages, permettant à de nombreuses organisations de tirer le meilleur parti des données associées aux représentations visuelles.  Cette solution NetApp et Protopia fournit une conception d"inférence d"IA unique pour protéger et privatiser les données AI/ML tout au long du cycle de vie ML/DL.  Il permet aux clients de conserver la propriété des données sensibles, d"utiliser des modèles de déploiement de cloud public ou hybride pour l"évolutivité et l"efficacité en atténuant les préoccupations liées à la confidentialité et de déployer l"inférence de l"IA à la périphérie.' 
+---
+= Domaines de solutions
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Le traitement d’images numériques présente de nombreux avantages, permettant à de nombreuses organisations de tirer le meilleur parti des données associées aux représentations visuelles.  Cette solution NetApp et Protopia fournit une conception d'inférence d'IA unique pour protéger et privatiser les données AI/ML tout au long du cycle de vie ML/DL.  Il permet aux clients de conserver la propriété des données sensibles, d'utiliser des modèles de déploiement de cloud public ou hybride pour l'évolutivité et l'efficacité en atténuant les préoccupations liées à la confidentialité et de déployer l'inférence de l'IA à la périphérie.
+
+
+
+== Intelligence environnementale
+
+Les industries peuvent tirer parti de nombreuses façons de l’analyse géospatiale dans le domaine des risques environnementaux.  Les gouvernements et le ministère des Travaux publics peuvent tirer des informations exploitables sur la santé publique et les conditions météorologiques pour mieux conseiller le public lors d’une pandémie ou d’une catastrophe naturelle telle que les incendies de forêt.  Par exemple, vous pouvez identifier un patient positif au COVID dans les espaces publics, tels que les aéroports ou les hôpitaux, sans compromettre la vie privée de la personne concernée et alerter les autorités compétentes et le public à proximité des mesures de sécurité nécessaires.
+
+
+
+== Appareils portables Edge
+
+Dans l’armée et sur les champs de bataille, vous pouvez utiliser l’inférence de l’IA en périphérie comme des appareils portables pour suivre la santé des soldats, surveiller le comportement des conducteurs et alerter les autorités sur la sécurité et les risques associés à l’approche des véhicules militaires tout en préservant et en protégeant la vie privée des soldats.  L'avenir de l'armée passe par la haute technologie avec l'Internet des objets de champ de bataille (IoBT) et l'Internet des objets militaires (IoMT) pour les équipements de combat portables qui aident les soldats à identifier les ennemis et à mieux performer au combat en utilisant l'informatique de pointe rapide.  La protection et la préservation des données visuelles collectées à partir d’appareils périphériques tels que les drones et les équipements portables sont essentielles pour tenir les pirates et l’ennemi à distance.
+
+
+
+== Opérations d'évacuation des non-combattants
+
+Les opérations d'évacuation des non-combattants (NEO) sont menées par le DoD pour aider à évacuer les citoyens et les ressortissants américains, le personnel civil du DoD et les personnes désignées (ressortissants du pays hôte (HN) et des pays tiers (TCN)) dont la vie est en danger vers un refuge sûr approprié.  Les contrôles administratifs en place utilisent en grande partie des processus manuels de contrôle des personnes évacuées.  Cependant, la précision, la sécurité et la rapidité de l’identification des personnes évacuées, du suivi des personnes évacuées et du filtrage des menaces pourraient potentiellement être améliorées en utilisant des outils d’IA/ML hautement automatisés combinés à des technologies d’obscurcissement vidéo IA/ML.
+
+
+
+== Santé et recherche biomédicale
+
+Le traitement d'images est utilisé pour diagnostiquer des pathologies en vue d'une planification chirurgicale à partir d'images 3D obtenues par tomodensitométrie (TDM) ou imagerie par résonance magnétique (IRM).  Les règles de confidentialité HIPAA régissent la manière dont les données doivent être collectées, traitées et effacées par les organisations pour toutes les informations personnelles et images numériques telles que les photographies.  Pour que les données soient considérées comme partageables en vertu de la réglementation HIPAA Safe Harbor, les images photographiques complètes et toutes les images comparables doivent être supprimées.  Les techniques automatisées telles que les algorithmes de désidentification ou d'extraction du crâne utilisés pour masquer les traits du visage d'un individu à partir d'images CT/IRM structurelles sont devenues un élément essentiel du processus de partage de données pour les institutions de recherche biomédicale.
+
+
+
+== Migration vers le cloud des analyses IA/ML
+
+Les clients d’entreprise ont traditionnellement formé et déployé des modèles d’IA/ML sur site.  Pour des raisons d’économies d’échelle et d’efficacité, ces clients se développent pour déplacer les fonctions d’IA/ML vers des déploiements cloud publics, hybrides ou multicloud.  Cependant, ils sont limités par les données qui peuvent être exposées à d’autres infrastructures.  Les solutions NetApp répondent à une gamme complète de menaces de cybersécurité requises pour https://www.netapp.com/data-protection/?internal_promo=mdw_aiml_ww_all_awareness-coas_blog["protection des données"^] et l'évaluation de la sécurité et, lorsqu'elles sont combinées à la transformation des données Protopia, minimisent les risques associés à la migration des charges de travail de traitement d'images AI/ML vers le cloud.
+
+Pour des cas d'utilisation supplémentaires pour l'informatique de pointe et l'inférence de l'IA dans d'autres secteurs, voirlink:../infra/ai-lenovo-edge-intro.html["TR-4886 Inférence IA à la périphérie"^] et le blog NetApp AI, https://www.netapp.com/blog/federated-learning-intelligence-vs-privacy/["Intelligence versus vie privée"^] .

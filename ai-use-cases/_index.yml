@@ -1,0 +1,39 @@
+---
+indexpage:
+  title: Cas d'utilisation et applications de l'IA NetApp
+  summary: Explorez les implémentations d'IA du monde réel avec les solutions NetApp
+    , des systèmes RAG d'entreprise et de l'inférence de périphérie aux pratiques
+    d'IA responsables et aux stratégies de migration de données.  Ces cas d’utilisation
+    démontrent comment NetApp permet aux applications d’IA de fonctionner dans divers
+    environnements tout en maintenant la sécurité, les performances et l’évolutivité.
+  lead: Explorez les implémentations d'IA du monde réel avec les solutions NetApp
+    , des systèmes RAG d'entreprise et de l'inférence de périphérie aux pratiques
+    d'IA responsables et aux stratégies de migration de données.  Ces cas d’utilisation
+    démontrent comment NetApp permet aux organisations de déployer des applications
+    d’IA dans divers environnements tout en maintenant la sécurité, les performances
+    et l’évolutivité.
+  tiles:
+  - title: Applications et cas d'utilisation de l'IA d'entreprise
+    links:
+    - title: NetApp AIPod Mini pour RAG d'entreprise
+      url: "../infra/ai-minipod.html"
+    - title: IA générative et valeur NetApp
+      url: "../gen-ai/ai-wp-genai.html"
+    - title: Inférence d'IA Edge avec NetApp et Lenovo
+      url: "../infra/ai-lenovo-edge-intro.html"
+    - title: Migration de l'analyse des Big Data vers l'IA
+      url: "../data-analytics/bda-ai-introduction.html"
+  - title: IA responsable
+    links:
+    - title: IA responsable avec la transformation d'images Protopia
+      url: "../software/ai-conf-protopia-overview.html"
+    - title: Domaines de solutions
+      url: "../software/ai-conf-protopia-usecases.html"
+    - title: Aperçu de la technologie
+      url: "../software/ai-conf-protopia-tech.html"
+  - title: Solutions de stockage et d'infrastructure d'IA
+    links:
+    - title: Concevez Quantum StorNext avec les systèmes de la série E
+      url: "../infra/ai-eseries-nva1150-design.html"
+    - title: Déployer Quantum StorNext avec les systèmes de la série E
+      url: "../infra/ai-eseries-nva1150-deploy.html"

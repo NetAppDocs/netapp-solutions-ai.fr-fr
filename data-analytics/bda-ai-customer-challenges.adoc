@@ -1,0 +1,23 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/bda-ai-customer-challenges.html 
+keywords: customer, challenge, data lake, repository, syncing, moving data 
+summary: Cette page décrit les défis auxquels un client peut être confronté lorsqu’il tente d’accéder aux données issues d’analyses de Big Data pour les opérations d’IA. 
+---
+= Les défis des clients
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Les clients peuvent être confrontés aux défis suivants lorsqu'ils tentent d'accéder aux données issues d'analyses de Big Data pour les opérations d'IA :
+
+* Les données client se trouvent dans un référentiel de lac de données.  Le lac de données peut contenir différents types de données telles que des données structurées, non structurées, semi-structurées, des journaux et des données machine à machine.  Tous ces types de données doivent être traités dans les systèmes d’IA.
+* L'IA n'est pas compatible avec les systèmes de fichiers Hadoop.  Une architecture d’IA typique n’est pas en mesure d’accéder directement aux données HDFS et HCFS, qui doivent être déplacées vers un système de fichiers compréhensible par l’IA (NFS).
+* Le transfert des données du lac de données vers l’IA nécessite généralement des processus spécialisés.  La quantité de données dans le lac de données peut être très importante.  Un client doit disposer d’un moyen efficace, à haut débit et rentable pour déplacer des données vers des systèmes d’IA.
+* Synchronisation des données.  Si un client souhaite synchroniser les données entre la plateforme Big Data et l’IA, les données traitées par l’IA peuvent parfois être utilisées avec le Big Data pour le traitement analytique.
+

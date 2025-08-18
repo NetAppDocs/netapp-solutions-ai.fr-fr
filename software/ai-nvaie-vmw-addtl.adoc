@@ -1,0 +1,40 @@
+---
+sidebar: sidebar 
+permalink: software/ai-nvaie-vmw-addtl.html 
+keywords: NetApp AI, AI, Artificial Intelligence, ML, Machine Learning, NVIDIA, NVIDIA AI Enterprise, NVAIE, VMware 
+summary: 'NVIDIA AI Enterprise avec NetApp et VMware : où trouver des informations supplémentaires ?' 
+---
+= Où trouver des informations supplémentaires
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Pour en savoir plus sur les informations décrites dans ce document, reportez-vous aux documents et/ou sites Web suivants :
+
+* Logiciel de gestion de données NetApp ONTAP — Bibliothèque d'informations ONTAP
++
+http://mysupport.netapp.com/documentation/productlibrary/index.html?productID=62286["http://mysupport.netapp.com/documentation/productlibrary/index.html?productID=62286"^]
+
+* Boîte à outils NetApp DataOps
++
+https://github.com/NetApp/netapp-dataops-toolkit["https://github.com/NetApp/netapp-dataops-toolkit"^]
+
+* NVIDIA AI Enterprise avec VMware
++
+https://www.nvidia.com/en-us/data-center/products/ai-enterprise/["https://www.nvidia.com/en-us/data-center/products/ai-enterprise/"^]
+
+
+
+
+
+== Remerciements
+
+* Bobby Oommen, directeur principal, NetApp
+* Ramesh Isaac, administrateur système, NetApp
+* Roney Daniel, ingénieur marketing technique, NetApp
+

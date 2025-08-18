@@ -1,0 +1,19 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/kafka-nfs-conclusion.html 
+keywords: conclusion 
+summary: La solution NetApp au problème de renommage stupide fournit une forme de stockage simple, peu coûteuse et gérée de manière centralisée pour les charges de travail qui étaient auparavant incompatibles avec NFS. 
+---
+= Conclusion
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+La solution NetApp au problème de renommage stupide fournit une forme de stockage simple, peu coûteuse et gérée de manière centralisée pour les charges de travail qui étaient auparavant incompatibles avec NFS.
+
+Ce nouveau paradigme permet aux clients de créer des clusters Kafka plus faciles à gérer, plus faciles à migrer et à mettre en miroir à des fins de reprise après sinistre et de protection des données.  Nous avons également constaté que NFS offre des avantages supplémentaires tels qu'une utilisation réduite du processeur et un temps de récupération plus rapide, une efficacité de stockage considérablement améliorée et de meilleures performances grâce à NetApp ONTAP.

@@ -1,0 +1,59 @@
+---
+sidebar: sidebar 
+permalink: vector-db/ai-vdb-tech.html 
+keywords: vector database 
+summary: 'Besoin technologique : solution de base de données vectorielle pour NetApp' 
+---
+= Exigences technologiques
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Cette section fournit un aperçu des exigences relatives à la solution de base de données vectorielle NetApp .
+
+
+
+== Exigences technologiques
+
+Les configurations matérielles et logicielles décrites ci-dessous ont été utilisées pour la majorité des validations effectuées dans ce document, à l'exception des performances.  Ces configurations servent de guide pour vous aider à configurer votre environnement.  Veuillez toutefois noter que les composants spécifiques peuvent varier en fonction des exigences individuelles des clients.
+
+
+
+== Configuration matérielle requise
+
+|===
+| Matériel | Détails 
+
+
+| Paire de baies de stockage NetApp AFF HA | * A800 * ONTAP 9.14.1 * 48 x 3,49 To SSD-NVM * Deux volumes de groupe flexibles : métadonnées et données.  * Le volume NFS de métadonnées dispose de 12 volumes persistants de 250 Go.  * Les données sont un volume ONTAP NAS S3 
+
+
+| 6 x FUJITSU PRIMERGY RX2540 M4 | * 64 processeurs * Processeur Intel(R) Xeon(R) Gold 6142 à 2,60 GHz * Mémoire physique de 256 Go * 1 port réseau 100 GbE 
+
+
+| Réseautage | 100 GbE 
+
+
+| StorageGRID | * 1 x SG100, 3xSGF6024 * 3 x 24 x 7,68 To 
+|===
+
+
+== Configuration logicielle requise
+
+|===
+| Logiciels | Détails 
+
+
+| amas de Milvus | * GRAPHIQUE - milvus-4.1.11.  * Version APP – 2.3.4 * Bundles dépendants tels que bookkeeper, zookeeper, pulsar, etcd, proxy, querynode, worker 
+
+
+| Kubernetes | * Cluster K8s à 5 nœuds * 1 nœud maître et 4 nœuds travailleurs * Version – 1.7.2 
+
+
+| Python | *3.10.12. 
+|===

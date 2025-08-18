@@ -1,0 +1,96 @@
+---
+sidebar: sidebar 
+permalink: software/ai-osmlops-trident-ops.html 
+keywords: Trident 
+summary: 'MLOps Open Source avec NetApp - Exemples d"opérations Trident' 
+---
+= Exemple d'opérations Trident
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Cette section comprend des exemples de diverses opérations que vous souhaiterez peut-être effectuer avec Trident.
+
+
+
+== Importer un volume existant
+
+S'il existe des volumes existants sur votre système/plateforme de stockage NetApp que vous souhaitez monter sur des conteneurs au sein de votre cluster Kubernetes, mais qui ne sont pas liés aux PVC du cluster, vous devez importer ces volumes.  Vous pouvez utiliser la fonctionnalité d’importation de volume Trident pour importer ces volumes.
+
+Les exemples de commandes qui suivent montrent l’importation d’un volume nommé `pb_fg_all` .  Pour plus d'informations sur les PVC, consultez le https://kubernetes.io/docs/concepts/storage/persistent-volumes/["documentation officielle de Kubernetes"^] .  Pour plus d'informations sur la fonctionnalité d'importation de volume, consultez le https://docs.netapp.com/us-en/trident/index.html["Documentation Trident"^] .
+
+Un `accessModes` valeur de `ReadOnlyMany` est spécifié dans les exemples de fichiers de spécifications PVC.  Pour plus d'informations sur le `accessMode` champ, voir le https://kubernetes.io/docs/concepts/storage/persistent-volumes/["documentation officielle de Kubernetes"^] .
+
+....
+$ cat << EOF > ./pvc-import-pb_fg_all-iface1.yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pb-fg-all-iface1
+  namespace: default
+spec:
+  accessModes:
+    - ReadOnlyMany
+  storageClassName: ontap-ai-flexgroups-retain-iface1
+EOF
+$ tridentctl import volume ontap-ai-flexgroups-iface1 pb_fg_all -f ./pvc-import-pb_fg_all-iface1.yaml -n trident
++--------------------------------+--------+-----------------------------------+----------+--------------------------------------------+--------+---------+
+|          NAME                  |  SIZE  |       STORAGE CLASS               | PROTOCOL |             BACKEND UUID                         | STATE  | MANAGED |
++--------------------------------+--------+-----------------------------------+----------+------------------------------------------+--------+---------+
+| default-pb-fg-all-iface1-7d9f1 | 10 TiB | ontap-ai-flexgroups-retain-iface1 | file     | b74cbddb-e0b8-40b7-b263-b6da6dec0bdd | online | true    |
++--------------------------------+--------+-----------------------------------+----------+--------------------------------------------+--------+---------+
+$ tridentctl get volume -n trident
++----------------------------------+---------+-----------------------------------+----------+--------------------------------------+--------+---------+
+|               NAME               |  SIZE   |           STORAGE CLASS           | PROTOCOL |             BACKEND UUID             | STATE  | MANAGED |
++----------------------------------+---------+-----------------------------------+----------+--------------------------------------+--------+---------+
+| default-pb-fg-all-iface1-7d9f1   | 10 TiB  | ontap-ai-flexgroups-retain-iface1 | file     | b74cbddb-e0b8-40b7-b263-b6da6dec0bdd | online | true    |
++----------------------------------+---------+-----------------------------------+----------+--------------------------------------+--------+---------+
+$ kubectl get pvc
+NAME                 STATUS   VOLUME                             CAPACITY         ACCESS MODES   STORAGECLASS                        AGE
+pb-fg-all-iface1     Bound    default-pb-fg-all-iface1-7d9f1     10995116277760   ROX            ontap-ai-flexgroups-retain-iface1   25h
+....
+
+
+== Provisionner un nouveau volume
+
+Vous pouvez utiliser Trident pour provisionner un nouveau volume sur votre système ou plate-forme de stockage NetApp .
+
+
+
+=== Provisionner un nouveau volume à l'aide de kubectl
+
+Les exemples de commandes suivants montrent le provisionnement d’un nouveau FlexVol volume à l’aide de kubectl.
+
+Un `accessModes` valeur de `ReadWriteMany` est spécifié dans l'exemple de fichier de définition PVC suivant.  Pour plus d'informations sur le `accessMode` champ, voir le https://kubernetes.io/docs/concepts/storage/persistent-volumes/["documentation officielle de Kubernetes"^] .
+
+....
+$ cat << EOF > ./pvc-tensorflow-results.yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: tensorflow-results
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ontap-ai-flexvols-retain
+EOF
+$ kubectl create -f ./pvc-tensorflow-results.yaml
+persistentvolumeclaim/tensorflow-results created
+$ kubectl get pvc
+NAME                              STATUS    VOLUME                             CAPACITY         ACCESS MODES   STORAGECLASS                        AGE
+pb-fg-all-iface1                  Bound     default-pb-fg-all-iface1-7d9f1     10995116277760   ROX            ontap-ai-flexgroups-retain-iface1   26h
+tensorflow-results                Bound     default-tensorflow-results-2fd60   1073741824       RWX            ontap-ai-flexvols-retain            25h
+....
+
+
+=== Provisionner un nouveau volume à l'aide de la boîte à outils NetApp DataOps
+
+Vous pouvez également utiliser NetApp DataOps Toolkit pour Kubernetes pour provisionner un nouveau volume sur votre système ou plateforme de stockage NetApp .  La boîte à outils NetApp DataOps pour Kubernetes utilise Trident pour provisionner les volumes mais simplifie le processus pour l'utilisateur.  Se référer à lalink:https://github.com/NetApp/netapp-dataops-toolkit/blob/main/netapp_dataops_k8s/docs/volume_management.md["documentation"] pour plus de détails.

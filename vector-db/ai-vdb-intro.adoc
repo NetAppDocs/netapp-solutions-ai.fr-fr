@@ -1,0 +1,36 @@
+---
+sidebar: sidebar 
+permalink: vector-db/ai-vdb-intro.html 
+keywords: vector database 
+summary: Introduction à la solution de base de données vectorielle pour NetApp 
+---
+= Introduction
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Cette section fournit une introduction à la solution de base de données vectorielle pour NetApp.
+
+
+
+== Introduction
+
+Les bases de données vectorielles répondent efficacement aux défis conçus pour gérer les complexités de la recherche sémantique dans les grands modèles de langage (LLM) et l'intelligence artificielle générative (IA).  Contrairement aux systèmes de gestion de données traditionnels, les bases de données vectorielles sont capables de traiter et de rechercher différents types de données, notamment des images, des vidéos, du texte, de l'audio et d'autres formes de données non structurées, en utilisant le contenu des données elles-mêmes plutôt que des étiquettes ou des balises.
+
+Les limites des systèmes de gestion de bases de données relationnelles (SGBDR) sont bien documentées, en particulier leurs difficultés avec les représentations de données à haute dimension et les données non structurées courantes dans les applications d'IA.  Les SGBDR nécessitent souvent un processus long et sujet aux erreurs d'aplatissement des données dans des structures plus faciles à gérer, ce qui entraîne des retards et des inefficacités dans les recherches.  Les bases de données vectorielles sont toutefois conçues pour contourner ces problèmes, en offrant une solution plus efficace et plus précise pour la gestion et la recherche de données complexes et de grande dimension, facilitant ainsi l'avancement des applications d'IA.
+
+Ce document sert de guide complet pour les clients qui utilisent actuellement ou prévoient d'utiliser des bases de données vectorielles, détaillant les meilleures pratiques d'utilisation des bases de données vectorielles sur des plates-formes telles que NetApp ONTAP, NetApp StorageGRID, Amazon FSx ONTAP pour NetApp ONTAP et SnapCenter.  Le contenu fourni ici couvre une gamme de sujets :
+
+* Directives d'infrastructure pour les bases de données vectorielles, comme Milvus, fournies par le stockage NetApp via NetApp ONTAP et le stockage d'objets StorageGRID .
+* Validation de la base de données Milvus dans AWS FSx ONTAP via un magasin de fichiers et d'objets.
+* Plonge dans la dualité fichier-objet de NetApp, démontrant son utilité pour les données dans les bases de données vectorielles ainsi que pour d'autres applications.
+* Comment le produit de gestion de la protection des données de NetApp, SnapCenter, offre des fonctionnalités de sauvegarde et de restauration pour les données de bases de données vectorielles.
+* Comment le cloud hybride de NetApp offre la réplication et la protection des données dans les environnements sur site et cloud.
+* Fournit des informations sur la validation des performances des bases de données vectorielles telles que Milvus et pgvector sur NetApp ONTAP.
+* Deux cas d'utilisation spécifiques : Retrieval Augmented Generation (RAG) avec Large Language Models (LLM) et ChatAI de l'équipe informatique de NetApp , offrant ainsi des exemples pratiques des concepts et pratiques décrits.
+

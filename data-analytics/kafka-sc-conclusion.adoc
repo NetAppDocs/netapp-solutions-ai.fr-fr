@@ -1,0 +1,49 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/kafka-sc-conclusion.html 
+keywords: conclusion, where to find additional information 
+summary: Ce test de vérification a atteint 31,74 Gbit/s de débit de hiérarchisation sur Confluent avec un contrôleur de stockage NetApp ONTAP . 
+---
+= Conclusion
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Ce test de vérification a atteint 31,74 Gbit/s de débit de hiérarchisation sur Confluent avec le contrôleur de stockage NetApp ONTAP .
+
+
+
+== Où trouver des informations supplémentaires
+
+Pour en savoir plus sur les informations décrites dans ce document, consultez les documents et/ou sites Web suivants :
+
+* Qu'est-ce que Confluent ?
++
+https://www.confluent.io/apache-kafka-vs-confluent/["https://www.confluent.io/apache-kafka-vs-confluent/"^]
+
+* Détails des paramètres du puits S3
++
+https://docs.confluent.io/kafka-connect-s3-sink/current/configuration_options.html["https://docs.confluent.io/kafka-connect-s3-sink/current/configuration_options.html#s3-configuration-options"^]
+
+* Apache Kafka
++
+https://en.wikipedia.org/wiki/Apache_Kafka["https://en.wikipedia.org/wiki/Apache_Kafka"^]
+
+* Meilleures pratiques S3 dans ONTAP
++
+https://www.netapp.com/pdf.html?item=/media/17219-tr4814.pdf["https://www.netapp.com/pdf.html?item=/media/17219-tr4814.pdf"^]
+
+* Gestion du stockage d'objets S3
++
+https://docs.netapp.com/us-en/ontap/s3-config/s3-support-concept.html["https://docs.netapp.com/us-en/ontap/s3-config/s3-support-concept.html"^]
+
+* Documentation produit NetApp
++
+https://www.netapp.com/support-and-training/documentation/["https://www.netapp.com/support-and-training/documentation/"^]
+
+

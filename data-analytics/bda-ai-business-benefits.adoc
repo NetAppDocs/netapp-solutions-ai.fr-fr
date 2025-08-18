@@ -1,0 +1,26 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/bda-ai-business-benefits.html 
+keywords: business, benefits 
+summary: Cette section décrit les avantages commerciaux de cette solution. 
+---
+= Avantages commerciaux
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Le transfert de données de l’analyse Big Data vers l’IA offre les avantages suivants :
+
+* La capacité d'extraire des données de différents systèmes de fichiers Hadoop et GPFS dans un système de stockage NFS unifié
+* Un moyen intégré et automatisé de transférer des données
+* Une réduction du coût de développement de bibliothèques pour déplacer des données à partir de systèmes de fichiers Hadoop
+* Performances maximales grâce au débit agrégé de plusieurs interfaces réseau à partir d'une seule source de données en utilisant NIPAM
+* Méthodes planifiées et à la demande pour transférer des données
+* Efficacité du stockage et capacité de gestion d'entreprise pour les données NFS unifiées à l'aide du logiciel de gestion de données ONTAP
+* Coût nul pour le déplacement des données avec la méthode Hadoop pour le transfert de données
+

@@ -1,0 +1,38 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/cdm-fod-solution-technology.html 
+keywords: use case, summary, cvo, cloud volumes ontap, ml, dl 
+summary: 'Un cas d’utilisation potentiel pour l’accès au double protocole NFS et S3 se situe dans les domaines de l’apprentissage automatique et de la science des données.  Par exemple, une équipe de scientifiques des données peut travailler sur un projet d’apprentissage automatique utilisant AWS SageMaker, qui nécessite l’accès aux données stockées au format NFS.  Cependant, les données peuvent également devoir être consultées et partagées via des compartiments S3 pour collaborer avec d"autres membres de l"équipe ou pour s"intégrer à d"autres applications qui utilisent S3.' 
+---
+= Technologie des solutions
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Cette solution utilise les technologies suivantes :
+
+* *Bloc-notes AWS SageMaker.*  Offre des capacités d'apprentissage automatique aux développeurs et aux scientifiques des données pour créer, former et déployer efficacement des modèles ML de haute qualité.
+* * NetApp BlueXP.*  Permet la découverte, le déploiement et l’exploitation du stockage sur site ainsi que sur AWS, Azure et Google Cloud.  Il offre une protection des données contre la perte de données, les cybermenaces et les pannes imprévues et optimise le stockage et l'infrastructure des données.
+* * NetApp Cloud Volumes ONTAP.*  Fournit des volumes de stockage de niveau entreprise avec les protocoles NFS, SMB/CIFS, iSCSI et S3 sur AWS, Azure et Google Cloud, offrant aux utilisateurs une plus grande flexibilité dans l'accès et la gestion de leurs données dans le cloud.
+
+
+NetApp Cloud Volumes ONTAP créé à partir de BlueXP pour stocker les données ML.
+
+La figure suivante montre les composants techniques de la solution.
+
+image:cdm-fod-001.png["Cette figure montre les composants techniques de la solution."]
+
+
+
+== Résumé du cas d'utilisation
+
+Un cas d’utilisation potentiel pour l’accès au double protocole NFS et S3 se situe dans les domaines de l’apprentissage automatique et de la science des données.  Par exemple, une équipe de scientifiques des données peut travailler sur un projet d’apprentissage automatique utilisant AWS SageMaker, qui nécessite l’accès aux données stockées au format NFS.  Cependant, les données peuvent également devoir être consultées et partagées via des compartiments S3 pour collaborer avec d'autres membres de l'équipe ou pour s'intégrer à d'autres applications qui utilisent S3.
+
+En utilisant NetApp Cloud Volumes ONTAP, l’équipe peut stocker ses données dans un emplacement unique et les rendre accessibles avec les protocoles NFS et S3.  Les scientifiques des données peuvent accéder aux données au format NFS directement depuis AWS SageMaker, tandis que d'autres membres de l'équipe ou applications peuvent accéder aux mêmes données via des buckets S3.
+
+Cette approche permet d’accéder aux données et de les partager facilement et efficacement sans avoir besoin de logiciels supplémentaires ou de migration de données entre différentes solutions de stockage.  Il permet également un flux de travail et une collaboration plus rationalisés entre les membres de l’équipe, ce qui se traduit par un développement plus rapide et plus efficace des modèles d’apprentissage automatique.

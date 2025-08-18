@@ -1,0 +1,95 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/kafka-certification.html 
+keywords: certification, setup, configuration, benchmark 
+summary: Nous avons effectué la certification avec Confluent Platform avec Kafka pour le stockage hiérarchisé dans NetApp StorageGRID. 
+---
+= Vérification confluente
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Nous avons effectué une vérification avec Confluent Platform 6.2 Tiered Storage dans NetApp StorageGRID.  Les équipes NetApp et Confluent ont travaillé ensemble sur cette vérification et ont exécuté les cas de test requis pour la vérification.
+
+
+
+== Configuration de la plateforme Confluent
+
+Nous avons utilisé la configuration suivante pour la vérification.
+
+Pour la vérification, nous avons utilisé trois gardiens de zoo, cinq courtiers, cinq serveurs d'exécution de scripts de test, des serveurs d'outils nommés avec 256 Go de RAM et 16 processeurs.  Pour le stockage NetApp , nous avons utilisé StorageGRID avec un équilibreur de charge SG1000 avec quatre SGF6024.  Le stockage et les courtiers étaient connectés via des connexions 100 GbE.
+
+La figure suivante montre la topologie du réseau de configuration utilisée pour la vérification Confluent.
+
+image:confluent-kafka-007.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]
+
+Les serveurs d’outils agissent comme des clients d’application qui envoient des requêtes aux nœuds Confluent.
+
+
+
+== Configuration de stockage hiérarchisé Confluent
+
+La configuration du stockage hiérarchisé nécessite les paramètres suivants dans Kafka :
+
+....
+Confluent.tier.archiver.num.threads=16
+confluent.tier.fetcher.num.threads=32
+confluent.tier.enable=true
+confluent.tier.feature=true
+confluent.tier.backend=S3
+confluent.tier.s3.bucket=kafkasgdbucket1-2
+confluent.tier.s3.region=us-west-2
+confluent.tier.s3.cred.file.path=/data/kafka/.ssh/credentials
+confluent.tier.s3.aws.endpoint.override=http://kafkasgd.rtpppe.netapp.com:10444/
+confluent.tier.s3.force.path.style.access=true
+....
+Pour la vérification, nous avons utilisé StorageGRID avec le protocole HTTP, mais HTTPS fonctionne également.  La clé d'accès et la clé secrète sont stockées dans le nom de fichier fourni dans le `confluent.tier.s3.cred.file.path` paramètre.
+
+
+
+== Stockage d'objets NetApp - StorageGRID
+
+Nous avons configuré une configuration à site unique dans StorageGRID pour vérification.
+
+image:confluent-kafka-008.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]
+
+
+
+== Tests de vérification
+
+Nous avons réalisé les cinq cas de test suivants pour la vérification.  Ces tests sont exécutés sur le framework Trogdor.  Les deux premiers étaient des tests de fonctionnalité et les trois autres étaient des tests de performance.
+
+
+
+=== Test d'exactitude du magasin d'objets
+
+Ce test détermine si toutes les opérations de base (par exemple, obtenir/mettre/supprimer) sur l'API du magasin d'objets fonctionnent bien en fonction des besoins du stockage hiérarchisé.  Il s’agit d’un test de base que chaque service de magasin d’objets doit s’attendre à réussir avant les tests suivants.  Il s’agit d’un test assertif qui réussit ou échoue.
+
+
+
+=== Test d'exactitude des fonctionnalités de hiérarchisation
+
+Ce test détermine si la fonctionnalité de stockage hiérarchisé de bout en bout fonctionne bien avec un test assertif qui réussit ou échoue.  Le test crée une rubrique de test qui, par défaut, est configurée avec la hiérarchisation activée et une taille de hotset fortement réduite.  Il produit un flux d'événements vers la rubrique de test nouvellement créée, il attend que les courtiers archivent les segments dans le magasin d'objets, puis il consomme le flux d'événements et valide que le flux consommé correspond au flux produit.  Le nombre de messages produits dans le flux d'événements est configurable, ce qui permet à l'utilisateur de générer une charge de travail suffisamment importante en fonction des besoins des tests.  La taille réduite du hotset garantit que les récupérations du consommateur en dehors du segment actif sont servies uniquement à partir du magasin d'objets ; cela permet de tester l'exactitude du magasin d'objets pour les lectures.  Nous avons effectué ce test avec et sans injection de fautes dans le magasin d’objets.  Nous avons simulé une défaillance de nœud en arrêtant le service du gestionnaire de services dans l’un des nœuds de StorageGRID et en validant que la fonctionnalité de bout en bout fonctionne avec le stockage d’objets.
+
+
+
+=== Benchmark de récupération de niveaux
+
+Ce test a validé les performances de lecture du stockage d'objets hiérarchisé et a vérifié la plage de requêtes de lecture d'extraction sous une charge importante à partir des segments générés par le benchmark.  Dans cette référence, Confluent a développé des clients personnalisés pour répondre aux demandes de récupération de niveau.
+
+
+
+=== Benchmark de la charge de travail de production et de consommation
+
+Ce test a généré indirectement une charge de travail d'écriture sur le magasin d'objets via l'archivage des segments.  La charge de travail de lecture (segments lus) a été générée à partir du stockage d'objets lorsque les groupes de consommateurs ont récupéré les segments.  Cette charge de travail a été générée par le script de test.  Ce test a vérifié les performances de lecture et d'écriture sur le stockage d'objets dans des threads parallèles.  Nous avons testé avec et sans injection de pannes de magasin d'objets comme nous l'avons fait pour le test d'exactitude de la fonctionnalité de hiérarchisation.
+
+
+
+=== Benchmark de la charge de travail de rétention
+
+Ce test a vérifié les performances de suppression d'un magasin d'objets sous une charge de travail de rétention de sujets importante.  La charge de travail de rétention a été générée à l’aide d’un script de test qui produit de nombreux messages en parallèle avec une rubrique de test.  Le sujet de test consistait à configurer un paramètre de rétention agressif basé sur la taille et le temps, ce qui entraînait la purge continue du flux d'événements du magasin d'objets.  Les segments ont ensuite été archivés.  Cela a conduit à un grand nombre de suppressions dans le stockage d'objets par le courtier et à la collecte des performances des opérations de suppression du magasin d'objets.

@@ -1,0 +1,43 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/hdcs-sh-use-case-analytics.html 
+keywords: analytics platform, nfs, hadoop, jbod, monte carlo 
+summary: 'Dans ce scénario, la plate-forme d"analyse d"une grande banque de services financiers et d"investissement a été modernisée à l"aide de la solution de stockage NetApp NFS pour obtenir une amélioration significative de l"analyse des risques d"investissement et des produits dérivés pour son unité commerciale de gestion d"actifs et quantitative.' 
+---
+= Cas d'utilisation 5 : Accélérer les charges de travail analytiques
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dans ce scénario, la plate-forme d'analyse d'une grande banque de services financiers et d'investissement a été modernisée à l'aide de la solution de stockage NetApp NFS pour obtenir une amélioration significative de l'analyse des risques d'investissement et des produits dérivés pour son unité commerciale de gestion d'actifs et quantitative.
+
+
+
+== Scénario
+
+Dans l'environnement existant du client, l'infrastructure Hadoop utilisée pour la plate-forme d'analyse exploitait le stockage interne des serveurs Hadoop.  En raison de la nature propriétaire de l'environnement JBOD, de nombreux clients internes de l'organisation n'ont pas pu profiter de leur modèle quantitatif Monte Carlo, une simulation qui repose sur des échantillons récurrents de données en temps réel.  La capacité sous-optimale à comprendre les effets de l’incertitude sur les mouvements du marché était défavorable à l’unité commerciale de gestion quantitative des actifs.
+
+
+
+== Exigences et défis
+
+L'unité commerciale quantitative de la banque souhaitait une méthode de prévision efficace pour obtenir des prévisions précises et opportunes.  Pour ce faire, l’équipe a reconnu la nécessité de moderniser l’infrastructure, de réduire le temps d’attente des E/S existantes et d’améliorer les performances des applications analytiques telles que Hadoop et Spark pour simuler efficacement les modèles d’investissement, mesurer les gains potentiels et analyser les risques.
+
+
+
+== Solution
+
+Le client disposait de JBOD pour sa solution Spark existante.  NetApp ONTAP, NetApp StorageGRID et MinIO Gateway vers NFS ont ensuite été exploités pour réduire le temps d'attente des E/S pour le groupe financier quantitatif de la banque qui exécute des simulations et des analyses sur des modèles d'investissement qui évaluent les gains et les risques potentiels.  Cette image montre la solution Spark avec le stockage NetApp .
+
+image:hdcs-sh-013.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]
+
+Comme le montre la figure ci-dessus, les systèmes AFF A800, A700 et StorageGRID ont été déployés pour accéder aux fichiers Parquet via les protocoles NFS et S3 dans un cluster Hadoop à six nœuds avec Spark et les services de métadonnées YARN et Hive pour les opérations d'analyse de données.
+
+Une solution de stockage à connexion directe (DAS) dans l'ancien environnement du client présentait l'inconvénient de permettre une mise à l'échelle indépendante du calcul et du stockage.  Grâce à la solution NetApp ONTAP pour Spark, l'unité commerciale d'analyse financière de la banque a pu découpler le stockage du calcul et apporter de manière transparente des ressources d'infrastructure plus efficacement selon les besoins.
+
+En utilisant ONTAP avec NFS, les processeurs du serveur de calcul ont été presque entièrement utilisés pour les tâches Spark SQL et le temps d'attente des E/S a été réduit de près de 70 %, offrant ainsi une meilleure puissance de calcul et une amélioration des performances des charges de travail Spark.  Par la suite, l’augmentation de l’utilisation du processeur a également permis au client d’exploiter les GPU, tels que GPUDirect, pour une modernisation supplémentaire de la plate-forme.  De plus, StorageGRID fournit une option de stockage à faible coût pour les charges de travail Spark et MinIO Gateway fournit un accès sécurisé aux données NFS via le protocole S3.  Pour les données dans le cloud, NetApp recommande Cloud Volumes ONTAP, Azure NetApp Files et Google Cloud NetApp Volumes.

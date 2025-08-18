@@ -1,0 +1,37 @@
+---
+section: ai-infrastructures
+title: Infrastructures convergées de l'IA
+url: "/ai-infrastructures/index.html"
+entries:
+- title: NetApp AIPod avec systèmes NVIDIA DGX
+  pdf-filename: NVA-1173 NetApp AIPod avec systèmes NVIDIA DGX
+  entries:
+  - title: Introduction
+    url: "/infra/ai-aipod-nv-intro.html"
+  - title: Composants matériels
+    url: "/infra/ai-aipod-nv-hw.html"
+  - title: Composants logiciels
+    url: "/infra/ai-aipod-nv-sw.html"
+  - title: Architecture
+    url: "/infra/ai-aipod-nv-architecture.html"
+  - title: Exemple de détails de déploiement
+    url: "/infra/ai-aipod-nv-deploy.html"
+  - title: Guide de validation et de dimensionnement
+    url: "/infra/ai-aipod-nv-validation.html"
+  - title: Conclusion et informations complémentaires
+    url: "/infra/ai-aipod-nv-conclusion.html"
+- title: NetApp AIPod avec Lenovo pour NVIDIA OVX
+  pdf-filename: 'NVA-1172-DESIGN : NetApp AIPod avec Lenovo pour NVIDIA OVX'
+  url: "/infra/ai-aipod-lenovo-nva1172.html"
+- title: NVIDIA DGX SuperPOD avec série EF
+  pdf-filename: NVIDIA DGX SuperPOD avec NetApp EF-Series
+  url: "/infra/ai-eseries-superpod.html"
+- title: BeeGFS sur NetApp avec stockage E-Series
+  pdf-filename: BeeGFS sur NetApp avec stockage E-Series
+  url: "/infra/ai-eseries-beegfs.html"
+- title: Déployer IBM Spectrum Scale avec le stockage E-Series
+  pdf-filename: Déployer IBM Spectrum Scale avec le stockage E-Series
+  url: "/infra/ai-eseries-spectrumscale.html"
+- title: ONTAP et Lenovo ThinkSystem pour l'IA
+  pdf-filename: NetApp ONTAP et Lenovo ThinkSystem SR670 pour l'IA
+  url: "/infra/ai-lenovo-train-intro.html"

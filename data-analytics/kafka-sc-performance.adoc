@@ -1,0 +1,34 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/kafka-sc-performance.html 
+keywords: data graphs, kafka throughput, s3 tiering traffic, aff a900, resource utilization 
+summary: 'Nous avons effectué des tests de stockage à plusieurs niveaux avec cinq ou huit nœuds de courtier pendant une charge de travail de production-consommation avec le contrôleur de stockage NetApp à une paire AFF A900 HA.  Selon nos tests, le temps d"exécution et les résultats de performance ont évolué avec le nombre de nœuds de courtier jusqu"à ce que l"utilisation des ressources AFF A900 atteigne cent pour cent.  La configuration du contrôleur de stockage ONTAP nécessitait au moins une paire HA.' 
+---
+= Tests de performance avec générateur de charge de travail de production-consommation
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Nous avons effectué des tests de stockage à plusieurs niveaux avec cinq ou huit nœuds de courtier pendant une charge de travail de production-consommation avec le contrôleur de stockage NetApp à une paire AFF A900 HA.  Selon nos tests, le temps d'exécution et les résultats de performance ont évolué avec le nombre de nœuds de courtier jusqu'à ce que l'utilisation des ressources AFF A900 atteigne cent pour cent.  La configuration du contrôleur de stockage ONTAP nécessitait au moins une paire HA.
+
+Les performances de l’opération de récupération S3 ont augmenté linéairement en fonction du nombre de nœuds de courtier Confluent.  Le contrôleur de stockage ONTAP prend en charge jusqu'à 12 paires HA dans un seul déploiement.
+
+Le graphique suivant montre le trafic de hiérarchisation S3 combiné avec cinq ou huit nœuds de courtier.  Nous avons maximisé les performances de la paire HA unique de AFF A900 .
+
+image:kafka-sc-009.png["Ce graphique de données montre le trafic de hiérarchisation S3 combiné avec cinq ou huit nœuds de courtier."]
+
+Le graphique suivant montre le débit de Kafka à environ 31,74 Gbit/s.
+
+image:kafka-sc-010.png["Ce graphique de données montre le débit de Kafka à environ 31,74 Gbit/s."]
+
+Nous avons également observé un débit similaire dans le contrôleur de stockage ONTAP `perfstat` rapport.
+
+....
+object_store_server:wle-mendocino-07-08:get_data:34080805907b/ s
+object_store_server:wle-mendocino-07-08:put_data:484236974b/ s
+....
