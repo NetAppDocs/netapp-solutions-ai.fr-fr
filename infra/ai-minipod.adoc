@@ -448,7 +448,7 @@ Pour le serveur d'applications :
 | 222HA-TN-OTO-37 | Hyper SuperServer SYS-222HA-TN /2U | 2 
 
 
-| P4X-GNR6972P-SRPL2-UCC | Processeur Intel Xeon 6972P 2 cœurs 128C 2 Go 504 Mo 500 W SGX512 | 2 
+| P4X-GNR6980P-SRPL2-UCC | Processeur Intel Xeon 6980P 2 cœurs 128C 2 Go 504 Mo 500 W SGX512 | 4 
 
 
 | BÉLIER | Mémoire RDIMM ECC MEM-DR564MC-ER64(x16) 64 Go DDR5-6400 2RX4 (16 Go) | 32 
@@ -470,7 +470,7 @@ Pour le serveur de contrôle :
 | 511R-M-OTO-17 | OPTIMISÉ 1U X13SCH-SYS, CSE-813MF2TS-R0RCNBP, PWS-602A-1R | 1 
 
 
-| P4X-GNR6972P-SRPL2-UCC | P4D-G7400-SRL66(x1) ADL Pentium G7400 | 1 
+|  | RPL-E 6369P IP 8C/16T 3,3G 24 Mo 95 W 1700 mAh | 1 
 
 
 | BÉLIER | MEM-DR516MB-EU48(x2)16 Go DDR5-4800 1Rx8 (16 Go) ECC UDIMM | 1 
