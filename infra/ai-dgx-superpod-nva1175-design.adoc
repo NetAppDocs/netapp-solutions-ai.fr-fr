@@ -1,0 +1,279 @@
+---
+sidebar: sidebar 
+permalink: infra/ai-dgx-superpod-nva1175-design.html 
+keywords: NetApp AI, AI, Artificial Intelligence, ML, Machine Learning, NVIDIA, NVIDIA AI Enterprise, NVIDIA SuperPOD, NVIDIA DGX 
+summary: NVIDIA DGX SuperPOD avec NetApp AFF A90 
+---
+= Systèmes de stockage NetApp AFF A90 avec NVIDIA DGX SuperPOD
+:hardbreaks:
+:allow-uri-read: 
+:firstname: == Design Guide
+:author: == Design Guide
+:authorinitials: =
+:authors: == Design Guide
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Les systèmes de stockage NVIDIA DGX SuperPOD™ avec NetApp AFF® A90 combinent les performances de calcul de classe mondiale des systèmes NVIDIA DGX avec les systèmes de stockage connectés au cloud NetApp pour permettre des flux de travail basés sur les données pour l'apprentissage automatique (ML), l'intelligence artificielle (IA) et le calcul technique haute performance (HPC).  Ce document décrit l'architecture de haut niveau de la solution DGX SuperPOD utilisant les systèmes de stockage NetApp AFF A90 avec une structure de stockage Ethernet.
+
+image:nvidialogo.png["Logo Nvidia"]
+
+David Arnette, NetApp
+
+
+
+== Résumé exécutif
+
+Grâce aux performances informatiques éprouvées de NVIDIA DGX SuperPOD combinées aux capacités de sécurité des données, de gouvernance des données et de multi-location de pointe de NetApp, les clients peuvent déployer l'infrastructure la plus efficace et la plus agile pour les charges de travail de nouvelle génération.  Ce document décrit l'architecture de haut niveau et les fonctionnalités clés qui aident les clients à accélérer la mise sur le marché et le retour sur investissement des initiatives d'IA/ML.
+
+
+
+== Résumé du programme
+
+NVIDIA DGX SuperPOD offre une solution de centre de données IA clé en main pour les organisations, offrant de manière transparente des outils informatiques, des outils logiciels, une expertise et une innovation continue de classe mondiale.  DGX SuperPOD fournit tout ce dont les clients ont besoin pour déployer des charges de travail AI/ML et HPC avec un temps de configuration minimal et une productivité maximale.  La figure 1 montre les composants de haut niveau du DGX SuperPOD.
+
+Figure 1) NVIDIA DGX SuperPOD avec systèmes de stockage NetApp AFF A90 .
+
+image:ai-superpod-a90-001.png["600 600"]
+
+DGX SuperPOD offre les avantages suivants :
+
+* Performances éprouvées pour les charges de travail IA/ML et HPC
+* Pile matérielle et logicielle intégrée, de la gestion et de la surveillance de l'infrastructure aux modèles et outils d'apprentissage en profondeur pré-construits.
+* Services dédiés allant de l'installation et de la gestion de l'infrastructure à la mise à l'échelle des charges de travail et à la rationalisation de l'IA de production
+
+
+
+
+== Présentation de la solution
+
+Alors que les organisations adoptent des initiatives d’intelligence artificielle (IA) et d’apprentissage automatique (ML), la demande de solutions d’infrastructure robustes, évolutives et efficaces n’a jamais été aussi grande.  Au cœur de ces initiatives se trouve le défi de gérer et de former des modèles d’IA de plus en plus complexes tout en garantissant la sécurité des données, l’accessibilité et l’optimisation des ressources.  L’évolution de l’IA agentique et les exigences sophistiquées en matière de formation de modèles ont créé des demandes sans précédent en matière d’infrastructures de calcul et de stockage.  Les organisations doivent désormais gérer des ensembles de données massifs, prendre en charge plusieurs charges de travail de formation simultanées et maintenir des environnements informatiques hautes performances tout en garantissant la protection des données et la conformité réglementaire.  Les solutions d’infrastructure traditionnelles ont souvent du mal à répondre à ces demandes, ce qui entraîne des inefficacités opérationnelles et des retards dans la rentabilisation des projets d’IA.  Cette solution offre les principaux avantages suivants :
+
+* *Évolutivité.*  Les systèmes de stockage NVIDIA DGX SuperPOD avec NetApp AFF A90 offrent une évolutivité inégalée grâce à son architecture modulaire et à ses capacités d'extension flexibles.  Les organisations peuvent faire évoluer de manière transparente leur infrastructure d’IA en ajoutant des nœuds de calcul DGX et des systèmes de stockage AFF A90 sans perturber les charges de travail existantes ni nécessiter de reconfigurations complexes.
+* *Gestion et accès aux données.*  Les systèmes de stockage NVIDIA DGX SuperPOD avec NetApp AFF A90 sont basés sur NetApp ONTAP qui excelle dans la gestion des données grâce à sa suite complète de fonctionnalités de niveau entreprise.  Grâce aux fonctionnalités d'instantané et de FlexClone d'ONTAP, les équipes peuvent créer instantanément des copies peu encombrantes d'ensembles de données et de bases de données vectorielles pour le développement et les tests parallèles.  Les technologies de réplication FlexCache et Snapmirror permettent des pipelines de données rationalisés, économes en espace et automatisés à partir de sources de données dans toute l'entreprise, et l'accès multiprotocole aux données à l'aide de protocoles NAS et d'objets permet de nouveaux flux de travail optimisés pour les tâches d'ingestion et d'ingénierie des données.
+* *Sécurité.*  Les systèmes de stockage NetApp AFF A90 offrent une sécurité de niveau entreprise grâce à plusieurs couches de protection.  Au niveau de l’infrastructure, la solution met en œuvre des mécanismes de contrôle d’accès robustes, notamment le contrôle d’accès basé sur les rôles (RBAC), l’authentification multifacteur et des capacités de journalisation d’audit détaillées.  Le cadre de cryptage complet de la plateforme protège les données au repos et en transit, en utilisant des protocoles et des algorithmes standard de l'industrie pour protéger la propriété intellectuelle et maintenir la conformité aux exigences réglementaires.  Les outils de surveillance de sécurité intégrés offrent une visibilité en temps réel sur les menaces de sécurité potentielles, tandis que les mécanismes de réponse automatisés aident à atténuer les risques avant qu'ils ne puissent avoir un impact sur les opérations.
+
+
+
+
+=== Public cible
+
+Cette solution est destinée aux organisations disposant de charges de travail HPC et AI/ML qui nécessitent une intégration plus poussée dans de vastes parcs de données et des outils et processus d'infrastructure informatique traditionnels.
+
+Le public cible de la solution comprend les groupes suivants :
+
+* Les décideurs informatiques et métiers planifient l'infrastructure la plus efficace pour mettre en œuvre les initiatives d'IA/ML avec le délai de mise sur le marché et le retour sur investissement les plus rapides.
+* Scientifiques et ingénieurs de données qui souhaitent maximiser l'efficacité des parties critiques axées sur les données du flux de travail IA/ML.
+* Architectes et ingénieurs informatiques qui doivent fournir une infrastructure fiable et sécurisée permettant des flux de données automatisés et la conformité aux normes de gouvernance des données et des processus existantes.
+
+
+
+
+=== Technologie des solutions
+
+NVIDIA DGX SuperPOD comprend les serveurs, le réseau et le stockage nécessaires pour offrir des performances éprouvées pour les charges de travail d'IA exigeantes.  Les systèmes NVIDIA DGX™ H200 et NVIDIA DGX B200 offrent une puissance de calcul de classe mondiale, et les commutateurs réseau NVIDIA Quantum et Spectrum™ InfiniBand offrent une latence ultra-faible et des performances réseau de pointe.  Grâce à l'ajout des capacités de gestion des données et de performances de pointe du stockage NetApp ONTAP , les clients peuvent mettre en œuvre des initiatives d'IA/ML plus rapidement et avec moins de migration de données et de frais administratifs.  Les sections suivantes décrivent les composants de stockage du DGX SuperPOD avec les systèmes de stockage AFF A90 .
+
+
+
+==== Systèmes de stockage NetApp AFF A90 avec NetApp ONTAP
+
+Le logiciel de gestion de données NetApp AFF A90 optimisé par NetApp ONTAP offre une protection des données intégrée, des fonctionnalités anti-ransomware et les hautes performances, l'évolutivité et la résilience nécessaires pour prendre en charge les charges de travail commerciales les plus critiques. Il élimine les perturbations des opérations critiques, minimise le réglage des performances et protège vos données contre les attaques de ransomware.  Les systèmes NetApp AFF A90 offrent-
+
+* *Performance.* L' AFF A90 gère facilement les charges de travail de nouvelle génération telles que l'apprentissage en profondeur, l'IA et l'analyse à grande vitesse, ainsi que les bases de données d'entreprise traditionnelles telles qu'Oracle, SAP HANA, Microsoft SQL Server et les applications virtualisées. Avec NFS sur RDMA, pNFS et le trunking de session, les clients peuvent atteindre le niveau élevé de performances réseau requis pour les applications de nouvelle génération en utilisant l'infrastructure réseau du centre de données existante et les protocoles standard de l'industrie sans logiciel propriétaire.  La distribution granulaire des données permet de distribuer des fichiers individuels sur chaque nœud du cluster de stockage et, lorsqu'elle est combinée avec pNFS, offre un accès parallèle hautes performances aux ensembles de données contenus dans un seul fichier volumineux.
+* *Intelligence.*  Accélérez la transformation numérique avec un écosystème prêt pour l'IA, basé sur une intelligence basée sur les données, une infrastructure à l'épreuve du temps et des intégrations approfondies avec NVIDIA et l'écosystème MLOps.  Grâce aux fonctionnalités d'instantané et de FlexClone d'ONTAP, les équipes peuvent créer instantanément des copies peu encombrantes d'ensembles de données pour le développement et les tests parallèles.  Les technologies de réplication FlexCache et Snapmirror permettent des pipelines de données rationalisés, peu encombrants et automatisés à partir de sources de données dans toute l'entreprise.  L'accès multiprotocole aux données à l'aide de protocoles NAS et d'objets permet de nouveaux flux de travail optimisés pour les tâches d'ingestion et d'ingénierie des données.  Les points de contrôle des données et de la formation peuvent être hiérarchisés vers un stockage à moindre coût pour éviter de remplir le stockage principal.  Les clients peuvent gérer, protéger et mobiliser les données de manière transparente, au moindre coût, dans un cloud hybride avec un système d'exploitation de stockage unique et la suite de services de données la plus riche du secteur.
+* *Sécurité.*  Le NVIDIA DGX SuperPOD avec NetApp ONTAP Storage offre une sécurité de niveau entreprise grâce à plusieurs couches de protection.  Au niveau de l’infrastructure, la solution met en œuvre des mécanismes de contrôle d’accès robustes, notamment le contrôle d’accès basé sur les rôles (RBAC), l’authentification multifacteur et des capacités de journalisation d’audit détaillées.  Le cadre de cryptage complet de la plateforme protège les données au repos et en transit, en utilisant des protocoles et des algorithmes standard de l'industrie pour protéger la propriété intellectuelle et maintenir la conformité aux exigences réglementaires.  Les outils de surveillance de sécurité intégrés offrent une visibilité en temps réel sur les menaces de sécurité potentielles, tandis que les mécanismes de réponse automatisés aident à atténuer les risques avant qu'ils ne puissent avoir un impact sur les opérations.  NetApp ONTAP est le seul stockage d'entreprise renforcé validé pour stocker des données top secrètes.
+* *Multi-location*.  NetApp ONTAP offre la plus large gamme de fonctionnalités pour permettre une utilisation multi-locataire sécurisée des ressources de stockage.  Les machines virtuelles de stockage offrent une délégation administrative basée sur le locataire avec des contrôles RBAC. Des contrôles QoS complets garantissent les performances des charges de travail critiques tout en permettant une utilisation maximale, et des fonctionnalités de sécurité telles que les clés gérées par le locataire pour le chiffrement au niveau du volume garantissent la sécurité des données sur les supports de stockage partagés.
+* *Fiabilité.*  NetApp élimine les perturbations des opérations critiques grâce à des fonctionnalités avancées de fiabilité, de disponibilité, de facilité d'entretien et de gestion (RASM), offrant ainsi la disponibilité la plus élevée disponible.  Pour plus d'informations, consultez le https://www.netapp.com/media/67355-wp-7354.pdf["+++ Livre blanc ONTAP RASS+++"] .  De plus, la santé du système peut être optimisée grâce à des analyses prédictives basées sur l’IA fournies par Active IQ et Data Infrastructure Insights.
+
+
+
+
+==== Systèmes NVIDIA DGX B200
+
+NVIDIA DGX™ B200 est une plateforme d'IA unifiée pour les pipelines de développement et de déploiement pour les entreprises de toute taille à n'importe quelle étape de leur parcours d'IA.  Équipé de huit GPU NVIDIA Blackwell interconnectés avec la cinquième génération https://www.nvidia.com/en-us/data-center/nvlink/?ncid=em-even-646649-noa-na-all-l2["+++NVIDIA+++"] https://www.nvidia.com/en-us/data-center/nvlink/?ncid=em-even-646649-noa-na-all-l2["+++NVLink(™)+++"] Le DGX B200 offre des performances de pointe, offrant 3 fois les performances de formation et 15 fois les performances d'inférence des générations précédentes.  Tirer parti de la https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/["+++ NVIDIA Blackwell+++"] https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/["+++architecture+++"] DGX B200 peut gérer diverses charges de travail, notamment des modèles linguistiques volumineux, des systèmes de recommandation et des chatbots, ce qui le rend idéal pour les entreprises cherchant à accélérer leur transformation en IA.
+
+
+
+==== Commutateurs Ethernet NVIDIA Spectrum SN5600
+
+Le commutateur intelligent SN5600 à feuille, à colonne vertébrale et à super colonne vertébrale offre 64 ports de 800 GbE dans un format 2U dense.  Le SN5600 permet à la fois des conceptions standard de type feuille/colonne vertébrale avec des commutateurs de type top-of-rack (ToR) ainsi que des topologies de type end-of-row (EoR).  Le SN5600 offre une connectivité diversifiée dans des combinaisons de 1 à 800 GbE et bénéficie d'un débit total de pointe de 51,2 Tb/s.
+
+
+
+==== Logiciel NVIDIA Base Command
+
+NVIDIA Base Command™ alimente la plateforme NVIDIA DGX, permettant aux organisations de tirer parti du meilleur de l'innovation NVIDIA AI.  Grâce à lui, chaque organisation peut exploiter tout le potentiel de son infrastructure DGX avec une plate-forme éprouvée qui comprend la gestion des flux de travail de l'IA, la gestion des clusters de niveau entreprise, des bibliothèques qui accélèrent l'infrastructure de calcul, de stockage et de réseau, ainsi que des logiciels système optimisés pour l'exécution des charges de travail de l'IA.  La figure 2 montre la pile logicielle NVIDIA Base Command.
+
+Figure 2) Logiciel de commande de base NVIDIA .
+
+image:ai-superpod-a90-002.png["600 600"]
+
+
+
+===== Gestionnaire de commandes de base NVIDIA
+
+NVIDIA Base Command Manager offre un déploiement rapide et une gestion de bout en bout pour les clusters hétérogènes d'IA et de calcul haute performance (HPC) en périphérie, dans le centre de données et dans les environnements multicloud et hybrides.  Il automatise le provisionnement et l'administration de clusters dont la taille varie de quelques nœuds à des centaines de milliers, prend en charge les systèmes accélérés par GPU NVIDIA et d'autres systèmes, et permet l'orchestration avec Kubernetes.  L'intégration des systèmes de stockage NetApp AFF A90 avec DGX SuperPOD nécessite une configuration minimale de Base Command Manager pour le réglage du système et les paramètres de montage pour des performances optimales, mais aucun logiciel supplémentaire n'est requis pour fournir un accès multi-chemins hautement disponible entre les systèmes DGX et le système de stockage AFF A90 .
+
+
+
+=== Résumé du cas d'utilisation
+
+NVIDIA DGX SuperPOD est conçu pour répondre aux exigences de performances des charges de travail les plus exigeantes à la plus grande échelle.
+
+Cette solution s'applique aux cas d'utilisation suivants :
+
+* Apprentissage automatique à grande échelle à l’aide d’outils d’analyse traditionnels.
+* Formation de modèles d'intelligence artificielle pour les grands modèles linguistiques, la vision par ordinateur/la classification d'images, la détection de fraude et d'innombrables autres cas d'utilisation.
+* Calcul haute performance tel que l'analyse sismique, la dynamique des fluides numérique et la visualisation à grande échelle.
+
+
+
+
+== Architecture de la solution
+
+DGX SuperPOD est basé sur le concept d'une unité évolutive (SU) qui comprend 32 systèmes DGX B200 et tous les autres composants nécessaires pour fournir la connectivité requise et éliminer tout goulot d'étranglement des performances dans l'infrastructure.  Les clients peuvent commencer avec un ou plusieurs SU et ajouter des SU supplémentaires selon leurs besoins pour répondre à leurs besoins.  Ce document décrit la configuration de stockage pour un seul SU et le tableau 1 montre les composants nécessaires pour des configurations plus grandes.
+
+L'architecture de référence DGX SuperPOD comprend plusieurs réseaux et le système de stockage AFF A90 est connecté à plusieurs d'entre eux.  Pour plus d'informations sur la mise en réseau DGX SuperPOD, veuillez vous référer auhttps://docs.nvidia.com/dgx-superpod/reference-architecture-scalable-infrastructure-b200/latest/abstract.html["+++ Architecture de référence NVIDIA DGX SuperPOD +++"] .
+
+Pour cette solution, la structure de stockage haute performance est un réseau Ethernet basé sur le commutateur NVIDIA Spectrum SN5600 avec 64 ports 800 Go dans une configuration Spine/Leaf.  Le réseau In-band fournit un accès utilisateur à d'autres fonctions telles que les répertoires personnels et les partages de fichiers généraux et est également basé sur les commutateurs SN5600, et le réseau hors bande (OOB) est destiné à l'accès administrateur système au niveau du périphérique à l'aide des commutateurs SN2201.
+
+La structure de stockage est une architecture feuille-épine où les systèmes DGX se connectent à une paire de commutateurs feuille et le système de stockage se connecte à une autre paire de commutateurs feuille.  Plusieurs ports 800 Gb sont utilisés pour connecter chaque commutateur feuille à une paire de commutateurs spine, créant ainsi plusieurs chemins à large bande passante à travers le réseau pour des performances globales et une redondance.  Pour la connectivité au système de stockage AFF A90 , chaque port 800 Go est divisé en quatre ports 200 Go à l'aide des câbles de dérivation en cuivre ou optiques appropriés.  Pour prendre en charge les clients montant le système de stockage avec NFS sur RDMA, la structure de stockage est configurée pour RDMA sur Ethernet convergé (RoCE), ce qui garantit une livraison de paquets sans perte sur le réseau.  La figure 3 montre la topologie du réseau de stockage de cette solution.
+
+Figure 3) Topologie de la structure de stockage.
+
+image:ai-superpod-a90-003.png["600 600"]
+
+Le système de stockage NetApp AFF A90 est un châssis 4RU contenant 2 contrôleurs qui fonctionnent comme partenaires haute disponibilité (paire HA) l'un pour l'autre, avec jusqu'à 48 disques SSD au format 2,5 pouces.  Chaque contrôleur est connecté aux deux commutateurs de stockage SN5600 à l'aide de quatre connexions Ethernet 200 Gb, et il existe 2 interfaces IP logiques sur chaque port physique.  Le cluster de stockage prend en charge NFS v4.1 avec Parallel NFS (pNFS) qui permet aux clients d'établir des connexions directement à chaque contrôleur du cluster.  De plus, la jonction de session combine les performances de plusieurs interfaces physiques en une seule session, permettant même aux charges de travail à thread unique d'accéder à plus de bande passante réseau que ce qui est possible avec la liaison Ethernet traditionnelle. La combinaison de toutes ces fonctionnalités avec RDMA permet au système de stockage AFF A90 de fournir une faible latence et un débit élevé qui évolue de manière linéaire pour les charges de travail exploitant NVIDIA GPUDirect Storage™.
+
+Pour la connectivité au réseau en bande, les contrôleurs AFF A90 disposent d'interfaces Ethernet 200 Gb supplémentaires configurées dans un groupe d'interfaces LACP fournissant des services NFS v3 et v4 généraux ainsi qu'un accès S3 aux systèmes de fichiers partagés si vous le souhaitez.  Tous les contrôleurs et commutateurs de cluster de stockage sont connectés au réseau OOB pour un accès administratif à distance.
+
+Pour permettre des performances et une évolutivité élevées, les contrôleurs de stockage forment un cluster de stockage qui permet de combiner l'ensemble des performances et de la capacité des nœuds du cluster dans un seul espace de noms appelé FlexGroup avec des données réparties sur les disques de chaque nœud du cluster.  Avec la nouvelle fonctionnalité de distribution de données granulaires publiée dans ONTAP 9.16.1, les fichiers individuels sont séparés et distribués dans le FlexGroup pour permettre les niveaux de performances les plus élevés pour les charges de travail à fichier unique.  La figure 4 ci-dessous montre comment pNFS et la jonction de session NFS fonctionnent avec FlexGroups et GDD pour permettre un accès parallèle aux fichiers volumineux en exploitant chaque interface réseau et chaque disque du système de stockage.
+
+Figure 4) pNFS, jonction de session, FlexGroups et GDD.
+
+image:ai-superpod-a90-004.png["600 600"]
+
+Cette solution exploite plusieurs machines virtuelles de stockage (SVM) pour héberger des volumes pour un accès au stockage hautes performances ainsi que des répertoires personnels des utilisateurs et d'autres artefacts de cluster sur une SVM de gestion.  Chaque SVM est configuré avec des interfaces réseau et des volumes FlexGroup et une politique QoS est mise en œuvre pour garantir les performances du SVM de données.  Pour plus d'informations sur les FlexGroups, les machines virtuelles de stockage et les fonctionnalités ONTAP QoS, veuillez vous référer au https://docs.netapp.com/us-en/ontap/index.html["+++ Documentation ONTAP +++"] .
+
+
+
+=== Configuration matérielle requise pour la solution
+
+Le tableau 1 répertorie les composants matériels de stockage nécessaires pour implémenter une, deux, quatre ou huit unités évolutives.  Pour connaître les exigences matérielles détaillées pour les serveurs et la mise en réseau, veuillez consulter le https://docs.nvidia.com/dgx-superpod/reference-architecture-scalable-infrastructure-b200/latest/abstract.html["+++ Architecture de référence NVIDIA DGX SuperPOD +++"] .
+
+Tableau 1) Configuration matérielle requise.
+
+[cols="14%,12%,19%,18%,16%,10%,11%"]
+|===
+| Taille de la SU | Systèmes AFF A90 | Commutateurs d'interconnexion de cluster de stockage | Capacité utilisable (typique avec un SSD de 3,8 To) | Capacité maximale utilisable (avec SSD NVMe de 15,3 To) | RU (typique) | Puissance (typique) 
+
+
+| 1 | 4 | 2 | 555 To | 13.75PB | 18 | 7 300 watts 
+
+
+| 2 | 8 | 2 | 1PB | 27.5PB | 34 | 14 600 watts 
+
+
+| 4 | 16 | 2 | 2PB | 55PB | 66 | 29 200 watts 
+
+
+| 8 | 32 | 4 | 4PB | 110PB | 102 | 58 400 watts 
+|===
+[quote]
+____
+*REMARQUE :* NetApp recommande un minimum de 24 disques par paire AFF A90 HA pour des performances maximales.  Des disques internes supplémentaires, des disques de plus grande capacité et des étagères de disques d'extension externes permettent une capacité globale beaucoup plus élevée sans impact sur les performances du système.
+
+____
+
+
+
+=== Configuration logicielle requise
+
+Le tableau 2 répertorie les composants logiciels et les versions nécessaires pour intégrer le système de stockage AFF A90 avec DGX SuperPOD.  DGX SuperPOD implique également d'autres composants logiciels qui ne sont pas répertoriés ici.  Veuillez vous référer à lahttps://docs.nvidia.com/dgx-superpod/release-notes/latest/10-24-11.html["+++Notes de version de DGX SuperPOD+++"] pour plus de détails.
+
+Tableau 2) Configuration logicielle requise.
+
+[cols="50%,50%"]
+|===
+| Logiciels | Version 
+
+
+| NetApp ONTAP | 9.16.1 
+
+
+| Gestionnaire de commandes de base NVIDIA | 10.24.11 
+
+
+| Système d'exploitation NVIDIA DGX | 6.3.1 
+
+
+| Pilote NVIDIA OFED | MLNX_OFED_LINUX-23.10.3.2.0 LTS 
+
+
+| Système d'exploitation NVIDIA Cumulus | 5,10 
+|===
+
+
+== Vérification de la solution
+
+Cette solution de stockage a été validée en plusieurs étapes par NetApp et NVIDIA pour garantir que les performances et l'évolutivité répondent aux exigences de NVIDIA DGX SuperPOD.  La configuration a été validée à l’aide d’une combinaison de charges de travail synthétiques et de charges de travail ML/DL réelles pour vérifier à la fois les performances maximales et l’interopérabilité des applications.  Le tableau 3 ci-dessous fournit des exemples de charges de travail typiques et de leurs exigences en matière de données qui sont couramment observées dans les déploiements DGX SuperPOD.
+
+Tableau 3) Exemples de charge de travail SuperPOD.
+
+[cols="17%,33%,50%"]
+|===
+| Niveau | Description du travail | Taille de l'ensemble de données 
+
+
+| Standard | Plusieurs tâches de formation LLM ou de réglage fin simultanées et points de contrôle périodiques, où les exigences de calcul dominent considérablement les exigences d'E/S de données. | La plupart des ensembles de données peuvent tenir dans le cache mémoire des systèmes de calcul locaux pendant la formation.  Les ensembles de données sont à modalité unique et les modèles comportent des millions de paramètres. 
+
+
+| Amélioré | Plusieurs tâches de formation multimodales simultanées et points de contrôle périodiques, où les performances d'E/S de données sont un facteur important pour le temps de formation de bout en bout. | Les ensembles de données sont trop volumineux pour tenir dans le cache mémoire des systèmes de calcul locaux, ce qui nécessite davantage d'E/S pendant la formation, mais pas suffisamment pour éviter le besoin d'E/S fréquentes.  Les ensembles de données ont plusieurs modalités et les modèles ont des milliards (ou plus) de paramètres. 
+|===
+Le tableau 4 présente les directives de performances pour les exemples de charges de travail ci-dessus.  Ces valeurs représentent le débit de stockage qui peut être généré par ces charges de travail dans des conditions idéales.
+
+Tableau 4) Directives de performance du DGX SuperPOD.
+
+[cols="42%,29%,29%"]
+|===
+| Caractéristiques de performance | Standard (GBps) | Amélioré (GBps) 
+
+
+| Lecture d'un seul système d'agrégation SU | 40 | 125 
+
+
+| Écriture système agrégée SU unique | 20 | 62 
+
+
+| Lecture du système d'agrégation 4 SU | 160 | 500 
+
+
+| Écriture système agrégée 4 SU | 80 | 250 
+|===
+
+
+== Conclusion
+
+Le NVIDIA DGX SuperPOD avec les systèmes de stockage NetApp * AFF A90 * représente une avancée significative dans les solutions d'infrastructure d'IA.  En répondant aux principaux défis liés à la sécurité, à la gestion des données, à l’utilisation des ressources et à l’évolutivité, il permet aux organisations d’accélérer leurs initiatives d’IA tout en maintenant l’efficacité opérationnelle, la protection des données et la collaboration.  L'approche intégrée de la solution élimine les goulots d'étranglement courants dans les pipelines de développement de l'IA, permettant aux scientifiques et aux ingénieurs des données de se concentrer sur l'innovation plutôt que sur la gestion de l'infrastructure.
+
+
+
+== Où trouver des informations supplémentaires
+
+Pour en savoir plus sur les informations décrites dans ce document, consultez les documents et/ou sites Web suivants :
+
+* https://www.netapp.com/pdf.html?item=/media/125004-nva-1175-deploy-superpod-a90.pdf["Guide de déploiement des systèmes de stockage NVA-1175 NVIDIA DGX SuperPOD avec NetApp AFF A90"^]
+* https://docs.nvidia.com/dgx-superpod/reference-architecture-scalable-infrastructure-b200/latest/index.html["Architecture de référence NVIDIA DGX B200 SuperPOD"^]
+* https://docs.nvidia.com/dgx-superpod/reference-architecture/scalable-infrastructure-h200/latest/index.html["Architecture de référence NVIDIA DGX H200 SuperPOD"^]
+* https://docs.nvidia.com/base-command-manager/index.html#product-manuals["Logiciel NVIDIA BaseCommand"]
+* https://nvdam.widen.net/s/mmvbnpk8qk/networking-ethernet-switches-sn5000-datasheet-us["Commutateurs Ethernet NVIDIA Spectrum SN5600"]
+* https://docs.netapp.com/us-en/netapp-solutions/ai/index.html["+++ Documentation des solutions d'IA NetApp +++"]
+* https://docs.netapp.com/us-en/ontap/index.html["+++ Logiciel NetApp ONTAP +++"]
+* https://docs.netapp.com/us-en/ontap-systems/aff-aseries/index.html["+++ Installation et maintenance des systèmes de stockage AFF NetApp +++"]
+* https://docs.netapp.com/us-en/ontap/nfs-rdma/index.html["NFS sur RDMA"]
+* https://www.netapp.com/media/19761-tr-4063.pdf["+++Qu'est-ce que pNFS+++"](document plus ancien avec d'excellentes informations sur pNFS)
+

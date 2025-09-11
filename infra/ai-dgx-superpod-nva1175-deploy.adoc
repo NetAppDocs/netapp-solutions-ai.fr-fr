@@ -1,0 +1,765 @@
+---
+sidebar: sidebar 
+permalink: infra/ai-dgx-superpod-nva1175-deploy.html 
+keywords: NetApp AI, AI, Artificial Intelligence, ML, Machine Learning, NVIDIA, NVIDIA AI Enterprise, NVIDIA SuperPOD, NVIDIA DGX 
+summary: NVIDIA DGX SuperPOD avec NetApp AFF A90 
+---
+= Systèmes de stockage NetApp AFF A90 avec NVIDIA DGX SuperPOD
+:allow-uri-read: 
+
+
+
+
+== Déploiement de l'ANV
+
+[role="lead"]
+Les systèmes de stockage NVIDIA DGX SuperPOD avec NetApp AFF A90 combinent les performances de calcul de classe mondiale des systèmes NVIDIA DGX avec les systèmes de stockage connectés au cloud NetApp pour permettre des flux de travail basés sur les données pour l'apprentissage automatique (ML), l'intelligence artificielle (IA) et le calcul technique haute performance (HPC).  Ce document décrit les détails de configuration et de déploiement pour l'intégration des systèmes de stockage AFF A90 dans l'architecture DGX SuperPOD.
+
+image:nvidialogo.png["Logo Nvidia"]
+
+David Arnette, NetApp
+
+
+
+== Résumé du programme
+
+NVIDIA DGX SuperPOD™ offre une solution de centre de données IA clé en main pour les organisations, offrant de manière transparente des capacités informatiques, des outils logiciels, une expertise et une innovation continue de classe mondiale.  DGX SuperPOD fournit tout ce dont les clients ont besoin pour déployer des charges de travail AI/ML et HPC avec un temps de configuration minimal et une productivité maximale.  La figure 1 montre les composants de haut niveau du DGX SuperPOD.
+
+Figure 1) NVIDIA DGX SuperPOD avec systèmes de stockage NetApp AFF A90 .
+
+image:ai-superpod-a90-005.png["600 600"]
+
+DGX SuperPOD offre les avantages suivants :
+
+* Performances éprouvées pour les charges de travail IA/ML et HPC
+* Pile matérielle et logicielle intégrée, de la gestion et de la surveillance de l'infrastructure aux modèles et outils d'apprentissage en profondeur pré-construits.
+* Services dédiés allant de l'installation et de la gestion de l'infrastructure à la mise à l'échelle des charges de travail et à la rationalisation de l'IA de production.
+
+
+
+
+== Présentation de la solution
+
+Alors que les organisations adoptent des initiatives d’intelligence artificielle (IA) et d’apprentissage automatique (ML), la demande de solutions d’infrastructure robustes, évolutives et efficaces n’a jamais été aussi grande.  Au cœur de ces initiatives se trouve le défi de gérer et de former des modèles d’IA de plus en plus complexes tout en garantissant la sécurité des données, l’accessibilité et l’optimisation des ressources. 
+
+Cette solution offre les principaux avantages suivants :
+
+* *Évolutivité*
+* *Gestion et accès aux données*
+* *Sécurité*
+
+
+
+
+=== Technologie des solutions
+
+NVIDIA DGX SuperPOD comprend les serveurs, le réseau et le stockage nécessaires pour offrir des performances éprouvées pour les charges de travail d'IA exigeantes.  Les systèmes NVIDIA DGX™ H200 et B200 offrent une puissance de calcul de classe mondiale, et les commutateurs réseau Ethernet NVIDIA Quantum InfiniBand et Spectrum™ offrent une latence ultra-faible et des performances réseau de pointe.  Grâce à l'ajout des capacités de gestion des données et de performances de pointe du stockage NetApp ONTAP , les clients peuvent mettre en œuvre des initiatives d'IA/ML plus rapidement et avec moins de migration de données et de frais administratifs.  Pour plus d'informations sur les composants spécifiques de cette solution, veuillez vous référer auhttps://www.netapp.com/pdf.html?item=/media/125003-nva-1175-design-superpod-a90.pdf["GUIDE DE CONCEPTION NVA-1175"] et https://docs.nvidia.com/dgx-superpod/reference-architecture-scalable-infrastructure-b200/latest/index.html["+++ Architecture de référence NVIDIA DGX SuperPOD +++"] documentation.
+
+
+
+=== Résumé du cas d'utilisation
+
+NVIDIA DGX SuperPOD est conçu pour répondre aux exigences de performances et d'évolutivité des charges de travail les plus exigeantes.
+
+Cette solution s'applique aux cas d'utilisation suivants :
+
+* Apprentissage automatique à grande échelle à l’aide d’outils d’analyse traditionnels.
+* Formation de modèles d'intelligence artificielle pour les grands modèles linguistiques, la vision par ordinateur/la classification d'images, la détection de fraude et d'innombrables autres cas d'utilisation.
+* Calcul haute performance tel que l'analyse sismique, la dynamique des fluides numérique et la visualisation à grande échelle.
+
+
+
+
+== Exigences technologiques
+
+DGX SuperPOD est basé sur le concept d'une unité évolutive (SU) qui comprend tous les composants nécessaires pour fournir la connectivité et les performances requises et éliminer tous les goulots d'étranglement dans l'infrastructure.  Les clients peuvent commencer avec un ou plusieurs SU et ajouter des SU supplémentaires selon leurs besoins pour répondre à leurs besoins.  Pour plus d'informations, veuillez vous référer au https://docs.nvidia.com/dgx-superpod/reference-architecture-scalable-infrastructure-b200/latest/index.html["+++ Architecture de référence NVIDIA DGX SuperPOD +++"] .  Ce document décrit les composants de stockage et la configuration d'un seul SU.
+
+
+
+=== Configuration matérielle requise
+
+Le tableau 1 répertorie les composants matériels requis pour implémenter les composants de stockage pour 1SU.  Veuillez vous référer à l'annexe A pour les pièces et quantités spécifiques pour 1 à 4 unités évolutives.
+
+Tableau 1) Configuration matérielle requise.
+
+[cols="50%,50%"]
+|===
+| Matériel | Quantité 
+
+
+| Système de stockage NetApp AFF A90 | 4 
+
+
+| Commutateur d'interconnexion de cluster de stockage NetApp | 2 
+
+
+| Câbles répartiteurs NVIDIA 800 Go -> 4x 200 Go | 12 
+|===
+
+
+=== Configuration logicielle requise
+
+Le tableau 2 répertorie les composants logiciels et les versions minimales requis pour intégrer le système de stockage AFF A90 avec DGX SuperPOD.  DGX SuperPOD implique également d'autres composants logiciels qui ne sont pas répertoriés ici.  Veuillez vous référer à lahttps://docs.nvidia.com/dgx-superpod/release-notes/latest/10-24-11.html["+++Notes de version de DGX SuperPOD+++"] pour plus de détails.
+
+Tableau 2) Configuration logicielle requise.
+
+[cols="50%,50%"]
+|===
+| Logiciels | Version 
+
+
+| NetApp ONTAP | 9.16.1 ou supérieur 
+
+
+| Gestionnaire de commandes de base NVIDIA | 10.24.11 ou supérieur 
+
+
+| Système d'exploitation NVIDIA DGX | 6.3.1 ou supérieur 
+
+
+| Pilote NVIDIA OFED | MLNX_OFED_LINUX-23.10.3.2.0 LTS ou supérieur 
+
+
+| Système d'exploitation NVIDIA Cumulus | 5,10 ou supérieur 
+|===
+
+
+== Procédures de déploiement
+
+L'intégration du stockage NetApp ONTAP avec DGX SuperPOD implique les tâches suivantes :
+
+* Configuration réseau pour les systèmes de stockage NetApp AFF A90 avec RoCE
+* Installation et configuration du système de stockage
+* Configuration du client DGX avec NVIDIA Base Command™ Manager
+
+
+
+
+=== Installation et configuration du système de stockage
+
+
+
+==== Préparation du site et installation de base
+
+La préparation du site et l'installation de base du cluster de stockage AFF A90 seront effectuées par NetApp Professional Services pour tous les déploiements DGX SuperPOD dans le cadre du service de déploiement standard.  NetApp PS confirmera que les conditions du site sont appropriées pour l'installation et installera le matériel dans les racks désignés.  Ils connecteront également les connexions réseau OOB et termineront la configuration de base du cluster à l'aide des informations réseau fournies par le client.  Annexe A – Nomenclature et élévations des racks comprend les élévations de racks standard à titre de référence.  Pour plus d'informations sur l'installation de l'A90, veuillez vous référer au https://docs.netapp.com/us-en/ontap-systems/a70-90/install-overview.html["+++ Documentation d'installation du matériel AFF A90 +++"] .
+
+Une fois le déploiement standard terminé, NetApp PS effectuera la configuration avancée de la solution de stockage à l'aide des procédures ci-dessous, y compris l'intégration avec Base Command Manager pour la connectivité et le réglage du client.
+
+
+
+==== Câblage du système de stockage à la structure de stockage DGX SuperPOD
+
+Le système de stockage AFF A90 est connecté aux commutateurs de stockage à l'aide de quatre ports Ethernet 200 Gb par contrôleur, avec deux connexions à chaque commutateur.  Les ports de commutation 800 Gb sur les commutateurs NVIDIA Spectrum SN5600 sont divisés en 4 ports 200 Gb utilisant les configurations DAC ou de répartiteur optique appropriées répertoriées dans l'annexe A. Les ports individuels de chaque port de commutation sont répartis sur le contrôleur de stockage pour éliminer les points de défaillance uniques.  La figure 2 ci-dessous montre le câblage des connexions de la structure de stockage :
+
+Figure 2) Câblage du réseau de stockage.
+
+image:ai-superpod-a90-006.png["600 600"]
+
+
+
+==== Câblage du système de stockage au réseau en bande DGX SuperPOD
+
+NetApp ONTAP inclut des fonctionnalités multi-locataires de pointe qui lui permettent de fonctionner à la fois comme système de stockage hautes performances dans l'architecture DGX SuperPOD et de prendre en charge les répertoires personnels, les partages de fichiers de groupe et les artefacts de cluster Base Command Manager.  Pour une utilisation sur le réseau en bande, chaque contrôleur AFF A90 est connecté aux commutateurs réseau en bande avec une connexion Ethernet 200 Gb par contrôleur, et les ports sont configurés dans une configuration LACP MLAG.  La figure 3 ci-dessous montre le câblage du système de stockage vers les réseaux en bande et OOB.
+
+Figure 3) Câblage réseau en bande et hors bande.
+
+image:ai-superpod-a90-007.png["600 600"]
+
+
+
+==== Configurer ONTAP pour DGX SuperPOD
+
+Cette solution exploite plusieurs machines virtuelles de stockage (SVM) pour héberger des volumes pour un accès au stockage hautes performances ainsi que des répertoires personnels des utilisateurs et d'autres artefacts de cluster sur une SVM de gestion.  Chaque SVM est configuré avec des interfaces réseau sur les réseaux de stockage ou en bande et des volumes FlexGroup pour le stockage des données.  Pour garantir les performances du Data SVM, une politique de qualité de service de stockage est mise en œuvre.  Pour plus d'informations sur les FlexGroups, les machines virtuelles de stockage et les fonctionnalités ONTAP QoS, veuillez vous référer au https://docs.netapp.com/us-en/ontap/index.html["+++ Documentation ONTAP +++"] .
+
+
+
+===== Configurer le stockage de base
+
+
+
+====== Configurer un seul agrégat sur chaque contrôleur
+
+[source, cli]
+----
+aggr create -node <node> -aggregate <node>_data01 -diskcount <47> -maxraidsize 24
+----
+Répétez les étapes ci-dessus pour chaque nœud du cluster.
+
+
+
+====== Configurer ifgrps sur chaque contrôleur pour le réseau en bande
+
+[source, cli]
+----
+net port ifgrp create -node <node> -ifgrp a1a -mode multimode
+-distr-function port
+
+net port ifgrp add-port -node <node> -ifgrp a1a -ports
+<node>:e2a,<node>:e2b
+----
+Répétez les étapes ci-dessus pour chaque nœud du cluster.
+
+
+
+====== Configurer les ports physiques pour RoCE
+
+L'activation de NFS sur RDMA nécessite une configuration pour garantir que le trafic réseau est correctement étiqueté au niveau du client et du serveur, puis géré de manière appropriée par le réseau à l'aide de RDMA sur Ethernet convergé (RoCE).  Cela inclut la configuration du contrôle de flux prioritaire (PFC) et la configuration de la file d'attente CoS PFC à utiliser.  NetApp ONTAP configure également automatiquement le code DSCP 26 pour s'aligner sur la configuration QoS du réseau lorsque les commandes ci-dessous sont exécutées.
+
+[source, cli]
+----
+network port modify -node * -port e6* -flowcontrol-admin pfc
+-pfc-queues-admin 3
+
+network port modify -node * -port e11* -flowcontrol-admin pfc
+-pfc-queues-admin 3
+----
+
+
+====== Créer des domaines de diffusion
+
+[source, cli]
+----
+broadcast-domain create -broadcast-domain in-band -mtu 9000 -ports
+ntapa90_spod-01:a1a,ntapa90_spod-02:a1a,ntapa90_spod-03:a1a,ntapa90_spod-04:a1a,ntapa90_spod-05:a1a,
+ntapa90_spod-06:a1a,ntapa90_spod-07:a1a,ntapa90_spod-08:a1a
+
+broadcast-domain create -broadcast-domain vlan401 -mtu 9000 -ports
+ntapa90_spod-01:e6a,ntapa90_spod-01:e6b,ntapa90_spod-02:e6a,ntapa90_spod-02:e6b,ntapa90_spod-03:e6a,ntapa90_spod-03:e6b,ntapa90_spod-04:e6a,ntapa90_spod-04:e6b,ntapa90_spod-05:e6a,ntapa90_spod-05:e6b,ntapa90_spod-06:e6a,ntapa90_spod-06:e6b,ntapa90_spod-07:e6a,ntapa90_spod-07:e6b,ntapa90_spod-08:e6a,ntapa90_spod-08:e6b
+
+broadcast-domain create -broadcast-domain vlan402 -mtu 9000 -ports
+ntapa90_spod-01:e11a,ntapa90_spod-01:e11b,ntapa90_spod-02:e11a,ntapa90_spod-02:e11b,ntapa90_spod-03:e11a,ntapa90_spod-03:e11b,ntapa90_spod-04:e11a,ntapa90_spod-04:e11b,ntapa90_spod-05:e11a,ntapa90_spod-05:e11b,ntapa90_spod-06:e11a,ntapa90_spod-06:e11b,ntapa90_spod-07:e11a,ntapa90_spod-07:e11b,ntapa90_spod-08:e11a,ntapa90_spod-08:e11b
+
+----
+
+
+===== Créer une SVM de gestion
+
+
+
+====== Créer et configurer la SVM de gestion
+
+[source, cli]
+----
+vserver create -vserver spod_mgmt
+
+vserver modify -vserver spod_mgmt -aggr-list
+ntapa90_spod-01_data01,ntapa90_spod-02_data01,
+ntapa90_spod-03_data01,ntapa90_spod-04_data01,
+ntapa90_spod-05_data01,ntapa90_spod-06_data01,
+ntapa90_spod-07_data01,ntapa90_spod-08_data01
+----
+
+
+====== Configurer le service NFS sur la SVM de gestion
+
+[source, cli]
+----
+nfs create -vserver spod_mgmt -v3 enabled -v4.1 enabled -v4.1-pnfs
+enabled -tcp-max-xfer-size 262144 -v4.1-trunking enabled
+
+set advanced
+
+nfs modify -vserver spod_mgmt -v3-64bit-identifiers enabled
+-v4.x-session-num-slots 1024
+----
+
+
+====== Créer des sous-réseaux IP pour les interfaces réseau en bande
+
+[source, cli]
+----
+network subnet create -subnet-name inband -broadcast-domain in-band
+-subnet xxx.xxx.xxx.0/24 -gateway xxx.xxx.xxx.x -ip-ranges
+xxx.xxx.xxx.xx-xxx.xxx.xxx.xxx
+----
+*Remarque :* les informations sur le sous-réseau IP doivent être fournies par le client au moment du déploiement pour l'intégration dans les réseaux clients existants.
+
+
+
+====== Créer des interfaces réseau sur chaque nœud pour SVM en bande
+
+[source, cli]
+----
+net int create -vserver spod_mgmt -lif inband_lif1 -home-node
+ntapa90_spod-01 -home-port a1a -subnet_name inband
+----
+Répétez les étapes ci-dessus pour chaque nœud du cluster.
+
+
+
+====== Créer des volumes FlexGroup pour la SVM de gestion
+
+[source, cli]
+----
+vol create -vserver spod_mgmt -volume home -size 10T -auto-provision-as
+flexgroup -junction-path /home
+
+vol create -vserver spod_mgmt -volume cm -size 10T -auto-provision-as
+flexgroup -junction-path /cm
+
+----
+
+
+====== Créer une politique d'exportation pour Management SVM
+
+[source, cli]
+----
+export-policy rule create -vserver spod_mgmt -policy default
+-client-match XXX.XXX.XXX.XXX -rorule sys -rwrule sys -superuser sys
+----
+*Remarque :* les informations sur le sous-réseau IP doivent être fournies par le client au moment du déploiement pour l'intégration dans les réseaux clients existants.
+
+
+
+===== Créer des données SVM
+
+
+
+====== Créer et configurer Data SVM
+
+[source, cli]
+----
+vserver create -vserver spod_data
+vserver modify -vserver spod_data -aggr-list
+ntapa90_spod-01_data01,ntapa90_spod-02_data01,
+ntapa90_spod-03_data01,ntapa90_spod-04_data01,
+ntapa90_spod-05_data01,ntapa90_spod-06_data01,
+ntapa90_spod-07_data01,ntapa90_spod-08_data01
+----
+
+
+====== Configurer le service NFS sur Data SVM avec RDMA activé
+
+[source, cli]
+----
+nfs create -vserver spod_data -v3 enabled -v4.1 enabled -v4.1-pnfs
+enabled -tcp-max-xfer-size 262144 -v4.1-trunking enabled -rdma enabled
+
+set advanced
+
+nfs modify -vserver spod_data -v3-64bit-identifiers enabled
+-v4.x-session-num-slots 1024
+----
+
+
+====== Créer des sous-réseaux IP pour les interfaces réseau Data SVM
+
+[source, cli]
+----
+network subnet create -subnet-name vlan401 -broadcast-domain vlan401
+-subnet 100.127.124.0/24 -ip-ranges 100.127.124.4-100.127.124.254
+
+network subnet create -subnet-name vlan402 -broadcast-domain vlan402
+-subnet 100.127.252.0/24 -ip-ranges 100.127.252.4-100.127.252.254
+----
+
+
+====== Créer des interfaces réseau sur chaque nœud pour Data SVM
+
+[source, cli]
+----
+net int create -vserver spod_data -lif data_lif1 -home-node
+ntapa90_spod-01 -home-port e6a -subnet_name vlan401 -failover-policy
+sfo-partner-only
+
+net int create -vserver spod_data -lif data_lif2 -home-node
+ntapa90_spod-01 -home-port e6b -subnet_name vlan401
+
+net int create -vserver spod_data -lif data_lif3 -home-node
+ntapa90_spod-01 -home-port e11a -subnet_name vlan402
+
+net int create -vserver spod_data -lif data_lif4 -home-node
+ntapa90_spod-01 -home-port e11b -subnet_name vlan402
+
+----
+Répétez les étapes ci-dessus pour chaque nœud du cluster.
+
+
+
+====== Configurer les interfaces réseau Data SVM pour RDMA
+
+[source, cli]
+----
+net int modify -vserver spod_data -lif * -rdma-protocols roce
+----
+
+
+====== Créer une politique d'exportation sur les données SVM
+
+[source, cli]
+----
+export-policy rule create -vserver spod_data -policy default
+-client-match 100.127.0.0/16 -rorule sys -rwrule sys -superuser sys
+----
+
+
+====== Créer des routes statiques sur les données SVM
+
+[source, cli]
+----
+route add -vserver spod_data -destination 100.127.0.0/17 -gateway
+100.127.124.1 -metric 20
+
+route add -vserver spod_data -destination 100.127.0.0/17 -gateway
+100.127.252.1 -metric 30
+
+route add -vserver spod_data -destination 100.127.128.0/17 -gateway
+100.127.252.1 -metric 20
+
+route add -vserver spod_data -destination 100.127.128.0/17 -gateway
+100.127.124.1 -metric 30
+----
+
+
+====== Créer un volume FlexGroup avec GDD pour Data SVM
+
+La distribution granulaire des données (GDD) permet de distribuer des fichiers de données volumineux sur plusieurs volumes et contrôleurs constituants FlexGroup afin de permettre des performances maximales pour les charges de travail à fichier unique.  NetApp recommande d'activer GDD sur les volumes de données pour tous les déploiements DGX SuperPOD.
+
+[source, cli]
+----
+set adv
+
+vol create -vserver spod-data -volume spod_data -size 100T -aggr-list
+ntapa90_spod-01_data01,ntapa90_spod-02_data01,
+ntapa90_spod-03_data01,ntapa90_spod-04_data01,
+ntapa90_spod-05_data01,ntapa90_spod-06_data01,
+ntapa90_spod-07_data01,ntapa90_spod-08_data01 -aggr-multiplier 16
+-granular-data advanced -junction-path /spod_data  
+----
+
+
+====== Désactiver l'efficacité du stockage pour le volume de données principal
+
+efficacité du volume désactivée -vserver spod_data -volume spod_data
+
+
+
+====== Créer une politique de qualité de service minimale pour les données SVM
+
+[source, cli]
+----
+qos policy-group create -policy-group spod_qos -vserver spod_data
+-min-throughput 62GB/s -is-shared true
+----
+
+
+====== Appliquer la politique QoS pour les données SVM
+
+[source, cli]
+----
+Volume modify -vserver spod_data -volume spod_data -qos-policy-group
+spod_qos
+----
+
+
+=== Configuration du serveur DGX avec NVIDIA Base Command Manager
+
+Pour préparer les clients DGX à utiliser le système de stockage AFF A90 , effectuez les tâches suivantes.  Ce processus suppose que les interfaces réseau et les routes statiques pour la structure de stockage ont déjà été configurées sur les nœuds du système DGX.  Les tâches suivantes seront effectuées par les services professionnels NetApp dans le cadre du processus de configuration avancée.
+
+
+
+==== Configurer l'image du serveur DGX avec les paramètres de noyau requis et d'autres paramètres
+
+NetApp ONTAP utilise des protocoles NFS standard et ne nécessite l'installation d'aucun logiciel supplémentaire sur les systèmes DGX.  Afin de fournir des performances optimales aux systèmes clients, plusieurs modifications de l'image système DGX sont nécessaires.  Les deux étapes suivantes sont effectuées après être entré dans le mode chroot de l'image BCM à l'aide de la commande ci-dessous :
+
+[source, cli]
+----
+cm-chroot-sw-img /cm/images/<image>
+----
+
+
+===== Configurer les paramètres de mémoire virtuelle du système dans /etc/sysctl.conf
+
+La configuration par défaut du système Linux fournit des paramètres de mémoire virtuelle qui ne fournissent pas nécessairement des performances optimales.  Dans le cas des systèmes DGX B200 avec 2 To de RAM, les paramètres par défaut autorisent 40 Go d'espace tampon, ce qui crée des modèles d'E/S incohérents et permet au client de surcharger le système de stockage lors du vidage du tampon.  Les paramètres ci-dessous limitent l'espace tampon du client à 5 Go et forcent le vidage plus souvent pour créer un flux d'E/S cohérent qui ne surcharge pas le système de stockage.
+
+Après être entré dans le mode chroot de l'image, modifiez le fichier /etc/sysctl.s/90-cm-sysctl.conf et ajoutez les lignes suivantes :
+
+[source, cli]
+----
+vm.dirty_ratio=0 #controls max host RAM used for buffering as a
+percentage of total RAM, when this limit is reached all applications
+must flush buffers to continue
+
+vm.dirty_background_ratio=0 #controls low-watermark threshold to start
+background flushing as a percentage of total RAM
+
+vm.dirty_bytes=5368709120 #controls max host RAM used for buffering as
+an absolute value (note _ratio above only accepts integers and the value
+we need is <1% of total RAM (2TB))
+
+vm.dirty_background_bytes=2147483648 #controls low-watermark threshold
+to start background flushing as an absolute value
+
+vm.dirty_expire_centisecs = 300 #controls how long data remains in
+buffer pages before being marked dirty
+
+vm.dirty_writeback_centisecs = 100 #controls how frequently the flushing
+process wakes up to flush dirty buffers
+----
+Enregistrez et fermez le fichier /etc/sysctl.conf.
+
+
+
+===== Configurer d’autres paramètres système avec un script qui s’exécute après le redémarrage
+
+Certains paramètres nécessitent que le système d’exploitation soit entièrement en ligne pour s’exécuter et ne sont pas persistants après un redémarrage.  Pour effectuer ces paramètres dans un environnement Base Command Manager, créez un fichier /root/ntap_dgx_config.sh et entrez les lignes suivantes :
+
+[source, cli]
+----
+#!/bin/bash
+
+##The commands below are platform-specific based.
+
+##For H100/H200 systems use the following variables
+
+## NIC1_ethname= enp170s0f0np0
+
+## NIC1_pciname=aa:00.0
+
+## NCI1_mlxname=mlx5_7
+
+## NIC1_ethname= enp41s0f0np0
+
+## NIC1_pciname=29:00.0
+
+## NCI1_mlxname=mlx5_1
+
+##For B200 systems use the following variables
+
+NIC1_ethname=enp170s0f0np0
+
+NIC1_pciname=aa:00.0
+
+NCI1_mlxname=mlx5_11
+
+NIC2_ethname=enp41s0f0np0
+
+NIC2_pciname=29:00.0
+
+NCI2_mlxname=mlx5_5
+
+mstconfig -y -d $\{NIC1_pciname} set ADVANCED_PCI_SETTINGS=1
+NUM_OF_VFS=0
+
+mstconfig -y -d $\{NIC2_pciname} set ADVANCED_PCI_SETTINGS=1
+NUM_OF_VFS=0
+
+setpci -s $\{NIC1_pciname} 68.W=5957
+
+setpci -s $\{NIC2_pciname} 68.W=5957
+
+ethtool -G $\{NIC1_ethname} rx 8192 tx 8192
+
+ethtool -G $\{NIC2_ethname} rx 8192 tx 8192
+
+mlnx_qos -i $\{NIC1_ethname} --pfc 0,0,0,1,0,0,0,0 --trust=dscp
+
+mlnx_qos -i $\{NIC2_ethname} --pfc 0,0,0,1,0,0,0,0 --trust=dscp
+
+echo 106 > /sys/class/infiniband/$\{NIC1_mlxname}/tc/1/traffic_class
+
+echo 106 > /sys/class/infiniband/$\{NIC2_mlxname}/tc/1/traffic_class
+----
+*Enregistrez et fermez le fichier.  Modifiez les autorisations sur le fichier pour qu'il soit exécutable :*
+
+[source, cli]
+----
+chmod 755 /root/ntap_dgx_config.sh
+----
+Créez une tâche cron qui est exécutée par root au démarrage en modifiant la ligne suivante :
+
+[source, cli]
+----
+@reboot /root/ntap_dgx_config.sh
+----
+Voir l'exemple de fichier crontab ci-dessous :
+
+[source, cli]
+----
+# Edit this file to introduce tasks to be run by cron.
+
+#
+
+# Each task to run has to be defined through a single line
+
+# indicating with different fields when the task will be run
+
+# and what command to run for the task
+
+#
+
+# To define the time you can provide concrete values for
+
+# minute (m), hour (h), day of month (dom), month (mon),
+
+# and day of week (dow) or use '*' in these fields (for 'any').
+
+#
+
+# Notice that tasks will be started based on the cron's system
+
+# daemon's notion of time and timezones.
+
+#
+
+# Output of the crontab jobs (including errors) is sent through
+
+# email to the user the crontab file belongs to (unless redirected).
+
+#
+
+# For example, you can run a backup of all your user accounts
+
+# at 5 a.m every week with:
+
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+
+#
+
+# For more information see the manual pages of crontab(5) and cron(8)
+
+#
+
+# m h dom mon dow command
+
+@reboot /home/ntap_dgx_config.sh
+----
+Quittez le mode chroot de l'image BCM en entrant exit ou Ctrl-D.
+
+
+
+==== Configurer la catégorie DGX de BaseCommand Manager pour les points de montage client
+
+Pour configurer les clients DGX qui montent le système de stockage AFF A90 , la catégorie de client BCM utilisée par les systèmes DGX doit être modifiée pour inclure les informations et options pertinentes.  Les étapes ci-dessous décrivent comment configurer le point de montage NFS.
+
+[source, cli]
+----
+cmsh
+
+category ; use category <category>; fsmounts
+
+add superpod
+
+set device 100.127.124.4:/superpod
+
+set mountpoint /mnt/superpod
+
+set filesystem nfs
+
+set mountoptions
+vers=4.1,proto=rdma,max_connect=16,write=eager,rsize=262144,wsize=262144
+
+commit
+----
+
+
+== Conclusion
+
+Le NVIDIA DGX SuperPOD avec les systèmes de stockage NetApp * AFF A90 * représente une avancée significative dans les solutions d'infrastructure d'IA.  En répondant aux principaux défis liés à la sécurité, à la gestion des données, à l’utilisation des ressources et à l’évolutivité, il permet aux organisations d’accélérer leurs initiatives d’IA tout en maintenant l’efficacité opérationnelle, la protection des données et la collaboration.  L'approche intégrée de la solution élimine les goulots d'étranglement courants dans les pipelines de développement de l'IA, permettant aux scientifiques et aux ingénieurs des données de se concentrer sur l'innovation plutôt que sur la gestion de l'infrastructure.
+
+
+
+== Où trouver des informations supplémentaires
+
+Pour en savoir plus sur les informations décrites dans ce document, consultez les documents et/ou sites Web suivants :
+
+* https://www.netapp.com/pdf.html?item=/media/125003-nva-1175-design-superpod-a90.pdf["Guide de conception des systèmes de stockage NVA-1175 NVIDIA DGX SuperPOD avec NetApp AFF A90"]
+* https://docs.nvidia.com/dgx-superpod/reference-architecture-scalable-infrastructure-b200/latest/index.html["Architecture de référence NVIDIA DGX B200 SuperPOD"]
+* https://docs.nvidia.com/dgx-superpod/reference-architecture/scalable-infrastructure-h200/latest/index.html["+++ Architecture de référence NVIDIA DGX H200 SuperPOD+++"]
+* https://docs.nvidia.com/base-command-manager/index.html#product-manuals["+++ Logiciel NVIDIA BaseCommand+++"]
+* https://nvdam.widen.net/s/mmvbnpk8qk/networking-ethernet-switches-sn5000-datasheet-us["+++ Commutateurs Ethernet NVIDIA Spectrum SN5600+++"]
+* https://docs.nvidia.com/dgx-superpod/release-notes/latest/10-24-11.html["+++ Notes de version de NVIDIA DGX SuperPOD +++"]
+* https://docs.netapp.com/us-en/ontap-systems/a70-90/install-overview.html["+++ Installation de NetApp AFF A90 +++"]
+* https://docs.netapp.com/us-en/netapp-solutions/ai/index.html["+++ Documentation des solutions d'IA NetApp +++"]
+* https://docs.netapp.com/us-en/ontap/index.html["+++ Logiciel NetApp ONTAP +++"]
+* https://docs.netapp.com/us-en/ontap-systems/aff-aseries/index.html["+++ Installation et maintenance des systèmes de stockage AFF NetApp +++"]
+* https://docs.netapp.com/us-en/ontap/nfs-rdma/index.html["NFS sur RDMA"]
+* https://www.netapp.com/media/19761-tr-4063.pdf["+++Qu'est-ce que pNFS+++"](document plus ancien avec d'excellentes informations sur pNFS)
+
+
+
+
+== Annexe A : Nomenclature et élévations des racks
+
+
+
+=== Nomenclature
+
+Le tableau 3 indique le numéro de pièce et les quantités des composants NetApp nécessaires au déploiement du stockage pour une, deux, trois et quatre unités évolutives.
+
+Tableau 3) Nomenclature NetApp pour 1, 2, 3 et 4 SU.
+
+[cols="20%,32%,12%,12%,12%,12%"]
+|===
+| Partie # | Article | Quantité pour 1SU | Quantité pour 2SU | Quantité pour 3SU | Quantité pour 4SU 
+
+
+| AFF-A90A-100-C | Système de stockage AFF A90 | 4 | 8 | 12 | 16 
+
+
+| X4025A-2-A-C | Pack de disques 2x7,6 To | 48 | 96 | 144 | 192 
+
+
+| X50131A-C | Module d'E/S, 2PT, 100/200/400 GbE | 24 | 48 | 96 | 128 
+
+
+| X50130A-C | Module d'E/S, 2PT, 100 GbE | 16 | 32 | 48 | 64 
+
+
+| X-02659-00 | Kit, 4 poteaux, trous carrés ou ronds, rail de 24 à 32 pouces | 4 | 8 | 12 | 16 
+
+
+| X1558A-R6 | Cordon d'alimentation pour armoire, 48 po, + C13-C14, 10 A/250 V | 20 | 40 | 60 | 80 
+
+
+| X190200-CS | Commutateur de cluster, N9336C 36 points PTSX10/25/40/100G | 2 | 4 | 6 | 8 
+
+
+| X66211A-2 | Câble 100 GbE QSFP28-QSFP28, cuivre, 2 m | 16 | 32 | 48 | 64 
+
+
+| X66211A-05 | Câble, 100 GbE, QSFP28-QSFP28, Cuivre, 0,5 m | 4 | 8 | 12 | 16 
+
+
+| X6561-R6 | Câble Ethernet CAT6 RJ45 5 m | 18 | 34 | 50 | 66 
+|===
+Le tableau 4 indique le numéro de pièce et la quantité de câbles NVIDIA nécessaires pour connecter les systèmes de stockage AFF A90 aux commutateurs SN5600 dans les réseaux de stockage hautes performances et en bande.
+
+Tableau 4) Câbles NVIDIA requis pour connecter les systèmes de stockage AFF A90 aux commutateurs SN5600 dans les réseaux de stockage hautes performances et en bande.
+
+[cols="20%,32%,12%,12%,12%,12%"]
+|===
+| Partie # | Article | Quantité pour 1SU | Quantité pour 2SU | Quantité pour 3SU | Quantité pour 4SU 
+
+
+| MCP7Y40-N003 | DAC 3m 26ga 2x400G à 4x200G OSFP à 4xQSFP112 | 12 | 24 | 36 | 48 
+
+
+| OU |  |  |  |  |  
+
+
+| MMS4X00-NS | Émetteur-récepteur multimode OSFP 2x400G 2xSR4 à deux ports, double MPO-12/APC | 12 | 24 | 36 | 48 
+
+
+| MFP7E20-N0XX | Répartiteurs de fibres multimodes 400G-> 2x200G XX = 03, 05, 07, 10, 15, 20, 30, 40, 50) mètres | 24 | 48 | 96 | 128 
+
+
+| MMA1Z00-NS400 | Émetteur-récepteur QSFP112 multimode SR4 400G à port unique, simple MPO-12/APC | 48 | 96 | 144 | 192 
+|===
+
+
+=== Élévations des racks
+
+Les figures 4 à 6 montrent des exemples d'élévations de rack pour 1 à 4 SU.
+
+Figure 4) Élévations des racks pour 1 SU et 2 SU.
+
+image:ai-superpod-a90-008.png["600 600"]
+
+Figure 5) Élévations du rack pour 3 SU.
+
+image:ai-superpod-a90-009.png["600 600"]
+
+Figure 6) Élévations des racks pour 4 SU.
+
+image:ai-superpod-a90-010.png["600 600"]
