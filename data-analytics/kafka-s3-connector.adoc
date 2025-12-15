@@ -305,3 +305,9 @@ root@stlrx2540m1-108:~# java -jar /usr/src/avro-tools-1.11.0.1.jar tojson tes.av
 root@stlrx2540m1-108:~#
 ....
 
+
+
+
+== Connecteurs Instaclustr Kafka Connect
+
+Instaclustr prend en charge les connecteurs Kafka Connect et leurs détails - link:https://github.com/instaclustr/kafka-connect-connectors["Plus de détails"]. Instaclustr fournit des connecteurs supplémentaires link:https://www.instaclustr.com/support/documentation/kafka-connect/bundled-kafka-connect-plugins/["leurs détails"]

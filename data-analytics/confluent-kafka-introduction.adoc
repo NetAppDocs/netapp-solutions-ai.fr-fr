@@ -31,6 +31,8 @@ Ce document décrit les meilleures pratiques pour l'utilisation du stockage hié
 
 Confluent est devenu la plateforme de streaming en temps réel par défaut pour de nombreuses applications, en particulier pour les charges de travail de Big Data, d'analyse et de streaming.  Le stockage hiérarchisé permet aux utilisateurs de séparer le calcul du stockage sur la plateforme Confluent.  Il rend le stockage des données plus rentable, vous permet de stocker des quantités pratiquement infinies de données et d'augmenter (ou de réduire) les charges de travail à la demande, et facilite les tâches administratives telles que le rééquilibrage des données et des locataires.  Les systèmes de stockage compatibles S3 peuvent tirer parti de toutes ces fonctionnalités pour démocratiser les données avec tous les événements en un seul endroit, éliminant ainsi le besoin d'une ingénierie de données complexe.  Pour plus d'informations sur les raisons pour lesquelles vous devriez utiliser le stockage hiérarchisé pour Kafka, consultezlink:https://docs.confluent.io/platform/current/kafka/tiered-storage.html#netapp-object-storage["cet article de Confluent"^] .
 
+NetApp instaclustr prend également en charge Kafka avec stockage hiérarchisé à partir de la version 3.8.1. Veuillez consulter plus de détails ici link:https://www.instaclustr.com/support/documentation/kafka-add-ons/using-kafka-tiered-storage/["instaclust utilisant le stockage hiérarchisé de Kafka"]
+
 
 
 == Pourquoi NetApp StorageGRID pour le stockage hiérarchisé ?
