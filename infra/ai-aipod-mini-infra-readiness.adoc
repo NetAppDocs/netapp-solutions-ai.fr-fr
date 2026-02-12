@@ -1,0 +1,83 @@
+---
+sidebar: sidebar 
+permalink: infra/ai-aipod-mini-infra-readiness.html 
+keywords: netapp, aipod, RAG, ai solution, design, infrastructure, FAQs 
+summary: 'Ce document présente une liste de contrôle complète de l"infrastructure de préparation pour NetApp AIPod Mini for Enterprise RAG, servant de référence avant le déploiement.' 
+---
+= NetApp AIPod Mini pour ERAG - Liste de contrôle de préparation de l'infrastructure
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Ce document présente une liste de contrôle complète de l'infrastructure de préparation pour NetApp AIPod Mini for Enterprise RAG, servant de référence avant le déploiement.
+
+
+
+== Préparation des activités et des cas d'utilisation
+
+* La solution est-elle alignée sur les résultats des lignes de métier (par exemple, productivité, service client, juridique, domaine de la santé, production, secteur public) ?
+* Avez-vous estimé le Time to First Token (TTFT) et les besoins en latence pour vos charges de travail LLM ?
+* Connaissez-vous la charge de concurrence/d'utilisateurs prévue (par exemple, 32 utilisateurs simultanés par nœud de travail à 2 travailleurs pour RAG) ?
+* Avez-vous identifié les principales charges de travail IA/GenAI (RAG, inférence, réglage fin, LLM départementaux, intégration de vector DB) ?
+* Évaluez-vous les options d'IA basées sur le CPU (OPEA, Intel Xeon) par rapport aux alternatives GPU pour l'équilibre coût/performance ?
+
+
+
+
+== Exigences techniques et d'infrastructure
+
+* Votre pipeline de données est-il prêt (préparation des données, ETL, ingestion sécurisée dans vector DB) ?
+* Avez-vous besoin de haute disponibilité, de redondance ou de capacités de reprise après sinistre ?
+* Utilisez-vous la prise en charge d'Ubuntu Linux / Kubernetes / Red Hat OpenShift AI stack ?
+* Avez-vous validé les performances du réseau (25–100GbE selon la charge de travail) ?
+* Le stockage est-il provisionné avec NetApp ONTAP + Trident CSI driver pour la persistance Kubernetes ?
+* Minimum 3 nœuds de calcul (2 de travail, 1 plan de contrôle) correctement dimensionnés ?
+
+
+
+
+== Alignement du logiciel et de l'écosystème
+
+* Vos applications conteneurisées sont-elles compatibles avec les charts Kubernetes et Helm fournis ?
+* Quelles bases de données vectorielles (par exemple, Milvus, pgvector) sont prévues pour le déploiement ?
+* Avez-vous besoin d'une pré-intégration OPEA (Open Platform for Enterprise AI) pour la génération augmentée par récupération (RAG) ?
+* Utilisez-vous des options de cloud hybride (Cloud Volumes ONTAP, FSxN, Anthos, Azure Arc) ?
+* Avez-vous besoin d'intégrations avec des partenaires ISV (ESRI, PACS de santé, ISV financiers/juridiques) ?
+
+
+
+
+== Gouvernance des données et sécurité
+
+* Avez-vous activé le contrôle d'accès basé sur les rôles (RBAC) dans Kubernetes ?
+* Existe-t-il un plan de protection des données et de sauvegarde (SnapMirror, SnapCenter, protection contre les ransomwares) ?
+* Avez-vous cartographié les besoins en matière de conformité des données (HIPAA, GDPR, FedRAMP, CJIS) ?
+* Avez-vous besoin d'un déploiement d'IA privé (isolé, sur site, enclave sécurisée) ?
+
+
+
+
+== Considérations opérationnelles et de support
+
+* Les administrateurs sont-ils formés/habilités sur Kubernetes, Trident CSI et le déploiement de la pile OPEA ?
+* Avez-vous besoin de support pour la multi-location (départements, agences SLED, unités commerciales) ?
+* Existe-t-il un plan de surveillance et d'observabilité (ONTAP System Manager, Cloud Insights, Prometheus/Grafana) ?
+* Qui sera responsable des opérations du deuxième jour (customer IT, partenaire, managed service provider) ?
+
+
+
+
+== Alignement commercial et GTM
+
+* Existe-t-il une feuille de route progressive (département → expansion de l’IA à l’ensemble de l’entreprise) ?
+* Disposez-vous d'une projection pro forma pluriannuelle (TCO, ARR, marge uplift) ?
+* Les scénarios d'augmentation des licences sont-ils clairs (vector DB, logiciels ISV, outils AI ops) ?
+* Avez-vous exploré les incitations partenaires (marge du distributeur, cofinancement OEM/Intel) ?
+* L'achat est-il aligné sur les cycles budgétaires (CapEx vs OpEx, modèles de consommation) ?
+* Disposez-vous d'un partenaire de services (Arrow, WWT, Presidio, etc.) pour le dimensionnement et le déploiement ?
+
