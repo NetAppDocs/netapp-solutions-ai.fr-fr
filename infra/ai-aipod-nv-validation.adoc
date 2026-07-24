@@ -18,6 +18,7 @@ Cette section se concentre sur la validation de la solution et les conseils de d
 
 
 
+[[solution-validation]]
 == Validation de la solution
 
 La configuration de stockage de cette solution a été validée à l’aide d’une série de charges de travail synthétiques utilisant l’outil open source FIO.  Ces tests incluent des modèles d'E/S de lecture et d'écriture destinés à simuler la charge de travail de stockage générée par les systèmes DGX exécutant des tâches de formation en apprentissage approfondi.  La configuration de stockage a été validée à l'aide d'un cluster de serveurs CPU à 2 sockets exécutant simultanément les charges de travail FIO pour simuler un cluster de systèmes DGX.  Chaque client a été configuré avec la même configuration réseau décrite précédemment, avec l’ajout des détails suivants.
@@ -66,6 +67,7 @@ Le système de stockage a été configuré comme décrit avec deux paires HA A90
 
 
 
+[[storage-system-sizing-guidance]]
 == Guide de dimensionnement du système de stockage
 
 NetApp a obtenu avec succès la certification DGX BasePOD et les deux paires A90 HA testées peuvent facilement prendre en charge un cluster de seize systèmes DGX H100.  Pour les déploiements plus importants avec des exigences de performances de stockage plus élevées, des systèmes AFF supplémentaires peuvent être ajoutés au cluster NetApp ONTAP jusqu'à 12 paires HA (24 nœuds) dans un seul cluster.  En utilisant la technologie FlexGroup décrite dans cette solution, un cluster à 24 nœuds peut fournir plus de 79 Po et jusqu'à 552 Gbit/s de débit dans un seul espace de noms.  D'autres systèmes de stockage NetApp tels que les AFF A400, A250 et C800 offrent des performances inférieures et/ou des options de capacité supérieure pour des déploiements plus petits à des coûts inférieurs.  Étant donné ONTAP 9 prend en charge les clusters à modèles mixtes, les clients peuvent commencer avec une empreinte initiale plus petite et ajouter des systèmes de stockage plus nombreux ou plus grands au cluster à mesure que les exigences de capacité et de performances augmentent.  Le tableau ci-dessous montre une estimation approximative du nombre de GPU A100 et H100 pris en charge sur chaque modèle AFF .

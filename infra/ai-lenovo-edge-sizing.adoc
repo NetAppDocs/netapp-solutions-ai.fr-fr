@@ -18,12 +18,14 @@ Vous pouvez ajuster la configuration utilisée pour la validation afin de l'adap
 
 
 
+[[compute-server]]
 == serveur de calcul
 
 Nous avons utilisé un processeur Intel Xeon D-2123IT, qui est le niveau de processeur le plus bas pris en charge dans SE350, avec quatre cœurs physiques et un TDP de 60 W.  Bien que le serveur ne prenne pas en charge le remplacement des processeurs, il peut être commandé avec un processeur plus puissant.  Le processeur le plus pris en charge est l'Intel Xeon D-2183IT avec 16 cœurs, 100 W fonctionnant à 2,20 GHz.  Cela augmente considérablement la capacité de calcul du processeur.  Bien que le processeur ne soit pas un goulot d’étranglement pour l’exécution des charges de travail d’inférence elles-mêmes, il aide au traitement des données et à d’autres tâches liées à l’inférence.  À l’heure actuelle, NVIDIA T4 est le seul GPU disponible pour les cas d’utilisation de pointe ; par conséquent, il n’existe actuellement aucune possibilité de mettre à niveau ou de rétrograder le GPU.
 
 
 
+[[shared-storage]]
 == Stockage partagé
 
 Pour les tests et la validation, le système NetApp AFF C190 , qui dispose d'une capacité de stockage maximale de 50,5 To, d'un débit de 4,4 Gbit/s pour les lectures séquentielles et de 230 000 IOPS pour les petites lectures aléatoires, a été utilisé dans le cadre de ce document et s'est avéré bien adapté aux charges de travail d'inférence de périphérie.

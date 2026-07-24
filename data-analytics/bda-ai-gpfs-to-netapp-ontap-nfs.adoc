@@ -20,6 +20,7 @@ image:bda-ai-005.png["Figure montrant une boîte de dialogue d'entrée/sortie ou
 
 
 
+[[gpfs-essentials]]
 == L'essentiel du GPFS
 
 Les types de nœuds suivants sont utilisés dans GPFS :
@@ -33,12 +34,14 @@ Les types de nœuds suivants sont utilisés dans GPFS :
 
 
 
+[[list-of-operations-for-gpfs-nfs-and-xcp]]
 == Liste des opérations pour GPFS, NFS et XCP
 
 Cette section fournit la liste des opérations qui créent GPFS, exportent GPFS en tant qu'exportation NFS et transfèrent les données à l'aide de XCP.
 
 
 
+[[create-gpfs]]
 === Créer GPFS
 
 Pour créer GPFS, procédez comme suit :
@@ -62,6 +65,7 @@ Pour créer GPFS, procédez comme suit :
 
 
 
+[[export-gpfs-into-nfs]]
 === Exporter GPFS vers NFS
 
 Pour exporter le GPFS vers NFS, procédez comme suit :
@@ -74,6 +78,7 @@ Pour exporter le GPFS vers NFS, procédez comme suit :
 
 
 
+[[configure-nfs-client]]
 === Configurer le client NFS
 
 Pour configurer le client NFS, procédez comme suit :

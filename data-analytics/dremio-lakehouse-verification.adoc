@@ -18,6 +18,7 @@ Dans cette section, nous avons exécuté des requêtes de test SQL à partir de 
 
 
 
+[[sql-query-on-object-storage]]
 === Requête SQL sur le stockage d'objets
 
 . Définissez la mémoire à 250 Go par serveur dans dremio.env

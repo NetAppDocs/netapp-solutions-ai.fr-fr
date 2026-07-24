@@ -18,6 +18,7 @@ Le dimensionnement de Kafka peut être effectué avec quatre modes de configurat
 
 
 
+[[simple]]
 == Simple
 
 Le mode simple convient aux nouveaux utilisateurs d'Apache Kafka ou aux premiers cas d'utilisation.  Pour ce mode, vous fournissez des exigences telles que le débit en Mo/s, la diffusion en lecture, la rétention et le pourcentage d'utilisation des ressources (60 % par défaut).  Vous entrez également dans l'environnement, tel que sur site (bare-metal, VMware, Kubernetes ou OpenStack) ou dans le cloud.  Sur la base de ces informations, le dimensionnement d'un cluster Kafka fournit le nombre de serveurs requis pour le courtier, le zookeeper, les travailleurs de connexion Apache Kafka, le registre de schémas, un proxy REST, ksqlDB et le centre de contrôle Confluent.
@@ -26,6 +27,7 @@ Pour le stockage hiérarchisé, envisagez le mode de configuration granulaire po
 
 
 
+[[producers]]
 === Producteurs
 
 Pour décrire les producteurs d'Apache Kafka (par exemple un client natif, un proxy REST ou un connecteur Kafka), fournissez les informations suivantes :
@@ -81,6 +83,7 @@ Les processeurs de flux doivent décrire leurs applications ou services qui cons
 
 
 
+[[consumers]]
 === Consommateurs
 
 Décrivez vos applications ou services qui consomment des données d'Apache Kafka et ne les réinjectent pas dans Apache Kafka ; par exemple, un client natif ou un connecteur Kafka.
@@ -117,6 +120,7 @@ En plus des exigences pour les producteurs, les processeurs de flux et les conso
 
 
 
+[[describe-your-environment]]
 === Décrivez votre environnement
 
 * *Dans quel environnement votre cluster fonctionnera-t-il ?*  Amazon Web Services, Microsoft Azure, plateforme cloud Google, bare-metal sur site, VMware sur site, OpenStack sur site ou Kubernates sur site ?

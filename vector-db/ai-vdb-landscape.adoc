@@ -18,6 +18,7 @@ Cette section couvre la définition et l’utilisation d’une base de données 
 
 
 
+[[vector-database]]
 == Base de données vectorielles
 
 Une base de données vectorielle est un type de base de données spécialisé conçu pour gérer, indexer et rechercher des données non structurées à l'aide d'intégrations provenant de modèles d'apprentissage automatique.  Au lieu d'organiser les données dans un format tabulaire traditionnel, il organise les données sous forme de vecteurs de grande dimension, également appelés plongements vectoriels.  Cette structure unique permet à la base de données de gérer des données complexes et multidimensionnelles de manière plus efficace et plus précise.
@@ -28,6 +29,7 @@ De plus, les bases de données vectorielles sont bien adaptées pour gérer des 
 
 
 
+[[advantages-of-vector-database-for-ml-and-ai]]
 === Avantages de la base de données vectorielle pour le ML et l'IA :
 
 * Recherche à haute dimension : les bases de données vectorielles excellent dans la gestion et la récupération de données à haute dimension, qui sont souvent générées dans les applications d'IA et de ML.
@@ -39,6 +41,7 @@ De plus, les bases de données vectorielles sont bien adaptées pour gérer des 
 
 
 
+[[vector-databases-and-use-cases]]
 === Bases de données vectorielles et cas d'utilisation.
 
 Cette section fournit diverses bases de données vectorielles et les détails de leurs cas d'utilisation.

@@ -18,6 +18,7 @@ Cette section décrit les tâches de configuration initiales qui doivent être e
 
 
 
+[[prerequisites]]
 == Prérequis
 
 Avant d’effectuer les étapes décrites dans cette section, nous supposons que vous avez déjà effectué les tâches suivantes :
@@ -33,6 +34,7 @@ Avant d’effectuer les étapes décrites dans cette section, nous supposons que
 
 
 
+[[install-the-domino-enterprise-ai-platform-in-aws]]
 == Installer la plateforme Domino Enterprise AI dans AWS
 
 Pour installer la plateforme Domino Enterprise MLOps dans AWS, suivez les instructions décrites danslink:https://docs.dominodatalab.com/en/latest/admin_guide/c1eec3/deploy-domino/["Guide d'administration Domino"] .  Vous devez déployer Domino dans le même cluster Amazon EKS que celui que vous avez précédemment provisionné.  De plus, NetApp Trident doit déjà être installé et configuré dans ce cluster EKS, et vous devez spécifier une classe de stockage gérée par Trident comme classe de stockage partagée dans votre fichier de configuration d'installation domino.yml.
@@ -45,12 +47,14 @@ NOTE: link:https://www.netapp.com/media/79922-tr-4952.pdf["Rapport technique TR-
 
 
 
+[[enable-domino-nexus]]
 == Activer Domino Nexus
 
 Ensuite, vous devez activer Domino Nexus.  Se référer à lalink:https://docs.dominodatalab.com/en/latest/admin_guide/c65074/nexus-hybrid-architecture/["Guide d'administration Domino"] pour plus de détails.
 
 
 
+[[deploy-a-domino-data-plane-in-your-on-premises-data-center]]
 == Déployez un plan de données Domino dans votre centre de données sur site
 
 Ensuite, vous devez déployer un plan de données Domino dans votre centre de données sur site.  Vous devez déployer ce plan de données dans le cluster Kubernetes local que vous avez précédemment provisionné.  De plus, NetApp Trident doit déjà être installé et configuré dans ce cluster Kubernetes.  Se référer à lalink:https://docs.dominodatalab.com/en/latest/admin_guide/5781ea/data-planes/["Guide d'administration Domino"] pour plus de détails.

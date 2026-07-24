@@ -20,12 +20,14 @@ image:hdcs-sh-009.png["Figure montrant une boîte de dialogue d'entrée/sortie o
 
 
 
+[[scenario]]
 == Scénario
 
 Dans ce scénario, les données du capteur IoT sont ingérées dans le cloud et analysées à l’aide d’un cluster Apache Spark open source au sein d’AWS.  L’exigence est de sauvegarder les données traitées du cloud vers les locaux.
 
 
 
+[[requirements-and-challenges]]
 == Exigences et défis
 
 Les principales exigences et défis pour ce cas d'utilisation incluent :
@@ -37,6 +39,7 @@ Les principales exigences et défis pour ce cas d'utilisation incluent :
 
 
 
+[[solution]]
 == Solution
 
 Le client utilise AWS Elastic Block Store (EBS) pour son stockage HDFS de cluster Spark afin de recevoir et d'ingérer des données provenant de capteurs distants via Kafka.  Par conséquent, le stockage HDFS agit comme source pour les données de sauvegarde.

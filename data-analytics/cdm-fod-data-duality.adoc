@@ -18,12 +18,14 @@ Les données sont disponibles dans NFS et accessibles depuis S3 depuis AWS SageM
 
 
 
+[[technology-requirements]]
 == Exigences technologiques
 
 Vous avez besoin de NetApp BlueXP, NetApp Cloud Volumes ONTAP et AWS SageMaker Notebooks pour le cas d'utilisation de la dualité des données.
 
 
 
+[[software-requirements]]
 === Configuration logicielle requise
 
 Le tableau suivant répertorie les composants logiciels nécessaires à la mise en œuvre du cas d’utilisation.
@@ -42,6 +44,7 @@ Le tableau suivant répertorie les composants logiciels nécessaires à la mise 
 |===
 
 
+[[deployment-procedures]]
 == Procédures de déploiement
 
 Le déploiement de la solution de dualité des données implique les tâches suivantes :
@@ -55,6 +58,7 @@ Le déploiement de la solution de dualité des données implique les tâches sui
 
 
 
+[[bluexp-connector]]
 === Connecteur BlueXP
 
 Dans cette validation, nous avons utilisé AWS.  Il est également applicable à Azure et Google Cloud.  Pour créer un connecteur BlueXP dans AWS, procédez comme suit :
@@ -71,6 +75,7 @@ Dans cette validation, nous avons utilisé AWS.  Il est également applicable à
 
 
 
+[[netapp-cloud-volumes-ontap]]
 === NetApp Cloud Volumes ONTAP
 
 Pour créer une instance Cloud Volumes ONTAP dans BlueXP, procédez comme suit :
@@ -244,6 +249,7 @@ sagemaker_cvo_sn1::*>
 
 
 
+[[aws-sagemaker]]
 === AWS SageMaker
 
 Pour créer un bloc-notes AWS à partir d'AWS SageMaker, procédez comme suit :
@@ -318,6 +324,7 @@ sh-4.2$
 
 
 
+[[data-for-machine-learning]]
 === Données pour l'apprentissage automatique
 
 Dans cette validation, nous avons utilisé un ensemble de données de DBpedia, un effort communautaire participatif, pour extraire du contenu structuré à partir des informations créées dans divers projets Wikimedia.
@@ -443,6 +450,7 @@ sh-4.2$
 
 
 
+[[validate-machine-learning-from-jupyter-notebooks]]
 == Valider l'apprentissage automatique à partir des notebooks Jupyter
 
 La validation suivante fournit la création, l'entraînement et le déploiement de modèles d'apprentissage automatique via la classification de texte en utilisant l'exemple SageMaker BlazingText ci-dessous :

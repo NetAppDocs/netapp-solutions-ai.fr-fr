@@ -18,6 +18,7 @@ Cette section présente plus en détail les principaux composants de cette solut
 
 
 
+[[netapp-aff-systems]]
 == Systèmes NetApp AFF
 
 Les systèmes de stockage NetApp AFF permettent aux entreprises de répondre aux exigences de stockage d'entreprise avec des performances de pointe, une flexibilité supérieure, une intégration cloud et une gestion des données de premier ordre.  Conçus spécifiquement pour le flash, les systèmes AFF aident à accélérer, gérer et protéger les données critiques de l'entreprise.
@@ -56,12 +57,14 @@ NetApp propose également d'autres systèmes de stockage, tels que l' AFF A800 e
 
 
 
+[[netapp-ontap]]
 == NetApp ONTAP
 
 ONTAP 9, la dernière génération de logiciel de gestion du stockage de NetApp, permet aux entreprises de moderniser leur infrastructure et de passer à un centre de données prêt pour le cloud.  En s'appuyant sur des capacités de gestion de données de pointe, ONTAP permet la gestion et la protection des données avec un seul ensemble d'outils, quel que soit l'endroit où résident ces données.  Les données peuvent également être déplacées librement là où elles sont nécessaires : vers la périphérie, le cœur ou le cloud.  ONTAP 9 inclut de nombreuses fonctionnalités qui simplifient la gestion des données, accélèrent et protègent les données critiques et garantissent une infrastructure pérenne dans les architectures de cloud hybride.
 
 
 
+[[simplify-data-management]]
 === Simplifier la gestion des données
 
 La gestion des données est essentielle aux opérations informatiques de l’entreprise afin que les ressources appropriées soient utilisées pour les applications et les ensembles de données.  ONTAP inclut les fonctionnalités suivantes pour rationaliser et simplifier les opérations et réduire le coût total d'exploitation :
@@ -73,6 +76,7 @@ La gestion des données est essentielle aux opérations informatiques de l’ent
 
 
 
+[[accelerate-and-protect-data]]
 === Accélérer et protéger les données
 
 ONTAP offre des niveaux supérieurs de performance et de protection des données et étend ces capacités des manières suivantes :
@@ -84,6 +88,7 @@ ONTAP offre des niveaux supérieurs de performance et de protection des données
 
 
 
+[[future-proof-infrastructure]]
 === Une infrastructure à l'épreuve du temps
 
 ONTAP 9 permet de répondre aux besoins métiers exigeants et en constante évolution :
@@ -95,6 +100,7 @@ ONTAP 9 permet de répondre aux besoins métiers exigeants et en constante évol
 
 
 
+[[netapp-flexgroup-volumes]]
 == Volumes NetApp FlexGroup
 
 Les ensembles de données de formation sont généralement une collection de milliards de fichiers potentiels.  Les fichiers peuvent inclure du texte, de l'audio, de la vidéo et d'autres formes de données non structurées qui doivent être stockées et traitées pour être lues en parallèle.  Le système de stockage doit stocker de nombreux petits fichiers et doit lire ces fichiers en parallèle pour les E/S séquentielles et aléatoires.
@@ -110,6 +116,7 @@ image:a400-thinksystem-005.png["Cette image représente une paire HA de contrôl
 
 
 
+[[lenovo-thinksystem-portfolio]]
 == Gamme Lenovo ThinkSystem
 
 Les serveurs Lenovo ThinkSystem sont dotés de matériel, de logiciels et de services innovants qui résolvent les défis actuels des clients et offrent une approche de conception modulaire, évolutive et adaptée aux besoins pour relever les défis de demain.  Ces serveurs capitalisent sur les meilleures technologies standard de leur catégorie, associées aux innovations Lenovo différenciées pour offrir la plus grande flexibilité possible dans les serveurs x86.
@@ -125,6 +132,7 @@ Dans le domaine de l’IA, Lenovo adopte une approche pratique pour aider les en
 
 
 
+[[lenovo-sr670-v2]]
 === Lenovo SR670 V2
 
 Le serveur rack Lenovo ThinkSystem SR670 V2 offre des performances optimales pour l'IA accélérée et le calcul haute performance (HPC).  Prenant en charge jusqu'à huit GPU, le SR670 V2 est adapté aux exigences de charge de travail intensives en calcul du ML, du DL et de l'inférence.
@@ -145,6 +153,7 @@ Les autres fonctionnalités incluent :
 
 
 
+[[mlperf]]
 == MLPerf
 
 MLPerf est la suite de référence leader du secteur pour l'évaluation des performances de l'IA.  Dans cette validation, nous avons utilisé son benchmark de classification d'images avec MXNet, l'un des frameworks d'IA les plus populaires.  Le script de formation MXNet_benchmarks a été utilisé pour piloter la formation de l'IA.  Le script contient des implémentations de plusieurs modèles conventionnels populaires et est conçu pour être aussi rapide que possible.  Il peut être exécuté sur une seule machine ou exécuté en mode distribué sur plusieurs hôtes.

@@ -56,6 +56,7 @@ https://github.com/zisianw/FaceBoxes.PyTorch["https://github.com/zisianw/FaceBox
 
 
 
+[[acknowledgments]]
 == Remerciements
 
 * Mark Cates, chef de produit principal, NetApp

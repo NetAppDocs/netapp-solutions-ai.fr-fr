@@ -22,6 +22,7 @@ image:hdcs-sh-001.png["Figure montrant une boîte de dialogue d'entrée/sortie o
 
 
 
+[[proven-data-fabric-customer-use-cases]]
 == Cas d'utilisation client éprouvés de Data Fabric
 
 La structure de données optimisée par NetApp fournit les neuf cas d'utilisation éprouvés suivants aux clients :
@@ -45,6 +46,7 @@ Ce document couvre deux des neuf cas d’utilisation (ainsi que leurs solutions)
 
 
 
+[[netapp-nfs-direct-access]]
 === Accès direct NetApp NFS
 
 NetApp NFS permet aux clients d'exécuter des tâches d'analyse de Big Data sur leurs données NFSv3 ou NFSv4 existantes ou nouvelles sans déplacer ni copier les données.  Il empêche les copies multiples de données et élimine le besoin de synchroniser les données avec une source.  Par exemple, dans le secteur financier, le déplacement de données d’un endroit à un autre doit répondre à des obligations légales, ce qui n’est pas une tâche facile.  Dans ce scénario, l’accès direct NetApp NFS analyse les données financières à partir de leur emplacement d’origine.  Un autre avantage clé est que l’utilisation de l’accès direct NetApp NFS simplifie la protection des données Hadoop en utilisant des commandes Hadoop natives et permet des flux de travail de protection des données exploitant le riche portefeuille de gestion des données de NetApp.
@@ -70,6 +72,7 @@ Les principaux avantages de l’utilisation de l’accès direct NetApp NFS incl
 
 
 
+[[building-blocks-for-big-data]]
 === Éléments de base du Big Data
 
 La structure de données optimisée par NetApp intègre des services et des applications de gestion des données (blocs de construction) pour l'accès, le contrôle, la protection et la sécurité des données, comme illustré dans la figure ci-dessous.

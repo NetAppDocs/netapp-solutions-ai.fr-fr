@@ -15,6 +15,7 @@ summary: 'Cette section couvre les détails du cas d"utilisation client de Dremi
 
 
 
+[[netapp-activeiq-use-case]]
 == Cas d'utilisation de NetApp ActiveIQ
 
 image:activeiqold.png["Ancienne architecture ActiveIQ"]
@@ -31,6 +32,7 @@ En remplacement de l'infrastructure Hadoop/Hive, Dremio offrait des fonctionnali
 
 
 
+[[auto-parts-sales-customer-use-case]]
 == Cas d'utilisation client de vente de pièces automobiles.
 
 *Défis* : Au sein de cette société mondiale de vente de pièces automobiles, les groupes de planification et d'analyse financière de la direction et de l'entreprise n'étaient pas en mesure d'obtenir une vue consolidée des rapports de vente et étaient obligés de lire les rapports de mesures de vente de chaque secteur d'activité et de tenter de les consolider.  Cela a conduit les clients à prendre des décisions avec des données datant d’au moins un jour.  Les délais d’obtention de nouvelles informations analytiques prennent généralement plus de quatre semaines.  Le dépannage des pipelines de données nécessiterait encore plus de temps, ajoutant trois jours ou plus au délai déjà long.  Le processus lent de développement des rapports ainsi que les performances des rapports ont obligé la communauté des analystes à attendre continuellement que les données soient traitées ou chargées, plutôt que de leur permettre de trouver de nouvelles perspectives commerciales et de stimuler de nouveaux comportements commerciaux.  Ces environnements perturbés étaient composés de nombreuses bases de données différentes pour différents secteurs d’activité, ce qui a donné lieu à de nombreux silos de données.  L’environnement lent et fragmenté a compliqué la gouvernance des données, car les analystes disposaient de trop de moyens pour élaborer leur propre version de la vérité par rapport à une source unique de vérité.  L’approche a coûté plus de 1,9 million de dollars en frais de plateforme de données et de personnel.  La maintenance de la plateforme existante et le traitement des demandes de données nécessitaient sept ingénieurs techniques de terrain (ETP) par an.  Avec l'augmentation des demandes de données, l'équipe de renseignement sur les données n'a pas pu adapter l'environnement existant pour répondre aux besoins futurs.

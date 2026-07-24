@@ -35,6 +35,7 @@ Pour cette solution, nous utilisons le Face Detection Data Set and Benchmark (FD
 
 
 
+[[target-audience]]
 == Public cible
 
 Ce rapport technique est destiné aux publics suivants :
@@ -48,6 +49,7 @@ Ce rapport technique est destiné aux publics suivants :
 
 
 
+[[solution-architecture]]
 == Architecture de la solution
 
 Cette solution est conçue pour gérer les charges de travail d'IA d'inférence en temps réel et par lots sur de grands ensembles de données en utilisant la puissance de traitement des GPU aux côtés des CPU traditionnels.  Cette validation démontre l’inférence préservant la confidentialité pour le ML et la gestion optimale des données requises pour les organisations recherchant des déploiements d’IA responsables.  Cette solution fournit une architecture adaptée à une plate-forme Kubernetes à nœud unique ou multi-nœuds pour le edge computing et le cloud computing interconnectés avec NetApp ONTAP AI au cœur sur site, NetApp DataOps Toolkit et le logiciel d'obfuscation Protopia utilisant Jupyter Lab et les interfaces CLI.  La figure suivante montre l’aperçu de l’architecture logique de Data Fabric optimisé par NetApp avec DataOps Toolkit et Protopia.

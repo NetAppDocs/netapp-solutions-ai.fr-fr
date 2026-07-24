@@ -18,6 +18,7 @@ Cette section décrit la configuration du cluster milvus avec Amazon FSx ONTAP p
 
 
 
+[[milvus-with-amazon-fsx-ontap-for-netapp-ontap-file-and-object-duality]]
 == Milvus avec Amazon FSx ONTAP pour NetApp ONTAP – dualité fichier et objet
 
 Dans cette section, pourquoi nous devons déployer une base de données vectorielle dans le cloud ainsi que les étapes pour déployer une base de données vectorielle (milvus autonome) dans Amazon FSx ONTAP pour NetApp ONTAP dans des conteneurs Docker.

@@ -29,6 +29,7 @@ image:cdm-fod-001.png["Cette figure montre les composants techniques de la solut
 
 
 
+[[use-case-summary]]
 == Résumé du cas d'utilisation
 
 Un cas d’utilisation potentiel pour l’accès au double protocole NFS et S3 se situe dans les domaines de l’apprentissage automatique et de la science des données.  Par exemple, une équipe de scientifiques des données peut travailler sur un projet d’apprentissage automatique utilisant AWS SageMaker, qui nécessite l’accès aux données stockées au format NFS.  Cependant, les données peuvent également devoir être consultées et partagées via des compartiments S3 pour collaborer avec d'autres membres de l'équipe ou pour s'intégrer à d'autres applications qui utilisent S3.

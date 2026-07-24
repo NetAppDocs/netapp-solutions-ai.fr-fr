@@ -18,6 +18,7 @@ Cette page décrit les différents domaines dans lesquels cette solution peut ê
 
 
 
+[[streaming-data]]
 == Données en streaming
 
 Apache Spark peut traiter des données en streaming, qui sont utilisées pour les processus d'extraction, de transformation et de chargement (ETL) en streaming ; l'enrichissement des données ; la détection d'événements déclencheurs ; et l'analyse de sessions complexes :
@@ -32,12 +33,14 @@ Pour plus de configuration de données en streaming, de vérification de Conflue
 
 
 
+[[machine-learning]]
 == Apprentissage automatique
 
 Le framework intégré Spark vous aide à exécuter des requêtes répétées sur des ensembles de données à l'aide de la bibliothèque d'apprentissage automatique (MLlib).  MLlib est utilisé dans des domaines tels que le clustering, la classification et la réduction de dimensionnalité pour certaines fonctions courantes du Big Data telles que l'intelligence prédictive, la segmentation des clients à des fins de marketing et l'analyse des sentiments.  MLlib est utilisé dans la sécurité des réseaux pour effectuer des inspections en temps réel des paquets de données à la recherche d'indications d'activité malveillante.  Il aide les fournisseurs de sécurité à se renseigner sur les nouvelles menaces et à garder une longueur d'avance sur les pirates tout en protégeant leurs clients en temps réel.
 
 
 
+[[deep-learning]]
 == Apprentissage profond
 
 TensorFlow est un framework d’apprentissage profond populaire utilisé dans l’ensemble du secteur.  TensorFlow prend en charge la formation distribuée sur un cluster CPU ou GPU.  Cette formation distribuée permet aux utilisateurs de l'exécuter sur une grande quantité de données avec de nombreuses couches profondes.
@@ -48,12 +51,14 @@ Les DataFrames et RDD des versions antérieures de Spark n'étaient pas bien ada
 
 
 
+[[interactive-analysis]]
 == Analyse interactive
 
 Apache Spark est suffisamment rapide pour effectuer des requêtes exploratoires sans échantillonnage avec des langages de développement autres que Spark, notamment SQL, R et Python.  Spark utilise des outils de visualisation pour traiter des données complexes et les visualiser de manière interactive.  Spark avec streaming structuré exécute des requêtes interactives sur des données en direct dans les analyses Web qui vous permettent d'exécuter des requêtes interactives sur la session actuelle d'un visiteur Web.
 
 
 
+[[recommender-system]]
 == Système de recommandation
 
 Au fil des ans, les systèmes de recommandation ont apporté d’énormes changements à nos vies, car les entreprises et les consommateurs ont réagi aux changements spectaculaires dans les achats en ligne, le divertissement en ligne et de nombreux autres secteurs.  En effet, ces systèmes comptent parmi les réussites les plus évidentes de l’IA en production.  Dans de nombreux cas d'utilisation pratiques, les systèmes de recommandation sont combinés à une IA conversationnelle ou à des chatbots interfacés avec un backend NLP pour obtenir des informations pertinentes et produire des inférences utiles.
@@ -64,6 +69,7 @@ Il existe plusieurs techniques populaires utilisées pour fournir des recommanda
 
 
 
+[[natural-language-processing]]
 == Traitement du langage naturel
 
 L’IA conversationnelle, rendue possible par le traitement du langage naturel (TALN), est la branche de l’IA qui aide les ordinateurs à communiquer avec les humains.  La PNL est répandue dans tous les secteurs d'activité et dans de nombreux cas d'utilisation, des assistants intelligents et des chatbots à la recherche Google et au texte prédictif.  Selon un https://www.forbes.com/sites/forbestechcouncil/2021/05/07/nice-chatbot-ing-with-you/?sh=7011eff571f4["Gartner"^] Selon les prévisions, d'ici 2022, 70 % des personnes interagiront quotidiennement avec des plateformes d'IA conversationnelles.  Pour une conversation de haute qualité entre un humain et une machine, les réponses doivent être rapides, intelligentes et naturelles.

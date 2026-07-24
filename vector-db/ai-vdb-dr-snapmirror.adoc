@@ -18,6 +18,7 @@ Cette section décrit la reprise après sinistre (DR) avec SnapMirror pour la so
 
 
 
+[[disaster-recovery-using-netapp-snapmirror]]
 == Reprise après sinistre avec NetApp SnapMirror
 
 image:vector-database-dr-fsxn-gcnv.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]

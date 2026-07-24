@@ -18,6 +18,7 @@ Cette section comprend un exemple de code YAML pour la solution de base de donnÃ
 
 
 
+[[appendix-d-docker-compose-yml]]
 == Annexe DÂ : docker-compose.yml
 
 [source, yml]

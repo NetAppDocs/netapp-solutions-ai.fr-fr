@@ -18,6 +18,7 @@ Ce document présente une liste de contrôle complète de l'infrastructure de pr
 
 
 
+[[business-use-case-readiness]]
 == Préparation des activités et des cas d'utilisation
 
 * La solution est-elle alignée sur les résultats des lignes de métier (par exemple, productivité, service client, juridique, domaine de la santé, production, secteur public) ?
@@ -29,6 +30,7 @@ Ce document présente une liste de contrôle complète de l'infrastructure de pr
 
 
 
+[[technical-infrastructure-requirements]]
 == Exigences techniques et d'infrastructure
 
 * Votre pipeline de données est-il prêt (préparation des données, ETL, ingestion sécurisée dans vector DB) ?
@@ -41,6 +43,7 @@ Ce document présente une liste de contrôle complète de l'infrastructure de pr
 
 
 
+[[software-ecosystem-alignment]]
 == Alignement du logiciel et de l'écosystème
 
 * Vos applications conteneurisées sont-elles compatibles avec les charts Kubernetes et Helm fournis ?
@@ -52,6 +55,7 @@ Ce document présente une liste de contrôle complète de l'infrastructure de pr
 
 
 
+[[data-governance-security]]
 == Gouvernance des données et sécurité
 
 * Avez-vous activé le contrôle d'accès basé sur les rôles (RBAC) dans Kubernetes ?
@@ -62,6 +66,7 @@ Ce document présente une liste de contrôle complète de l'infrastructure de pr
 
 
 
+[[operational-support-considerations]]
 == Considérations opérationnelles et de support
 
 * Les administrateurs sont-ils formés/habilités sur Kubernetes, Trident CSI et le déploiement de la pile OPEA ?
@@ -72,6 +77,7 @@ Ce document présente une liste de contrôle complète de l'infrastructure de pr
 
 
 
+[[commercial-gtm-alignment]]
 == Alignement commercial et GTM
 
 * Existe-t-il une feuille de route progressive (département → expansion de l’IA à l’ensemble de l’entreprise) ?

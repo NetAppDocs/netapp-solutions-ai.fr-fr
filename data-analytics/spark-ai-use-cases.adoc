@@ -18,6 +18,7 @@ Les principaux cas d’utilisation et méthodologies de l’IA, du ML et du DL p
 
 
 
+[[spark-nlp-pipelines-and-tensorflow-distributed-inferencing]]
 == Pipelines Spark NLP et inférence distribuée TensorFlow
 
 La liste suivante contient les bibliothèques NLP open source les plus populaires qui ont été adoptées par la communauté des sciences des données à différents niveaux de développement :
@@ -40,6 +41,7 @@ Le moteur d'apprentissage profond sous-jacent de Spark NLP est TensorFlow, une p
 
 
 
+[[horovod-distributed-training]]
 == Formation distribuée Horovod
 
 La validation Hadoop principale pour les performances liées à MapReduce est effectuée avec TeraGen, TeraSort, TeraValidate et DFSIO (lecture et écriture).  Les résultats de validation de TeraGen et TeraSort sont présentés dans https://www.netapp.com/pdf.html?item=/media/16420-tr-3969pdf.pdf["Solution NetApp E-Series pour Hadoop"] et dans la section « Storage Tiering » pour AFF.
@@ -61,6 +63,7 @@ Voir la sectionlink:apache-spark-use-cases-summary.html#machine-learning["Appren
 
 
 
+[[multi-worker-deep-learning-using-keras-for-ctr-prediction]]
 == Apprentissage profond multi-travailleurs utilisant Keras pour la prédiction du CTR
 
 Avec les avancées récentes des plateformes et applications ML, une grande attention est désormais portée à l’apprentissage à grande échelle.  Le taux de clics (CTR) est défini comme le nombre moyen de clics pour cent impressions d'annonces en ligne (exprimé en pourcentage).  Il est largement adopté comme indicateur clé dans divers secteurs d’activité et cas d’utilisation, notamment le marketing numérique, la vente au détail, le commerce électronique et les fournisseurs de services.  Pour plus de détails sur les applications du CTR et les résultats de performance de formation distribuée, consultez lelink:apache-spark-testing-results.html#deep-learning-models-for-ctr-prediction-performance["Modèles d'apprentissage profond pour les performances de prédiction du CTR"] section.
@@ -89,6 +92,7 @@ En plus du DCN, nous avons également testé d'autres modèles d'apprentissage p
 
 
 
+[[architectures-used-for-validation]]
 == Architectures utilisées pour la validation
 
 Pour cette validation, nous avons utilisé quatre nœuds de travail et un nœud maître avec une paire AFF-A800 HA.  Tous les membres du cluster étaient connectés via des commutateurs réseau 10 GbE.

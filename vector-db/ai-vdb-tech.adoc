@@ -18,12 +18,14 @@ Cette section fournit un aperçu des exigences relatives à la solution de base 
 
 
 
+[[technology-requirement]]
 == Exigences technologiques
 
 Les configurations matérielles et logicielles décrites ci-dessous ont été utilisées pour la majorité des validations effectuées dans ce document, à l'exception des performances.  Ces configurations servent de guide pour vous aider à configurer votre environnement.  Veuillez toutefois noter que les composants spécifiques peuvent varier en fonction des exigences individuelles des clients.
 
 
 
+[[hardware-requirements]]
 == Configuration matérielle requise
 
 |===
@@ -43,6 +45,7 @@ Les configurations matérielles et logicielles décrites ci-dessous ont été ut
 |===
 
 
+[[software-requirements]]
 == Configuration logicielle requise
 
 |===

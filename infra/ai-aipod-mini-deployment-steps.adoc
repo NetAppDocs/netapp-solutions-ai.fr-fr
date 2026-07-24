@@ -22,6 +22,7 @@ Sathish Thyagarajan, Michael Oglesby, Arpita Mahajan NetApp
 
 
 
+[[assumptions]]
 == Hypothèses :
 
 * L'utilisateur chargé du déploiement dispose des autorisations suffisantes pour créer un espace de noms et installer des charts Helm.
@@ -34,6 +35,7 @@ Sathish Thyagarajan, Michael Oglesby, Arpita Mahajan NetApp
 
 
 
+[[prerequisites]]
 == Prérequis
 
 Installez Git, Python3.11 et pip pour Python3.11
@@ -52,10 +54,12 @@ python3.11 -m pip --version
 ----
 
 
+[[erag-2-02-0-1-deployment-steps]]
 == Étapes de déploiement ERAG 2.0/2.0.1
 
 
 
+[[1-pull-enterprise-rag-2-0-release-from-github]]
 === 1. Récupérez la version Enterprise RAG 2.0 depuis GitHub
 
 [source, cli]
@@ -72,6 +76,7 @@ git checkout tags/release-2.0.1
 ----
 
 
+[[2-install-prerequisites]]
 === 2. Installer les prérequis
 
 [source, cli]
@@ -86,6 +91,7 @@ ansible-galaxy collection install -r requirements.yaml --upgrade
 ----
 
 
+[[3-create-inventory-file]]
 === 3. Créer un fichier d'inventaire
 
 [source, cli]
@@ -124,6 +130,7 @@ ansible_connection=ssh
 ----
 
 
+[[4-set-up-passwordless-ssh-to-each-node]]
 === 4. Configurez une connexion SSH sans mot de passe pour chaque nœud
 
 [source, cli]
@@ -134,6 +141,7 @@ Remarque : Si un nœud de déploiement est utilisé pour déployer l’ERAG, ass
 
 
 
+[[5-verify-connectivity]]
 === 5. Vérifier la connectivité
 
 [source, cli]
@@ -144,6 +152,7 @@ Remarque : Si vous n’avez pas configuré l’accès sudo sans mot de passe su
 
 
 
+[[6-edit-config-yaml-file]]
 === 6. Modifier  `config.yaml` file
 
 Préparez le déploiement en modifiant  `inventory/<cluster-name>/config.yaml` pour refléter les spécificités de votre environnement.
@@ -182,6 +191,7 @@ kubeconfig: "<repository path>/deployment/inventory/<cluster-name>/artifacts/adm
 ----
 
 
+[[7-deploy-the-k8s-cluster-with-trident]]
 === 7. Déployez le cluster K8s (avec Trident)
 
 Exécutez ansible-playbook playbooks/infrastructure.yaml avec les balises configure et install pour déployer le cluster et Trident CSI.
@@ -194,18 +204,21 @@ Remarque : - Si vous n'avez pas configuré sudo sans mot de passe sur vos nœud
 
 
 
+[[8-change-the-number-of-iwatch-open-descriptors]]
 === 8. Modifier le nombre de descripteurs iwatch ouverts
 
 Veuillez vous référer au  https://github.com/opea-project/Enterprise-RAG/blob/release-2.0.0/docs/application_deployment_guide.md#change-number-of-iwatch-open-descriptors["descripteurs ouverts iwatch"^] pour plus de détails.
 
 
 
+[[9-install-kubectl]]
 === 9. Installez kubectl
 
 Consultez le  https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/["Installer Kubectl"] si ce n'est pas déjà installé. Récupérez le fichier kubeconfig depuis  `<repository path>/deployment/inventory/<cluster-name>/artifacts/admin.conf`.
 
 
 
+[[10-install-metallb-in-kubernetes-cluster]]
 === 10. Installez MetalLB dans le cluster Kubernetes
 
 Installez MetalLB à l'aide de helm sur votre cluster Kubernetes.
@@ -219,6 +232,7 @@ Veuillez vous référer au  https://metallb.io/installation/["Installation de Me
 
 
 
+[[11-configure-metallb]]
 === 11. Configurer MetalLB
 
 MetalLB a été configuré en mode Layer 2, et les ressources IPAddressPool et L2Advertisement requises ont été créées conformément aux directives de configuration documentées.
@@ -255,6 +269,7 @@ Remarque : - Utilisez  `metallb-system` comme espace de noms pour MetalLB IPAdd
 
 
 
+[[12-update-config-yaml-with-fqdn-volume-access-mode-ingress-and-s3-details]]
 === 12. Mettez à jour le fichier config.yaml avec le FQDN, le mode d'accès au volume, l'ingress et les détails S3.
 
 Modifiez le fichier config.yaml situé à  `inventory/<cluster-name>/config.yaml` pour définir le FQDN du déploiement, définir les modes d'accès au volume, configurer l'exposition d'ingress et intégrer ONTAP S3.
@@ -316,6 +331,7 @@ Remarque : Par défaut, l’application Intel® AI for Enterprise RAG ingère l
 
 
 
+[[13-configure-scheduled-synchronization-settings]]
 === 13. Configurer les paramètres de synchronisation planifiée
 
 Lors de l'installation de l'OPEA pour Intel® AI for Enterprise RAG, activez  `scheduledSync` afin que l'application ingère automatiquement les fichiers nouveaux ou mis à jour de vos compartiments S3.
@@ -341,6 +357,7 @@ celery:
 ----
 
 
+[[14-deploy-enterprise-rag-2-02-0-1]]
 === 14. Déployer Enterprise RAG 2.0/2.0.1
 
 Avant l'installation, validez la préparation de l'infrastructure en suivant les procédures décrites dans le link:https://github.com/opea-project/Enterprise-RAG/blob/main/docs/application_deployment_guide.md["Guide de déploiement de l'application Intel® AI for Enterprise RAG"]. Cette étape garantit que l'infrastructure sous-jacente est correctement configurée et répond à toutes les conditions préalables requises pour une installation réussie de l'application Enterprise RAG.
@@ -355,6 +372,7 @@ Remarque : Si vous n’avez pas configuré sudo sans mot de passe sur votre nœ
 
 
 
+[[15-create-a-dns-entry]]
 === 15. Créez une entrée DNS
 
 Créez une entrée DNS pour le tableau de bord web Enterprise RAG sur votre serveur DNS. Pour continuer, récupérez l'adresse IP externe attribuée à l'ingress LoadBalancer d'Enterprise RAG :
@@ -369,16 +387,19 @@ Remarque : - Le FQDN utilisé pour l'entrée DNS DOIT correspondre au FQDN du fi
 
 
 
+[[16-access-enterprise-rag-ui]]
 === 16. Accéder à l'interface utilisateur Enterprise RAG
 
 Accédez à l'interface utilisateur Enterprise RAG en naviguant vers ce FQDN dans votre navigateur. Remarque : vous pouvez récupérer les identifiants UI par défaut à partir de cat ansible-logs/default_credentials.txt
 
 
 
+[[troubleshooting-guide]]
 == Guide de dépannage
 
 
 
+[[1-issue-keycloak-helm-installation-conflict]]
 === 1. Problème : Conflit d’installation de Keycloak Helm
 
 Scénario : Lors du déploiement d’ERAG, l’installation de Keycloak peut échouer avec l’erreur suivante :
@@ -404,6 +425,7 @@ Remarque : Un état obsolète de la version Helm peut bloquer les opérations d'
 
 
 
+[[2-issue-trident-operator-helm-chart-version-not-found]]
 === 2. Problème : version du Helm Chart de Trident Operator introuvable
 
 Scénario : Lors du déploiement d’ERAG, l’installation de l’opérateur Trident peut échouer en raison d’une incompatibilité de version du chart Helm. L’erreur suivante peut être observée :

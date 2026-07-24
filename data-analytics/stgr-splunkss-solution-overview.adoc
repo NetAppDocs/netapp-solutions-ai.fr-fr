@@ -18,6 +18,7 @@ Cette page décrit les composants utilisés pour compléter cette solution, nota
 
 
 
+[[netapp-storagegrid]]
 == NetApp StorageGRID
 
 NetApp StorageGRID est une plate-forme de stockage d'objets hautes performances et rentable.  Il offre une gestion intelligente des données mondiales basée sur des politiques utilisant une architecture de grille distribuée basée sur des nœuds.  Il simplifie la gestion de pétaoctets de données non structurées et de milliards d'objets grâce à son espace de noms d'objets global omniprésent combiné à des fonctionnalités de gestion de données sophistiquées.  L'accès aux objets par appel unique s'étend sur plusieurs sites et simplifie les architectures à haute disponibilité tout en garantissant un accès continu aux objets, quelles que soient les pannes du site ou de l'infrastructure.
@@ -28,6 +29,7 @@ SmartStore exploite StorageGRID comme niveau de stockage à distance et permet a
 
 
 
+[[splunk-enterprise]]
 == Splunk Entreprise
 
 Splunk, leader dans la collecte et l'analyse de données générées par des machines, contribue à simplifier et à moderniser l'informatique grâce à ses capacités d'analyse opérationnelle.  Il s'étend également aux cas d'utilisation de l'analyse commerciale, de la sécurité et de l'IoT.  Le stockage est un élément essentiel pour un déploiement réussi du logiciel Splunk.
@@ -36,6 +38,7 @@ Les données générées par machine constituent le type de big data qui connaî
 
 
 
+[[splunk-smartstore]]
 == Splunk SmartStore
 
 Splunk SmartStore est une fonctionnalité d'indexation qui utilise le stockage d'objets (également appelé stockage distant ou niveaux de stockage distants) tel que StorageGRID pour stocker des données chaudes à l'aide du protocole S3.

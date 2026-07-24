@@ -18,6 +18,7 @@ Cette section décrit la procédure de déploiement de la solution de base de do
 
 
 
+[[deployment-procedure]]
 == Procédure de déploiement
 
 Dans cette section de déploiement, nous avons utilisé la base de données vectorielle Milvus avec Kubernetes pour la configuration du laboratoire comme ci-dessous.
@@ -28,6 +29,7 @@ Le stockage NetApp fournit le stockage au cluster pour conserver les données de
 
 
 
+[[netapp-storage-setup-ontap]]
 === Configuration du stockage NetApp – ONTAP
 
 * Initialisation du système de stockage
@@ -54,6 +56,7 @@ Veuillez suivre les étapes ci-dessous pour NAS S3 (Network Attached Storage Sim
 
 
 
+[[netapp-storage-setup-storagegrid]]
 === Configuration du stockage NetApp – StorageGRID
 
 . Installez le logiciel storageGRID.

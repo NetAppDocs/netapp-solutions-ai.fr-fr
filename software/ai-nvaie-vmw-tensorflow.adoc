@@ -18,12 +18,14 @@ Cette section décrit les tâches à effectuer pour exécuter une tâche de form
 
 
 
+[[prerequisites]]
 == Prérequis
 
 Avant d'effectuer les étapes décrites dans cette section, nous supposons que vous avez déjà créé un modèle de machine virtuelle invitée en suivant les instructions décrites dans lelink:ai-nvaie-vmw-ngcsetup.html["Installation"] page.
 
 
 
+[[create-guest-vm-from-template]]
 == Créer une machine virtuelle invitée à partir d'un modèle
 
 Tout d’abord, vous devez créer une nouvelle machine virtuelle invitée à partir du modèle que vous avez créé dans la section précédente.  Pour créer une nouvelle machine virtuelle invitée à partir de votre modèle, connectez-vous à VMware vSphere, cliquez avec le bouton droit sur le nom du modèle, choisissez « Nouvelle machine virtuelle à partir de ce modèle... », puis suivez l'assistant.
@@ -32,6 +34,7 @@ image:nvaie-004.png["Figure montrant une boîte de dialogue d'entrée/sortie ou 
 
 
 
+[[create-and-mount-data-volume]]
 == Créer et monter un volume de données
 
 Ensuite, vous devez créer un nouveau volume de données sur lequel stocker votre ensemble de données d’entraînement.  Vous pouvez créer rapidement un nouveau volume de données à l’aide de NetApp DataOps Toolkit.  L'exemple de commande qui suit montre la création d'un volume nommé « imagenet » d'une capacité de 2 To.
@@ -46,12 +49,14 @@ $ sudo -E netapp_dataops_cli.py mount vol -n imagenet -m ~/imagenet
 ....
 
 
+[[populate-data-volume]]
 == Remplir le volume de données
 
 Une fois le nouveau volume provisionné et monté, l’ensemble de données de formation peut être récupéré à partir de l’emplacement source et placé sur le nouveau volume.  Cela impliquera généralement d'extraire les données d'un lac de données S3 ou Hadoop et nécessitera parfois l'aide d'un ingénieur de données.
 
 
 
+[[execute-tensorflow-training-job]]
 == Exécuter la tâche d'entraînement TensorFlow
 
 Vous êtes maintenant prêt à exécuter votre tâche de formation TensorFlow.  Pour exécuter votre tâche de formation TensorFlow, effectuez les tâches suivantes.

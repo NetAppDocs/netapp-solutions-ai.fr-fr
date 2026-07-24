@@ -18,12 +18,14 @@ Cette section fournit un aperçu des cas d’utilisation de la solution de base 
 
 
 
+[[vector-database-use-cases]]
 == Cas d'utilisation de bases de données vectorielles
 
 Dans cette section, nous discutons de deux cas d'utilisation tels que la récupération augmentée avec de grands modèles de langage et le chatbot informatique NetApp .
 
 
 
+[[retrieval-augmented-generation-rag-with-large-language-models-llms]]
 === Génération augmentée de récupération (RAG) avec de grands modèles de langage (LLM)
 
 ....
@@ -40,6 +42,7 @@ image:rag-nvidia-nemo.png["Figure montrant une boîte de dialogue d'entrée/sort
 
 
 
+[[netapp-it-chatbot-use-case]]
 === Cas d'utilisation du chatbot informatique NetApp
 
 Le chatbot de NetApp sert d’autre cas d’utilisation en temps réel pour la base de données vectorielle.  Dans ce cas, NetApp Private OpenAI Sandbox fournit une plate-forme efficace, sécurisée et efficiente pour gérer les requêtes des utilisateurs internes de NetApp.  En intégrant des protocoles de sécurité rigoureux, des systèmes de gestion de données efficaces et des capacités de traitement d'IA sophistiquées, il garantit des réponses précises et de haute qualité aux utilisateurs en fonction de leurs rôles et responsabilités au sein de l'organisation via l'authentification SSO.  Cette architecture met en évidence le potentiel de fusion de technologies avancées pour créer des systèmes intelligents axés sur l’utilisateur.

@@ -18,6 +18,7 @@ Cette section décrit les spécificités de la manière dont le produit instaclu
 
 
 
+[[vector-database-with-instaclustr-using-postgresql-pgvector]]
 == Base de données vectorielle avec Instaclustr utilisant PostgreSQL : pgvector
 
 Dans cette section, nous examinons en détail la manière dont le produit instaclustr s'intègre à la fonctionnalité postgreSQL sur pgvector.  Nous avons un exemple de « Comment améliorer la précision et les performances de votre LLM avec PGVector et PostgreSQL : Introduction aux intégrations et au rôle de PGVector ».  Veuillez vérifier lelink:https://www.instaclustr.com/blog/how-to-improve-your-llm-accuracy-and-performance-with-pgvector-and-postgresql-introduction-to-embeddings-and-the-role-of-pgvector/["blog"] pour obtenir plus d'informations.

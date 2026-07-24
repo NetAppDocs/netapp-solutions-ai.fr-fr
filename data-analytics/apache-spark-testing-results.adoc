@@ -75,6 +75,7 @@ Le tableau suivant répertorie les exigences logicielles.
 |===
 
 
+[[financial-sentiment-analysis]]
 == Analyse du sentiment financier
 
 Nous avons publiélink:https://www.netapp.com/pdf.html?item=/media/17123-tr4910pdf.pdf["TR-4910 : Analyse des sentiments à partir des communications clients avec NetApp AI"^] , dans lequel un pipeline d'IA conversationnelle de bout en bout a été construit en utilisant le https://github.com/NetApp/netapp-dataops-toolkit["Boîte à outils NetApp DataOps"^] , Stockage AFF et système NVIDIA DGX.  Le pipeline effectue le traitement du signal audio par lots, la reconnaissance automatique de la parole (ASR), l'apprentissage par transfert et l'analyse des sentiments en exploitant la boîte à outils DataOps, https://developer.nvidia.com/riva["Kit de développement logiciel NVIDIA Riva"^] , et le https://developer.nvidia.com/tao["Cadre Tao"^] .  En étendant le cas d'utilisation de l'analyse des sentiments au secteur des services financiers, nous avons créé un flux de travail SparkNLP, chargé trois modèles BERT pour diverses tâches NLP, telles que la reconnaissance d'entités nommées, et obtenu un sentiment au niveau des phrases pour les appels de résultats trimestriels des 10 premières entreprises du NASDAQ.
@@ -160,6 +161,7 @@ image:apache-spark-011.png["Exécution du workflow de bout en bout de l'analyse 
 
 
 
+[[distributed-training-with-horovod-performance]]
 == Formation distribuée avec performance Horovod
 
 La commande suivante a produit des informations d'exécution et un fichier journal dans notre cluster Spark à l'aide d'un seul `master` nœud avec 160 exécuteurs chacun avec un cœur.  La mémoire de l'exécuteur a été limitée à 5 Go pour éviter une erreur de mémoire insuffisante.  Voir la sectionlink:spark-python-scripts.html["Scripts Python pour chaque cas d'utilisation majeur"] pour plus de détails concernant le traitement des données, la formation du modèle et le calcul de la précision du modèle dans `keras_spark_horovod_rossmann_estimator.py` .
@@ -236,6 +238,7 @@ image:apache-spark-012.png["Exécution du flux de travail Horovod Spark."]
 
 
 
+[[deep-learning-models-for-ctr-prediction-performance]]
 == Modèles d'apprentissage profond pour les performances de prédiction du CTR
 
 Pour les systèmes de recommandation conçus pour maximiser le CTR, vous devez apprendre les interactions sophistiquées des fonctionnalités derrière les comportements des utilisateurs qui peuvent être calculées mathématiquement d'un ordre faible à un ordre élevé.  Les interactions entre les caractéristiques d’ordre faible et d’ordre élevé doivent être tout aussi importantes pour un bon modèle d’apprentissage en profondeur, sans biaiser vers l’une ou l’autre.  Deep Factorization Machine (DeepFM), un réseau neuronal basé sur une machine de factorisation, combine des machines de factorisation pour la recommandation et l'apprentissage en profondeur pour l'apprentissage des fonctionnalités dans une nouvelle architecture de réseau neuronal.

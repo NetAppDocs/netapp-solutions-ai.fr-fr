@@ -18,10 +18,12 @@ Cette section se concentre sur les composants logiciels du NetApp AIPod avec les
 
 
 
+[[nvidia-software]]
 == Logiciel NVIDIA
 
 
 
+[[nvidia-base-command]]
 === Commande de base NVIDIA
 
 NVIDIA Base Command alimente chaque DGX BasePOD, permettant aux organisations de tirer parti du meilleur de l'innovation logicielle NVIDIA .  Les entreprises peuvent exploiter tout le potentiel de leur investissement grâce à une plateforme éprouvée qui comprend une orchestration et une gestion de cluster de niveau entreprise, des bibliothèques qui accélèrent l'infrastructure de calcul, de stockage et de réseau, ainsi qu'un système d'exploitation (OS) optimisé pour les charges de travail d'IA.
@@ -32,6 +34,7 @@ image:aipod-nv-basecommand-new.png["Figure montrant une boîte de dialogue d'ent
 
 
 
+[[nvidia-gpu-cloud-ngc]]
 === NVIDIA GPU Cloud (NGC)
 
 NVIDIA NGC fournit des logiciels pour répondre aux besoins des scientifiques de données, des développeurs et des chercheurs ayant différents niveaux d'expertise en IA.  Les logiciels hébergés sur NGC sont soumis à des analyses par rapport à un ensemble agrégé de vulnérabilités et d'expositions courantes (CVE), de cryptographie et de clés privées.  Il est testé et conçu pour s'adapter à plusieurs GPU et, dans de nombreux cas, à plusieurs nœuds, garantissant ainsi aux utilisateurs de maximiser leur investissement dans les systèmes DGX.
@@ -42,16 +45,19 @@ image:aipod-nv-ngc.png["Figure montrant une boîte de dialogue d'entrée/sortie 
 
 
 
+[[nvidia-ai-enterprise]]
 === NVIDIA AI Enterprise
 
 NVIDIA AI Enterprise est la plate-forme logicielle de bout en bout qui met l'IA générative à la portée de chaque entreprise, offrant le temps d'exécution le plus rapide et le plus efficace pour les modèles de base d'IA générative optimisés pour s'exécuter sur la plate-forme NVIDIA DGX.  Avec une sécurité, une stabilité et une facilité de gestion de niveau production, il rationalise le développement de solutions d'IA génératives.  NVIDIA AI Enterprise est inclus avec DGX BasePOD pour permettre aux développeurs d'entreprise d'accéder à des modèles pré-entraînés, des frameworks optimisés, des microservices, des bibliothèques accélérées et un support d'entreprise.
 
 
 
+[[netapp-software]]
 == Logiciel NetApp
 
 
 
+[[netapp-ontap]]
 === NetApp ONTAP
 
 ONTAP 9, la dernière génération de logiciel de gestion du stockage de NetApp, permet aux entreprises de moderniser leur infrastructure et de passer à un centre de données prêt pour le cloud.  En s'appuyant sur des capacités de gestion de données de pointe, ONTAP permet la gestion et la protection des données avec un seul ensemble d'outils, quel que soit l'endroit où résident ces données.  Vous pouvez également déplacer librement les données là où elles sont nécessaires : vers la périphérie, le cœur ou le cloud.  ONTAP 9 inclut de nombreuses fonctionnalités qui simplifient la gestion des données, accélèrent et protègent les données critiques et permettent des capacités d'infrastructure de nouvelle génération dans les architectures de cloud hybride.
@@ -98,6 +104,7 @@ ONTAP permet de répondre aux besoins commerciaux exigeants et en constante évo
 
 
 
+[[netapp-dataops-toolkit]]
 === Boîte à outils NetApp DataOps
 
 NetApp DataOps Toolkit est un outil basé sur Python qui simplifie la gestion des espaces de travail de développement/formation et des serveurs d'inférence soutenus par un stockage NetApp hautes performances et évolutif.  La boîte à outils DataOps peut fonctionner comme un utilitaire autonome et est encore plus efficace dans les environnements Kubernetes exploitant NetApp Trident pour automatiser les opérations de stockage.  Les principales fonctionnalités comprennent :
@@ -111,6 +118,7 @@ NetApp DataOps Toolkit est un outil basé sur Python qui simplifie la gestion de
 
 
 
+[[netapp-trident]]
 === NetApp Trident
 
 Trident est un orchestrateur de stockage open source entièrement pris en charge pour les conteneurs et les distributions Kubernetes, y compris Anthos. Trident fonctionne avec l'ensemble du portefeuille de stockage NetApp , y compris NetApp ONTAP, et prend également en charge les connexions NFS, NVMe/TCP et iSCSI. Trident accélère le flux de travail DevOps en permettant aux utilisateurs finaux de provisionner et de gérer le stockage à partir de leurs systèmes de stockage NetApp sans nécessiter l'intervention d'un administrateur de stockage.

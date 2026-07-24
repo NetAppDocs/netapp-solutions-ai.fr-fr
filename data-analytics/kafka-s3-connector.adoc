@@ -308,6 +308,7 @@ root@stlrx2540m1-108:~#
 
 
 
+[[instaclustr-kafka-connect-connectors]]
 == Connecteurs Instaclustr Kafka Connect
 
 Instaclustr prend en charge les connecteurs Kafka Connect et leurs détails - link:https://github.com/instaclustr/kafka-connect-connectors["Plus de détails"]. Instaclustr fournit des connecteurs supplémentaires link:https://www.instaclustr.com/support/documentation/kafka-connect/bundled-kafka-connect-plugins/["leurs détails"]

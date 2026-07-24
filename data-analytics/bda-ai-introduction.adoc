@@ -20,28 +20,33 @@ Ce document décrit comment déplacer les données d’analyse Big Data et les d
 
 
 
+[[concepts-and-components]]
 == Concepts et composants
 
 
 
+[[big-data-analytics-storage]]
 === Stockage d'analyse de Big Data
 
 L'analyse de Big Data est le principal fournisseur de stockage pour HDFS.  Un client utilise souvent un système de fichiers compatible Hadoop (HCFS) tel que Windows Azure Blob Storage, MapR File System (MapR-FS) et le stockage d’objets S3.
 
 
 
+[[general-parallel-file-system]]
 === Système de fichiers parallèle général
 
 GPFS d'IBM est un système de fichiers d'entreprise qui offre une alternative à HDFS.  GPFS offre aux applications la flexibilité nécessaire pour décider de la taille des blocs et de la disposition de réplication, ce qui offre de bonnes performances et une bonne efficacité.
 
 
 
+[[netapp-in-place-analytics-module]]
 === Module d'analyse sur place NetApp
 
 Le module NetApp In-Place Analytics (NIPAM) sert de pilote aux clusters Hadoop pour accéder aux données NFS.  Il comporte quatre composants : un pool de connexions, un flux d'entrée NFS, un cache de gestion de fichiers et un flux de sortie NFS. Pour plus d'informations, consultez la section  https://www.netapp.com/pdf.html?item=/media/16351-tr-4382pdf.pdf[] .
 
 
 
+[[hadoop-distributed-copy]]
 === Copie distribuée Hadoop
 
 Hadoop Distributed Copy (DistCp) est un outil de copie distribué utilisé pour les tâches de copie inter-cluster et intra-cluster de grande taille.  Cet outil utilise MapReduce pour la distribution des données, la gestion des erreurs et la création de rapports.  Il étend la liste des fichiers et des répertoires et les saisit dans des tâches de mappage pour copier les données de la liste source.  L'image ci-dessous montre l'opération DistCp dans HDFS et non HDFS.
@@ -52,12 +57,14 @@ Hadoop DistCp déplace les données entre les deux systèmes HDFS sans utiliser 
 
 
 
+[[google-cloud-netapp-volumes]]
 == Google Cloud NetApp Volumes
 
 Google Cloud NetApp Volumes est un service de fichiers cloud natif avec des performances extrêmes.  Ce service aide les clients à accélérer leur mise sur le marché en augmentant et en diminuant rapidement les ressources et en utilisant les fonctionnalités NetApp pour améliorer la productivité et réduire les temps d'arrêt du personnel.  Google Cloud NetApp Volumes est la bonne alternative pour la reprise après sinistre et la sauvegarde dans le cloud, car il réduit l'empreinte globale du centre de données et consomme moins de stockage cloud public natif.
 
 
 
+[[netapp-xcp]]
 == NetApp XCP
 
 NetApp XCP est un logiciel client qui permet une migration rapide et fiable des données vers NetApp et NetApp vers NetApp .  Cet outil est conçu pour copier une grande quantité de données NAS non structurées de n’importe quel système NAS vers un contrôleur de stockage NetApp .  L'outil de migration XCP utilise un moteur de streaming d'E/S multicœur et multicanal qui peut traiter de nombreuses requêtes en parallèle, telles que la migration de données, les listes de fichiers ou de répertoires et les rapports d'espace.  Il s’agit de l’outil de migration de données NetApp par défaut.  Vous pouvez utiliser XCP pour copier des données d’un cluster Hadoop et HPC vers un stockage NetApp NFS.  Le diagramme ci-dessous montre le transfert de données d'un cluster Hadoop et HPC vers un volume NetApp NFS à l'aide de XCP.
@@ -66,6 +73,7 @@ image:bda-ai-002.png["Figure montrant une boîte de dialogue d'entrée/sortie ou
 
 
 
+[[netapp-bluexp-copy-and-sync]]
 == Copie et synchronisation NetApp BlueXP
 
 NetApp BlueXP Copy and Sync est un logiciel de réplication de données hybride en tant que service qui transfère et synchronise les données NFS, S3 et CIFS de manière transparente et sécurisée entre le stockage sur site et le stockage cloud.  Ce logiciel est utilisé pour la migration de données, l'archivage, la collaboration, l'analyse et bien plus encore.  Une fois les données transférées, BlueXP Copy and Sync synchronise en continu les données entre la source et la destination.  À l’avenir, il transfère ensuite le delta.  Il sécurise également les données au sein de votre propre réseau, dans le cloud ou sur site.  Ce logiciel est basé sur un modèle de paiement à l'utilisation, qui fournit une solution rentable et offre des capacités de surveillance et de reporting pour votre transfert de données.

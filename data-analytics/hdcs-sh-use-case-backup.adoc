@@ -18,6 +18,7 @@ Dans ce scénario, le client dispose d’un grand référentiel Hadoop sur site 
 
 
 
+[[requirements-and-challenges]]
 == Exigences et défis
 
 Les principales exigences et défis pour ce cas d'utilisation incluent :
@@ -35,6 +36,7 @@ Les principales exigences et défis pour ce cas d'utilisation incluent :
 
 
 
+[[customers-existing-backup-solutionx]]
 == Solution de sauvegarde existante du clientx
 
 La figure ci-dessous montre la solution de sauvegarde native Hadoop d’origine.
@@ -63,12 +65,14 @@ Les inconvénients de la solution de sauvegarde native Hadoop d'origine incluent
 
 
 
+[[backup-solutions]]
 == Solutions de sauvegarde
 
 Sur la base de ces défis et exigences, et en tenant compte du système de sauvegarde existant, trois solutions de sauvegarde possibles ont été suggérées.  Les sous-sections suivantes décrivent chacune de ces trois solutions de sauvegarde différentes, appelées solution A à solution C.
 
 
 
+[[solution-a]]
 === Solution A
 
 Dans la solution A, le cluster Hadoop de sauvegarde envoie les sauvegardes secondaires aux systèmes de stockage NetApp NFS, éliminant ainsi le besoin de bande, comme illustré dans la figure ci-dessous.
@@ -114,6 +118,7 @@ Dans cette solution, les disques SAN d' ONTAP peuvent être utilisés à la plac
 
 
 
+[[solution-b]]
 === Solution B
 
 La solution B ajoute un volume NFS au cluster Hadoop de production, ce qui élimine le besoin du cluster Hadoop de sauvegarde, comme illustré dans la figure ci-dessous.
@@ -141,6 +146,7 @@ L’inconvénient de cette solution est qu’elle est implémentée dans le clus
 
 
 
+[[solution-c]]
 === Solution C
 
 Dans la solution C, les volumes SAN NetApp sont directement provisionnés sur le cluster de production Hadoop pour le stockage HDFS, comme illustré dans la figure ci-dessous.

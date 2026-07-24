@@ -24,6 +24,7 @@ image:stgr-splunkss-011.png["Figure montrant une boîte de dialogue d'entrée/so
 
 
 
+[[configuration]]
 == Configuration
 
 Ce tableau répertorie le matériel utilisé pour la validation des performances de SmartStorage.
@@ -51,6 +52,7 @@ Ce tableau répertorie le matériel utilisé pour la validation des performances
 |===
 
 
+[[smartstore-remote-store-performance-validation]]
 == Validation des performances du magasin à distance SmartStore
 
 Dans cette validation des performances, nous avons configuré le cache SmartStore dans le stockage local sur tous les indexeurs pour 10 jours de données.  Nous avons permis à `maxDataSize=auto` (taille du bucket de 750 Mo) dans le gestionnaire de cluster Splunk et a poussé les modifications vers tous les indexeurs.  Pour mesurer les performances de téléchargement, nous avons ingéré 10 To par jour pendant 10 jours et avons transféré tous les buckets chauds vers des buckets chauds en même temps et capturé le débit maximal et moyen par instance et à l'échelle du déploiement à partir du tableau de bord de la console de surveillance SmartStore.
@@ -152,6 +154,7 @@ image:stgr-splunkss-015.png["Figure montrant une boîte de dialogue d'entrée/so
 
 
 
+[[storagegrid-performance]]
 == Performances de StorageGRID
 
 Les performances de SmartStore sont basées sur la recherche de modèles et de chaînes spécifiques à partir de grandes quantités de données.  Dans cette validation, les événements sont générés à l'aide de https://github.com/splunk/eventgen["Eventgen"^] sur un index Splunk spécifique (eventgen-test) via la tête de recherche, et la requête va à StorageGRID pour la plupart des requêtes.  L'image suivante montre les succès et les échecs des données de requête.  Les données de hits proviennent du disque local et les données d'échecs proviennent du contrôleur StorageGRID .
@@ -167,6 +170,7 @@ image:stgr-splunkss-017.png["Figure montrant une boîte de dialogue d'entrée/so
 
 
 
+[[storagegrid-hardware-usage]]
 == Utilisation du matériel StorageGRID
 
 L'instance StorageGRID dispose d'un équilibreur de charge et de trois contrôleurs StorageGRID .  L'utilisation du processeur pour les trois contrôleurs est comprise entre 75 % et 100 %.
@@ -175,6 +179,7 @@ image:stgr-splunkss-018.png["Figure montrant une boîte de dialogue d'entrée/so
 
 
 
+[[smartstore-with-netapp-storage-controller-benefits-for-the-customer]]
 == SmartStore avec contrôleur de stockage NetApp - avantages pour le client
 
 * *Découplage du calcul et du stockage.*  Splunk SmartStore dissocie le calcul et le stockage, ce qui vous aide à les faire évoluer indépendamment.

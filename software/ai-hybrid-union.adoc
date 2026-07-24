@@ -15,12 +15,14 @@ David Espejo, Union.ai Sathish Thyagarajan, NetApp
 
 
 
+[[overview]]
 == Aperçu
 
 La plateforme d'orchestration hybride d'Union.ai s'intègre parfaitement à NetApp ONTAP et FlexCache pour accélérer les flux de travail d'entraînement IA/ML.  Cette solution permet de conserver les données en toute sécurité sur site tout en tirant parti de la puissance de calcul GPU basée sur le cloud pour les charges de travail d'entraînement de l'IA.  NetApp FlexCache garantit que seules les données nécessaires sont mises en cache dans le cloud, permettant ainsi des pipelines d'IA/ML hybrides efficaces, sécurisés et évolutifs.
 
 
 
+[[customer-use-case-hybrid-cloud-ai-training]]
 == Cas d'utilisation client : Formation à l'IA dans le cloud hybride
 
 * Données sur site : stockées sur NetApp ONTAP pour des raisons de conformité et de sécurité.
@@ -31,6 +33,7 @@ La plateforme d'orchestration hybride d'Union.ai s'intègre parfaitement à NetA
 
 
 
+[[customer-value]]
 == Valeur client
 
 * Exécutez des charges de travail d'IA sur des ensembles de données massifs grâce aux capacités d'extension horizontale de NetApp ONTAP.
@@ -42,6 +45,7 @@ La plateforme d'orchestration hybride d'Union.ai s'intègre parfaitement à NetA
 
 
 
+[[enabling-the-plugin-prerequisites]]
 == Activation du plugin – Prérequis
 
 [cols="32%,68%"]
@@ -80,6 +84,7 @@ Accès administrateur aux clusters ONTAP et Kubernetes.
 |===
 
 
+[[reference-architecture]]
 == Architecture de référence
 
 La figure suivante illustre le plan de contrôle Union.ai intégré au stockage NetApp pour l'entraînement hybride en IA.
@@ -93,6 +98,7 @@ image::ai-hybrid-union-001.png[Architecture hybride de formation d'IA avec Union
 
 
 
+[[step-1-create-a-flexcache-volume]]
 === _Étape 1 : Créer un volume FlexCache
 
 Utilisation du gestionnaire de système ONTAP
@@ -110,6 +116,7 @@ Utilisation du gestionnaire de système ONTAP
 
 
 
+[[step-2-configure-trident]]
 === _Étape 2 : Configurer Trident_
 
 Installez Trident sur les deux clusters :
@@ -153,6 +160,7 @@ kubectl apply -f storageclass-flexcache.yaml
 ----
 
 
+[[step-3-deploy-union-ai-workflows]]
 === _Étape 3 : Déploiement des workflows Union.ai_
 
 Union utilise des PVC pour monter les volumes FlexCache dans les tâches d'entraînement.
@@ -212,6 +220,7 @@ L'opérateur syndiqué va :
 
 
 
+[[step-4-validate-integration]]
 === Étape 4 : Valider l'intégration
 
 [cols="21%,79%"]
@@ -234,6 +243,7 @@ Utilisez NetApp BlueXP ou l'interface de ligne de commande ONTAP pour surveiller
 
 
 
+[[security-considerations]]
 == Considérations de sécurité
 
 * Utiliser les points de terminaison VPC pour FSx pour NetApp ONTAP
@@ -244,6 +254,7 @@ Utilisez NetApp BlueXP ou l'interface de ligne de commande ONTAP pour surveiller
 
 
 
+[[monitoring-and-optimization]]
 == Surveillance et optimisation
 
 [cols="31%,69%"]
@@ -300,6 +311,7 @@ Utilisez NetApp BlueXP ou l'interface de ligne de commande ONTAP pour surveiller
 
 
 
+[[related-links]]
 == Liens connexes
 
 * https://docs.union.ai["+++Documentation Union.ai+++"]
@@ -310,12 +322,14 @@ Utilisez NetApp BlueXP ou l'interface de ligne de commande ONTAP pour surveiller
 
 
 
+[[conclusion]]
 == Conclusion
 
 Vous disposez désormais d'un environnement de formation hybride validé pour l'IA utilisant Union.ai et NetApp FlexCache.  Les tâches de formation peuvent s'exécuter dans le cloud tout en accédant aux données sur site de manière sécurisée et efficace, sans avoir à répliquer des ensembles de données entiers ni à compromettre la gouvernance.
 
 
 
+[[union-ai-companion-guide]]
 === *Union.ai - Guide d'utilisation*
 
 

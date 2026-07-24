@@ -18,6 +18,7 @@ Les configurations matérielles et logicielles décrites ci-dessous ont été ut
 
 
 
+[[hardware-requirements]]
 === Configuration matérielle requise
 
 |===
@@ -52,6 +53,7 @@ Les configurations matérielles et logicielles décrites ci-dessous ont été ut
 |===
 
 
+[[software-requirements]]
 === Configuration logicielle requise
 
 |===

@@ -85,6 +85,7 @@ Le tableau suivant présente les versions logicielles des différents composants
 |===
 
 
+[[storage-network-configuration]]
 == Configuration du réseau de stockage
 
 Cette section décrit les détails clés de la configuration du réseau de stockage Ethernet.  Pour plus d'informations sur la configuration du réseau informatique InfiniBand, veuillez consulter lelink:https://nvdam.widen.net/s/nfnjflmzlj/nvidia-dgx-basepod-reference-architecture["Documentation NVIDIA BasePOD"] .  Pour plus de détails sur la configuration du commutateur, veuillez vous référer aulink:https://docs.nvidia.com/networking-ethernet-software/cumulus-linux-59/["Documentation de NVIDIA Cumulus Linux"] .
@@ -183,6 +184,7 @@ Les étapes de base utilisées pour configurer les commutateurs SN4600 sont déc
 
 
 
+[[storage-system-configuration]]
 == Configuration du système de stockage
 
 Cette section décrit les détails clés de la configuration du système de stockage A90 pour cette solution.  Pour plus de détails sur la configuration des systèmes ONTAP , veuillez vous référer aulink:https://docs.netapp.com/us-en/ontap/index.html["Documentation ONTAP"] .  Le schéma ci-dessous montre la configuration logique du système de stockage.
@@ -305,6 +307,7 @@ Les étapes de base utilisées pour configurer le système de stockage sont déc
 
 
 
+[[dgx-h100-configuration-for-roce-storage-access]]
 === Configuration DGX H100 pour l'accès au stockage RoCE
 
 Cette section décrit les détails clés de la configuration des systèmes DGX H100.  Bon nombre de ces éléments de configuration peuvent être inclus dans l’image du système d’exploitation déployée sur les systèmes DGX ou implémentés par Base Command Manager au démarrage.  Ils sont répertoriés ici à titre de référence. Pour plus d'informations sur la configuration des nœuds et des images logicielles dans BCM, veuillez consulter lelink:https://docs.nvidia.com/base-command-manager/index.html#overview["Documentation BCM"] .

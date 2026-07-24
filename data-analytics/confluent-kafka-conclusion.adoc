@@ -18,6 +18,7 @@ Ce document fournit des directives sur les meilleures pratiques pour l'utilisati
 
 
 
+[[where-to-find-additional-information]]
 == Où trouver des informations supplémentaires
 
 Pour en savoir plus sur les informations décrites dans ce document, consultez les documents et/ou sites Web suivants :

@@ -18,6 +18,7 @@ Cette section fournit un exemple de code YAML pour les valeurs utilisées dans l
 
 
 
+[[appendix-a-values-yaml]]
 == Annexe A : Values.yaml
 
 [source, yaml]

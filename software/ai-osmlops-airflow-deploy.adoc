@@ -21,6 +21,7 @@ NOTE: Il est possible de déployer Airflow sur d’autres plateformes que Kubern
 
 
 
+[[prerequisites]]
 == Prérequis
 
 Avant d’effectuer l’exercice de déploiement décrit dans cette section, nous supposons que vous avez déjà effectué les tâches suivantes :
@@ -31,18 +32,21 @@ Avant d’effectuer l’exercice de déploiement décrit dans cette section, nou
 
 
 
+[[install-helm]]
 == Installer Helm
 
 Airflow est déployé à l'aide de Helm, un gestionnaire de packages populaire pour Kubernetes.  Avant de déployer Airflow, vous devez installer Helm sur l’hôte de saut de déploiement.  Pour installer Helm sur l'hôte de saut de déploiement, suivez les instructions https://helm.sh/docs/intro/install/["instructions d'installation"^] dans la documentation officielle de Helm.
 
 
 
+[[set-default-kubernetes-storageclass]]
 == Définir la classe de stockage Kubernetes par défaut
 
 Avant de déployer Airflow, vous devez désigner une StorageClass par défaut dans votre cluster Kubernetes.  Le processus de déploiement Airflow tente de provisionner de nouveaux volumes persistants à l’aide de la StorageClass par défaut.  Si aucune StorageClass n’est désignée comme StorageClass par défaut, le déploiement échoue.  Pour désigner une StorageClass par défaut au sein de votre cluster, suivez les instructions décrites dans lelink:ai-osmlops-kubeflow-deploy.html["Déploiement de Kubeflow"] section.  Si vous avez déjà désigné une StorageClass par défaut dans votre cluster, vous pouvez ignorer cette étape.
 
 
 
+[[use-helm-to-deploy-airflow]]
 == Utilisez Helm pour déployer Airflow
 
 Pour déployer Airflow dans votre cluster Kubernetes à l'aide de Helm, effectuez les tâches suivantes à partir de l'hôte de saut de déploiement :

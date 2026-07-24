@@ -26,6 +26,7 @@ Les systèmes de stockage NetApp offrent des performances identiques ou supérie
 
 
 
+[[acknowledgments]]
 == Remerciements
 
 * JJ  Falkanger, directeur principal, solutions HPC et IA, Lenovo
@@ -36,6 +37,7 @@ Les systèmes de stockage NetApp offrent des performances identiques ou supérie
 
 
 
+[[where-to-find-additional-information]]
 == Où trouver des informations supplémentaires
 
 Pour en savoir plus sur les informations décrites dans ce document, reportez-vous aux documents et/ou sites Web suivants :

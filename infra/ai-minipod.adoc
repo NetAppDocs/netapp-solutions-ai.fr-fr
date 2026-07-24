@@ -22,18 +22,21 @@ Sathish Thyagarajan, Michael Oglesby, Arpita Mahajan, NetApp
 
 
 
+[[executive-summary]]
 == Résumé exécutif
 
 De plus en plus d'organisations exploitent les applications de génération augmentée par la recherche (RAG) et les grands modèles de langage (LLM) pour interpréter les requêtes des utilisateurs et générer des réponses afin d'accroître leur productivité et leur valeur commerciale. Ces requêtes et réponses peuvent inclure du texte, du code, des images, voire des structures de protéines thérapeutiques extraites de la base de connaissances interne, des lacs de données, des référentiels de code et des référentiels de documents de l'organisation. Cet article présente l'architecture de référence de la solution NetApp AIPod Mini, composée du stockage NetApp AFF et de serveurs équipés de processeurs Intel Xeon 6. Elle inclut le logiciel de gestion des données NetApp ONTAP associé aux Intel Advanced Matrix Extensions (Intel AMX), ainsi que le logiciel Intel® AI for Enterprise RAG, basé sur Open Platform for Enterprise AI (OPEA). La solution NetApp AIPod Mini pour la RAG d'entreprise permet aux organisations d'enrichir un LLM public en une solution d'inférence d'IA générative (GenAI) privée. La solution démontre une inférence RAG efficace et économique à l'échelle de l'entreprise, conçue pour améliorer la fiabilité et vous offrir un meilleur contrôle sur vos informations propriétaires.
 
 
 
+[[intel-storage-partner-validation]]
 == Validation des partenaires de stockage Intel
 
 Les serveurs équipés de processeurs Intel Xeon 6 sont conçus pour gérer des charges de travail d'inférence d'IA exigeantes, en utilisant Intel AMX pour des performances maximales.  Pour permettre des performances de stockage et une évolutivité optimales, la solution a été validée avec succès à l'aide de NetApp ONTAP, permettant aux entreprises de répondre aux besoins des applications RAG.  Cette validation a été réalisée sur des serveurs équipés de processeurs Intel Xeon 6.  Intel et NetApp ont un partenariat solide axé sur la fourniture de solutions d’IA optimisées, évolutives et alignées sur les exigences commerciales des clients.
 
 
 
+[[advantages-of-running-rag-systems-with-netapp]]
 == Avantages de l'exécution de systèmes RAG avec NetApp
 
 Les applications RAG consistent à extraire des connaissances des référentiels documentaires des entreprises, sous différents formats tels que PDF, texte, CSV ou Excel. Ces données sont généralement stockées dans des solutions telles qu'un stockage d'objets S3 ou NFS sur site comme source de données. NetApp a été un leader dans la gestion des données, la mobilité des données, la gouvernance des données et les technologies de sécurité des données à travers l'écosystème edge, data center et cloud. La gestion des données NetApp ONTAP fournit un stockage de niveau entreprise pour prendre en charge divers types de charges de travail d'IA, y compris le traitement par lots et l'inférence en temps réel, et offre certains des avantages suivants :
@@ -45,16 +48,19 @@ Les applications RAG consistent à extraire des connaissances des référentiels
 
 
 
+[[target-audience]]
 == Public cible
 
 Ce document est destiné aux décideurs en matière d’IA, aux ingénieurs de données, aux chefs d’entreprise et aux cadres de service qui souhaitent profiter d’une infrastructure conçue pour fournir des solutions RAG et GenAI d’entreprise.  Une connaissance préalable de l'inférence de l'IA, des LLM, de Kubernetes, de la mise en réseau et de ses composants sera utile pendant la phase de mise en œuvre.
 
 
 
+[[technology-requirements]]
 == Exigences technologiques
 
 
 
+[[hardware]]
 === Matériel
 
 
@@ -94,6 +100,7 @@ Figure 3 - AIPod Mini Architecture de déploiement image:aipod-mini-012.png["300
 
 
 
+[[software]]
 === Logiciels
 
 
@@ -150,10 +157,12 @@ Le logiciel NetApp Trident est un orchestrateur de stockage open source et enti�
 |===
 
 
+[[solution-deployment]]
 == Déploiement de la solution
 
 
 
+[[software-stack]]
 === Pile logicielle
 
 La solution est déployée sur un cluster Kubernetes composé de nœuds d’application basés sur Intel Xeon.  Au moins trois nœuds sont nécessaires pour implémenter la haute disponibilité de base pour le plan de contrôle Kubernetes.  Nous avons validé la solution en utilisant la disposition de cluster suivante.
@@ -173,6 +182,7 @@ La figure suivante illustre une « vue de la pile logicielle » de la solution.i
 
 
 
+[[deployment-steps]]
 === Étapes de déploiement
 
 
@@ -291,6 +301,7 @@ Vous pouvez désormais « dialoguer » avec l’OPEA for Intel® AI for Enterp
 
 
 
+[[sizing-guidance]]
 == Guide de dimensionnement
 
 Dans le cadre de nos efforts de validation, nous avons effectué des tests de performances en coordination avec Intel.  Ces tests ont permis d’établir les recommandations de dimensionnement décrites dans le tableau suivant.
@@ -314,18 +325,21 @@ Remarque : Les recommandations de dimensionnement ci-dessus sont basées sur de
 
 
 
+[[conclusion]]
 == Conclusion
 
 Les systèmes RAG d'entreprise et les LLM sont des technologies qui fonctionnent de concert pour aider les organisations à fournir des réponses précises et contextuelles. Ces réponses reposent sur la recherche d'informations à partir d'une vaste collection de données internes et privées de l'entreprise. En utilisant RAG, des API, des embeddings vectoriels et des systèmes de stockage haute performance pour interroger les référentiels de documents contenant les données de l'entreprise, les données sont traitées plus rapidement et de manière sécurisée. Le NetApp AIPod Mini combine l'infrastructure de données intelligente de NetApp avec les capacités de gestion des données ONTAP, les processeurs Intel Xeon 6, Intel® AI for Enterprise RAG et la suite logicielle OPEA pour aider à déployer des applications RAG haute performance et placer les organisations sur la voie du leadership en IA.
 
 
 
+[[acknowledgment]]
 == Reconnaissance
 
 Ce document a été rédigé par Sathish Thyagarajan, Michael Oglesby et Arpita Mahajan, membres de l'équipe d'ingénierie des solutions NetApp. Les auteurs tiennent également à remercier l'équipe produit Enterprise AI chez Intel—Ajay Mungara, Mikolaj Zyczynski, Igor Konopko, Ramakrishna Karamsetty, Michal Prostko, Anna Alberska, Maciej Cichocki, Shreejan Mistry, Nicholas Rago et Ned Fiori—ainsi que les autres membres de l'équipe chez NetApp—Lawrence Bunka, Bobby Oommen et Jeff Liborio, pour leur soutien et leur aide constants durant le processus de validation de la solution.
 
 
 
+[[bill-of-materials]]
 == Nomenclature
 
 Ce qui suit est la nomenclature utilisée pour la validation fonctionnelle de cette solution et peut être utilisée comme référence.  Tout serveur ou composant réseau (ou même un réseau existant avec de préférence une bande passante de 100 GbE) qui correspond à la configuration suivante peut être utilisé.
@@ -418,12 +432,14 @@ Stockage NetApp AFF :
 |===
 
 
+[[infra-readiness-checklist]]
 == Liste de contrôle de préparation des infrastructures
 
 Veuillez vous référer au xref:ai-aipod-mini-infra-readiness.html[NetApp AIPod Mini - Préparation de l'infrastructure] pour plus de détails.
 
 
 
+[[where-to-find-additional-information]]
 == Où trouver des informations supplémentaires
 
 Pour en savoir plus sur les informations décrites dans ce document, consultez les documents et/ou sites Web suivants :

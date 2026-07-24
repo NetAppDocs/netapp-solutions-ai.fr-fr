@@ -20,12 +20,14 @@ Ce document décrit une architecture de calcul et de stockage pour déployer l'i
 
 
 
+[[summary]]
 == Résumé
 
 Plusieurs scénarios d’application émergents, tels que les systèmes avancés d’assistance à la conduite (ADAS), l’industrie 4.0, les villes intelligentes et l’Internet des objets (IoT), nécessitent le traitement de flux de données continus avec une latence proche de zéro.  Ce document décrit une architecture de calcul et de stockage pour déployer l'inférence d'intelligence artificielle (IA) basée sur le GPU sur les contrôleurs de stockage NetApp et les serveurs Lenovo ThinkSystem dans un environnement de périphérie qui répond à ces exigences.  Ce document fournit également des données de performances pour le benchmark d'inférence MLPerf standard de l'industrie, évaluant diverses tâches d'inférence sur des serveurs Edge équipés de GPU NVIDIA T4.  Nous étudions les performances des scénarios d'inférence hors ligne, à flux unique et à flux multiples et montrons que l'architecture avec un système de stockage en réseau partagé rentable est très performante et fournit un point central pour la gestion des données et des modèles pour plusieurs serveurs périphériques.
 
 
 
+[[introduction]]
 == Introduction
 
 Les entreprises génèrent de plus en plus de volumes massifs de données à la périphérie du réseau.  Pour tirer le meilleur parti des capteurs intelligents et des données IoT, les organisations recherchent une solution de streaming d’événements en temps réel qui permet l’informatique de pointe.  Les tâches exigeantes en termes de calcul sont donc de plus en plus effectuées en périphérie, en dehors des centres de données.  L’inférence de l’IA est l’un des moteurs de cette tendance.  Les serveurs Edge fournissent une puissance de calcul suffisante pour ces charges de travail, en particulier lors de l'utilisation d'accélérateurs, mais le stockage limité est souvent un problème, en particulier dans les environnements multiserveurs.  Dans ce document, nous montrons comment vous pouvez déployer un système de stockage partagé dans l’environnement Edge et comment il profite aux charges de travail d’inférence IA sans imposer de pénalité de performances.
@@ -36,6 +38,7 @@ Ce document couvre les tests et la validation d'une configuration de calcul et d
 
 
 
+[[target-audience]]
 === Public cible
 
 Ce document est destiné aux publics suivants :
@@ -49,6 +52,7 @@ Ce document est destiné aux publics suivants :
 
 
 
+[[solution-architecture]]
 === Architecture de la solution
 
 Cette solution de serveur Lenovo ThinkSystem et de stockage NetApp ONTAP ou NetApp SANtricity est conçue pour gérer l'inférence IA sur de grands ensembles de données en utilisant la puissance de traitement des GPU aux côtés des CPU traditionnels.  Cette validation démontre des performances élevées et une gestion optimale des données avec une architecture qui utilise un ou plusieurs serveurs Edge Lenovo SR350 interconnectés avec un seul système de stockage NetApp AFF , comme illustré dans les deux figures suivantes.
@@ -92,6 +96,7 @@ Cette solution NetApp et Lenovo offre les principaux avantages suivants :
 
 
 
+[[how-to-use-this-architecture]]
 === Comment utiliser cette architecture
 
 Ce document valide la conception et les performances de l'architecture proposée.  Cependant, nous n'avons pas testé certains éléments au niveau logiciel, tels que la gestion des conteneurs, des charges de travail ou des modèles et la synchronisation des données avec le cloud ou le centre de données sur site, car ils sont spécifiques à un scénario de déploiement.  Ici, plusieurs choix existent.
@@ -100,6 +105,7 @@ Au niveau de la gestion des conteneurs, la gestion des conteneurs Kubernetes est
 
 
 
+[[solution-areas]]
 === Domaines de solutions
 
 Le principal avantage de l’inférence de l’IA et de l’informatique de pointe est la capacité des appareils à calculer, traiter et analyser des données avec un niveau de qualité élevé sans latence.  Il existe beaucoup trop d'exemples de cas d'utilisation de l'informatique de pointe pour les décrire dans ce document, mais en voici quelques-uns parmi les plus importants :

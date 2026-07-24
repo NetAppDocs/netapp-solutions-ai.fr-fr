@@ -18,12 +18,14 @@ Cette section inclut des références pour des informations supplémentaires sur
 
 
 
+[[conclusion]]
 == Conclusion
 
 L'architecture DGX BasePOD est une plate-forme d'apprentissage en profondeur de nouvelle génération qui nécessite des capacités de stockage et de gestion des données tout aussi avancées.  En combinant DGX BasePOD avec les systèmes NetApp AFF , l'architecture des systèmes NetApp AIPod avec DGX peut être mise en œuvre à presque toutes les échelles.  Associé à l'intégration cloud supérieure et aux capacités définies par logiciel de NetApp ONTAP, AFF permet une gamme complète de pipelines de données qui couvrent la périphérie, le cœur et le cloud pour des projets DL réussis.
 
 
 
+[[additional-information]]
 == Informations supplémentaires
 
 Pour en savoir plus sur les informations décrites dans ce document, veuillez vous référer aux documents et/ou sites Web suivants :
@@ -84,6 +86,7 @@ https://www.nvidia.com/en-us/data-center/products/ai-enterprise/["https://www.nv
 
 
 
+[[acknowledgements]]
 == Remerciements
 
 Ce document est le travail des équipes NetApp Solutions et ONTAP Engineering : David Arnette, Olga Kornievskaia, Dustin Fischer, Srikanth Kaligotla, Mohit Kumar et Raghuram Sudhaakar.  Les auteurs souhaitent également remercier NVIDIA et l’équipe d’ingénierie NVIDIA DGX BasePOD pour leur soutien continu.

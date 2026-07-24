@@ -18,6 +18,7 @@ Cette section décrit les configurations testées, l'infrastructure réseau, le 
 
 
 
+[[solution-architecture]]
 == Architecture de la solution
 
 Nous avons utilisé les composants de solution répertoriés dans le tableau suivant pour cette validation.
@@ -54,6 +55,7 @@ image:a400-thinksystem-007.png["Ce graphique représente la couche de calcul, un
 
 
 
+[[storage-controller]]
 == Contrôleur de stockage
 
 Le tableau suivant répertorie la configuration de stockage.

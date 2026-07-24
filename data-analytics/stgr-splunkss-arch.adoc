@@ -18,6 +18,7 @@ Cette section décrit l'architecture Splunk, y compris les définitions clés, l
 
 
 
+[[key-definitions]]
 == Définitions clés
 
 Les deux tableaux suivants répertorient les composants Splunk et NetApp utilisés dans le déploiement Splunk distribué.
@@ -76,6 +77,7 @@ Ce tableau répertorie les composants de l’architecture de stockage Splunk.
 |===
 
 
+[[splunk-distributed-deployments]]
 == Déploiements distribués Splunk
 
 Pour prendre en charge des environnements plus vastes dans lesquels les données proviennent de nombreuses machines, vous devez traiter de grands volumes de données.  Si de nombreux utilisateurs doivent rechercher les données, vous pouvez faire évoluer le déploiement en distribuant les instances Splunk Enterprise sur plusieurs machines.  C'est ce qu'on appelle un déploiement distribué.
@@ -125,6 +127,7 @@ Découvrez les avantages suivants des déploiements distribués Splunk Enterpris
 
 
 
+[[splunk-smartstore]]
 == Splunk SmartStore
 
 SmartStore est une fonctionnalité d'indexation qui permet aux magasins d'objets distants tels qu'Amazon S3 de stocker des données indexées.  À mesure que le volume de données d’un déploiement augmente, la demande de stockage dépasse généralement la demande de ressources de calcul.  SmartStore vous permet de gérer de manière rentable le stockage de votre indexeur et vos ressources de calcul en mettant à l'échelle ces ressources séparément.
@@ -135,6 +138,7 @@ Avec SmartStore, vous pouvez réduire au minimum l'empreinte de stockage de l'in
 
 
 
+[[splunk-smartstore-data-flow]]
 == Flux de données Splunk SmartStore
 
 Lorsque les données provenant de diverses sources atteignent les indexeurs, les données sont indexées et enregistrées localement dans un bucket chaud.  L'indexeur réplique également les données du compartiment chaud vers les indexeurs cibles.  Jusqu’à présent, le flux de données est identique au flux de données des index non SmartStore.
@@ -151,6 +155,7 @@ Le travail du gestionnaire de cache est d'optimiser l'utilisation du cache dispo
 
 
 
+[[software-requirements]]
 == Configuration logicielle requise
 
 Le tableau ci-dessous répertorie les composants logiciels nécessaires à la mise en œuvre de la solution.  Les composants logiciels utilisés dans toute implémentation de la solution peuvent varier en fonction des exigences du client.
@@ -169,6 +174,7 @@ Le tableau ci-dessous répertorie les composants logiciels nécessaires à la mi
 |===
 
 
+[[single-and-multisite-requirements]]
 == Exigences mono et multisites
 
 Dans un environnement Splunk Enterprise (déploiements moyens et grands) où les données proviennent de nombreuses machines et où de nombreux utilisateurs doivent rechercher les données, vous pouvez faire évoluer votre déploiement en distribuant des instances Splunk Enterprise sur un ou plusieurs sites.
@@ -210,6 +216,7 @@ image:stgr-splunkss-007.png["Figure montrant une boîte de dialogue d'entrée/so
 
 
 
+[[hardware-requirements]]
 == Configuration matérielle requise
 
 Les tableaux suivants répertorient le nombre minimum de composants matériels requis pour implémenter la solution.  Les composants matériels utilisés dans les implémentations spécifiques de la solution peuvent varier en fonction des exigences du client.
@@ -241,6 +248,7 @@ Ce tableau répertorie le matériel utilisé pour une configuration multisite (p
 |===
 
 
+[[netapp-storagegrid-load-balancer-sg1000]]
 === Équilibreur de charge NetApp StorageGRID : SG1000
 
 Le stockage d’objets nécessite l’utilisation d’un équilibreur de charge pour présenter l’espace de noms de stockage cloud.  StorageGRID prend en charge les équilibreurs de charge tiers des principaux fournisseurs tels que F5 et Citrix, mais de nombreux clients choisissent l'équilibreur StorageGRID de niveau entreprise pour sa simplicité, sa résilience et ses hautes performances.  L'équilibreur de charge StorageGRID est disponible sous forme de machine virtuelle, de conteneur ou d'appliance spécialement conçue.
@@ -262,6 +270,7 @@ image:stgr-splunkss-008.png["Figure montrant une boîte de dialogue d'entrée/so
 
 
 
+[[sg6060]]
 === SG6060
 
 L'appliance StorageGRID SG6060 comprend un contrôleur de calcul (SG6060) et une étagère de contrôleur de stockage (E-Series E2860) contenant deux contrôleurs de stockage et 60 disques.  Cet appareil offre les fonctionnalités suivantes :
@@ -280,6 +289,7 @@ image:stgr-splunkss-009.png["Figure montrant une boîte de dialogue d'entrée/so
 
 
 
+[[splunk-design]]
 == Conception de Splunk
 
 Le tableau suivant répertorie la configuration Splunk pour un seul site.

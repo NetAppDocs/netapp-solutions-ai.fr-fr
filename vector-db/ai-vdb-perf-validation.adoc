@@ -18,6 +18,7 @@ Cette section met en évidence la validation des performances qui a été effect
 
 
 
+[[performance-validation]]
 == Validation des performances
 
 La validation des performances joue un rôle essentiel dans les bases de données vectorielles et les systèmes de stockage, servant de facteur clé pour garantir un fonctionnement optimal et une utilisation efficace des ressources.  Les bases de données vectorielles, connues pour gérer des données de grande dimension et exécuter des recherches de similarité, doivent maintenir des niveaux de performances élevés pour traiter des requêtes complexes rapidement et avec précision.  La validation des performances permet d’identifier les goulots d’étranglement, d’affiner les configurations et de garantir que le système peut gérer les charges attendues sans dégradation du service.  De même, dans les systèmes de stockage, la validation des performances est essentielle pour garantir que les données sont stockées et récupérées efficacement, sans problèmes de latence ni goulots d’étranglement susceptibles d’avoir un impact sur les performances globales du système.  Il permet également de prendre des décisions éclairées sur les mises à niveau ou les modifications nécessaires à l’infrastructure de stockage.  Par conséquent, la validation des performances est un aspect crucial de la gestion du système, contribuant de manière significative au maintien d’une qualité de service élevée, de l’efficacité opérationnelle et de la fiabilité globale du système.
@@ -48,6 +49,7 @@ Veuillez consulter la méthodologie utilisée pour milvus et les progrès ci-des
 |===
 
 
+[[vectordb-bench-with-milvus-standalone-cluster]]
 === VectorDB-Bench avec cluster autonome Milvus
 
 nous avons effectué la validation des performances suivante sur le cluster autonome milvus avec vectorDB-Bench.  La connectivité réseau et serveur du cluster autonome milvus est ci-dessous.
@@ -95,6 +97,7 @@ D'après la validation des performances de l'instance autonome Milvus, il est é
 
 
 
+[[vectordb-bench-with-milvus-cluster]]
 === VectorDB-Bench avec cluster Milvus
 
 Dans cette section, nous discutons du déploiement d’un cluster Milvus dans un environnement Kubernetes.  Cette configuration Kubernetes a été construite sur un déploiement VMware vSphere, qui hébergeait les nœuds maître et de travail Kubernetes.
@@ -144,6 +147,7 @@ Sur la base de la validation des performances du Milvus autonome et du cluster M
 
 
 
+[[vectordb-bench-with-postgres-pgvecto-rs]]
 === vectorDB-Bench avec Postgres (pgvecto.rs)
 
 Nous avons effectué les actions suivantes sur PostgreSQL (pgvecto.rs) en utilisant VectorDB-Bench : Les détails concernant la connectivité réseau et serveur de PostgreSQL (en particulier, pgvecto.rs) sont les suivants :
@@ -161,6 +165,7 @@ image:pgvecto-storage-perf-metrics.png["Figure montrant une boîte de dialogue d
 
 
 
+[[performance-comparison-between-milvus-and-postgres-on-vector-db-bench]]
 === Comparaison des performances entre Milvus et Postgres sur Vector DB Bench
 
 image:perf-comp-milvus-postgres.png["Figure montrant une boîte de dialogue d'entrée/sortie ou représentant un contenu écrit"]
@@ -177,6 +182,7 @@ Si la haute précision dans vos requêtes est une priorité, Milvus surpasse pgv
 
 
 
+[[observation-based-on-our-performance-validations]]
 === Observation basée sur nos validations de performance :
 
 Sur la base de nos validations de performances, nous avons fait les observations suivantes :

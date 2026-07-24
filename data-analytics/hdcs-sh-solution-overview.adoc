@@ -33,6 +33,7 @@ Ce document décrit les solutions de données cloud hybrides utilisant les syst�
 
 
 
+[[why-hadoop-data-protection]]
 == Pourquoi la protection des données Hadoop ?
 
 Dans un environnement Hadoop et Spark, les préoccupations suivantes doivent être prises en compte :
@@ -44,6 +45,7 @@ Dans un environnement Hadoop et Spark, les préoccupations suivantes doivent êt
 
 
 
+[[data-protection-challenges-for-hadoop-and-spark-customers]]
 == Les défis de la protection des données pour les clients Hadoop et Spark
 
 Un défi commun pour les clients Hadoop et Spark est de réduire le temps de sauvegarde et d’augmenter la fiabilité de la sauvegarde sans affecter négativement les performances du cluster de production pendant la protection des données.

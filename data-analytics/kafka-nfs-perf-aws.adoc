@@ -18,12 +18,14 @@ Un cluster Kafka avec la couche de stockage montée sur NetApp NFS a été éval
 
 
 
+[[kafka-in-aws-cloud-with-netapp-cloud-volumes-ontap-high-availability-pair-and-single-node]]
 == Kafka dans le cloud AWS avec NetApp Cloud Volumes ONTAP (paire haute disponibilité et nœud unique)
 
 Un cluster Kafka avec NetApp Cloud Volumes ONTAP (paire HA) a été évalué pour ses performances dans le cloud AWS.  Cette analyse comparative est décrite dans les sections suivantes.
 
 
 
+[[architectural-setup]]
 === Configuration architecturale
 
 Le tableau suivant montre la configuration environnementale d’un cluster Kafka utilisant NAS.
@@ -48,6 +50,7 @@ Le tableau suivant montre la configuration environnementale d’un cluster Kafka
 |===
 
 
+[[netapp-cluster-volume-ontap-setup]]
 === Configuration du volume de cluster NetApp ONTAP
 
 . Pour la paire Cloud Volumes ONTAP HA, nous avons créé deux agrégats avec trois volumes sur chaque agrégat sur chaque contrôleur de stockage.  Pour le nœud unique Cloud Volumes ONTAP , nous créons six volumes dans un agrégat.
@@ -103,6 +106,7 @@ image:kafka-nfs-029.png["Cette figure illustre l’architecture d’un cluster K
 
 
 
+[[openmessage-benchmarking-configurations]]
 === Configurations d'analyse comparative d'OpenMessage
 
 . Pour de meilleures performances NFS, nous avons besoin de plus de connexions réseau entre le serveur NFS et le client NFS, qui peuvent être créées à l'aide de nconnect.  Montez les volumes NFS sur les nœuds du courtier avec l'option nconnect en exécutant la commande suivante :
@@ -325,6 +329,7 @@ consumerConfig: |
 
 
 
+[[methodology-of-testing]]
 == Méthodologie des tests
 
 . Un cluster Kafka a été provisionné conformément à la spécification décrite ci-dessus à l'aide de Terraform et Ansible.  Terraform est utilisé pour créer l'infrastructure à l'aide d'instances AWS pour le cluster Kafka et Ansible construit le cluster Kafka sur celles-ci.
@@ -342,6 +347,7 @@ sudo bin/benchmark –drivers driver-kafka/kafka-throughput.yaml workloads/1-top
 
 
 
+[[observation]]
 == Observation
 
 Deux types de pilotes différents ont été utilisés pour générer des charges de travail afin d'évaluer les performances d'une instance Kafka exécutée sur NFS.  La différence entre les pilotes est la propriété de vidage du journal.

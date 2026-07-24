@@ -22,48 +22,56 @@ Ce document fournit également des cas d’utilisation client pour résoudre les
 
 
 
+[[customer-challenges]]
 == Les défis des clients
 
 Cette section se concentre sur les défis des clients en matière d'analyse de Big Data et d'IA/ML/DL dans les secteurs de croissance des données tels que la vente au détail, le marketing numérique, la banque, la fabrication discrète, la fabrication de processus, le gouvernement et les services professionnels.
 
 
 
+[[unpredictable-performance]]
 === Des performances imprévisibles
 
 Les déploiements Hadoop traditionnels utilisent généralement du matériel standard.  Pour améliorer les performances, vous devez ajuster le réseau, le système d’exploitation, le cluster Hadoop, les composants de l’écosystème tels que Spark et le matériel.  Même si vous ajustez chaque couche, il peut être difficile d'atteindre les niveaux de performances souhaités, car Hadoop s'exécute sur du matériel standard qui n'a pas été conçu pour des performances élevées dans votre environnement.
 
 
 
+[[media-and-node-failures]]
 === Pannes de médias et de nœuds
 
 Même dans des conditions normales, le matériel informatique de base est sujet à des pannes.  Si un disque sur un nœud de données tombe en panne, le maître Hadoop considère par défaut que ce nœud est défectueux.  Il copie ensuite des données spécifiques de ce nœud sur le réseau à partir de répliques vers un nœud sain.  Ce processus ralentit les paquets réseau pour tous les travaux Hadoop.  Le cluster doit ensuite recopier les données et supprimer les données sur-répliquées lorsque le nœud défectueux revient à un état sain.
 
 
 
+[[hadoop-vendor-lock-in]]
 === Verrouillage du fournisseur Hadoop
 
 Les distributeurs Hadoop ont leur propre distribution Hadoop avec leur propre versionnage, ce qui verrouille le client sur ces distributions.  Cependant, de nombreux clients ont besoin d’une prise en charge des analyses en mémoire qui ne lie pas le client à des distributions Hadoop spécifiques.  Ils ont besoin de la liberté de modifier les distributions tout en conservant leurs analyses avec eux.
 
 
 
+[[lack-of-support-for-more-than-one-language]]
 === Manque de support pour plus d'une langue
 
 Les clients ont souvent besoin de la prise en charge de plusieurs langues en plus des programmes Java MapReduce pour exécuter leurs tâches.  Des options telles que SQL et les scripts offrent plus de flexibilité pour obtenir des réponses, plus d'options pour organiser et récupérer des données, et des moyens plus rapides de déplacer des données dans un cadre d'analyse.
 
 
 
+[[difficulty-of-use]]
 === Difficulté d'utilisation
 
 Depuis un certain temps, les gens se plaignent de la difficulté d’utilisation d’Hadoop.  Même si Hadoop est devenu plus simple et plus puissant à chaque nouvelle version, cette critique a persisté.  Hadoop exige que vous compreniez les modèles de programmation Java et MapReduce, un défi pour les administrateurs de bases de données et les personnes possédant des compétences de script traditionnelles.
 
 
 
+[[complicated-frameworks-and-tools]]
 === Cadres et outils complexes
 
 Les équipes d’IA des entreprises sont confrontées à de multiples défis.  Même avec des connaissances spécialisées en science des données, les outils et les cadres pour différents écosystèmes de déploiement et applications peuvent ne pas être facilement transposables de l’un à l’autre.  Une plateforme de science des données doit s'intégrer de manière transparente aux plateformes Big Data correspondantes construites sur Spark avec une facilité de déplacement des données, des modèles réutilisables, du code prêt à l'emploi et des outils qui prennent en charge les meilleures pratiques de prototypage, de validation, de versionnage, de partage, de réutilisation et de déploiement rapide des modèles en production.
 
 
 
+[[why-choose-netapp]]
 == Pourquoi choisir NetApp?
 
 NetApp peut améliorer votre expérience Spark des manières suivantes :
@@ -101,6 +109,7 @@ Les sections suivantes décrivent les capacités de stockage importantes pour le
 
 
 
+[[storage-tiering]]
 === hiérarchisation du stockage
 
 Avec la hiérarchisation du stockage Hadoop, vous pouvez stocker des fichiers avec différents types de stockage conformément à une politique de stockage.  Les types de stockage incluent `hot` , `cold` , `warm` , `all_ssd` , `one_ssd` , et `lazy_persist` .
@@ -120,6 +129,7 @@ image:apache-spark-002.png["Il est temps de trier 1 To de données."]
 
 
 
+[[performance-scaling-scale-out]]
 === Mise à l'échelle des performances - Évolution horizontale
 
 Lorsque vous avez besoin de plus de puissance de calcul à partir d’un cluster Hadoop dans une solution AFF , vous pouvez ajouter des nœuds de données avec un nombre approprié de contrôleurs de stockage.  NetApp recommande de commencer avec quatre nœuds de données par baie de contrôleurs de stockage et d'augmenter le nombre à huit nœuds de données par contrôleur de stockage, en fonction des caractéristiques de la charge de travail.
@@ -128,18 +138,21 @@ AFF et FAS sont parfaits pour les analyses sur place.  En fonction des exigences
 
 
 
+[[performance-scaling-scale-up]]
 === Mise à l'échelle des performances - Mise à l'échelle
 
 Les fonctionnalités de mise à l'échelle vous permettent d'ajouter des lecteurs de disque aux systèmes AFF, FAS et E-Series lorsque vous avez besoin d'une capacité de stockage supplémentaire.  Avec Cloud Volumes ONTAP, la mise à l'échelle du stockage au niveau Po est une combinaison de deux facteurs : la hiérarchisation des données rarement utilisées vers le stockage d'objets à partir du stockage en blocs et l'empilement de licences Cloud Volumes ONTAP sans calcul supplémentaire.
 
 
 
+[[multiple-protocols]]
 === Protocoles multiples
 
 Les systèmes NetApp prennent en charge la plupart des protocoles pour les déploiements Hadoop, notamment SAS, iSCSI, FCP, InfiniBand et NFS.
 
 
 
+[[operational-and-supported-solutions]]
 === Solutions opérationnelles et supportées
 
 Les solutions Hadoop décrites dans ce document sont prises en charge par NetApp.  Ces solutions sont également certifiées auprès des principaux distributeurs Hadoop.  Pour plus d'informations, consultez le http://hortonworks.com/partner/netapp/["Hortonworks"^] site et Cloudera http://www.cloudera.com/partners/partners-listing.html?q=netapp["certification"^] et http://www.cloudera.com/partners/solutions/netapp.html["partenaire"^] sites.

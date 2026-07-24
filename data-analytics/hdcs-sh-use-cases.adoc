@@ -18,30 +18,35 @@ Cette section fournit une description de haut niveau des cas d’utilisation de 
 
 
 
+[[use-case-1-backing-up-hadoop-data]]
 == Cas d'utilisation 1 : Sauvegarde des données Hadoop
 
 Pour ce cas d'utilisation, le volume NetApp NFS a aidé une grande institution financière à réduire la longue fenêtre de sauvegarde de plus de 24 heures à un peu moins de quelques heures.
 
 
 
+[[use-case-2-backup-and-disaster-recovery-from-the-cloud-to-on-premises]]
 == Cas d'utilisation 2 : Sauvegarde et reprise après sinistre du cloud vers les locaux
 
 En utilisant la structure de données optimisée par NetApp comme éléments de base, une grande société de radiodiffusion a pu répondre à son exigence de sauvegarde des données cloud dans son centre de données sur site en fonction des différents modes de transfert de données, tels que la demande, l'instantané ou la charge du cluster Hadoop/Spark.
 
 
 
+[[use-case-3-enabling-devtest-on-existing-hadoop-data]]
 == Cas d'utilisation 3 : Activation de DevTest sur des données Hadoop existantes
 
 Les solutions NetApp ont aidé un distributeur de musique en ligne à créer rapidement plusieurs clusters Hadoop peu encombrants dans différentes branches pour créer des rapports et exécuter des tâches DevTest quotidiennes à l'aide de politiques planifiées.
 
 
 
+[[use-case-4-data-protection-and-multicloud-connectivity]]
 == Cas d'utilisation 4 : Protection des données et connectivité multicloud
 
 Un grand fournisseur de services a utilisé la structure de données optimisée par NetApp pour fournir des analyses multicloud à ses clients à partir de différentes instances cloud.
 
 
 
+[[use-case-5-accelerate-analytic-workloads]]
 == Cas d'utilisation 5 : Accélérer les charges de travail analytiques
 
 L'une des plus grandes banques de services financiers et d'investissement a utilisé la solution de stockage en réseau NetApp pour réduire le temps d'attente des E/S et accélérer sa plateforme d'analyse financière quantitative.

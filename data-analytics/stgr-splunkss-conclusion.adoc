@@ -20,6 +20,7 @@ La combinaison de Splunk SmartStore et de NetApp StorageGRID est conçue pour fo
 
 
 
+[[where-to-find-additional-information]]
 == Où trouver des informations supplémentaires
 
 Pour en savoir plus sur les informations décrites dans ce document, consultez les documents et/ou sites Web suivants :

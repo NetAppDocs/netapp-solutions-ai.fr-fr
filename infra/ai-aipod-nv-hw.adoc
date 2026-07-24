@@ -18,12 +18,14 @@ Cette section se concentre sur les composants matériels du NetApp AIPod avec le
 
 
 
+[[netapp-aff-storage-systems]]
 == Systèmes de stockage NetApp AFF
 
 Les systèmes de stockage de pointe NetApp AFF permettent aux services informatiques de répondre aux exigences de stockage de l'entreprise avec des performances de pointe, une flexibilité supérieure, une intégration cloud et une gestion des données de premier ordre.  Conçus spécifiquement pour le flash, les systèmes AFF aident à accélérer, gérer et protéger les données critiques de l'entreprise.
 
 
 
+[[aff-a90-storage-systems]]
 === Systèmes de stockage AFF A90
 
 Le logiciel de gestion de données NetApp AFF A90 optimisé par NetApp ONTAP offre une protection des données intégrée, des fonctionnalités anti-ransomware en option, ainsi que les hautes performances et la résilience requises pour prendre en charge les charges de travail commerciales les plus critiques.  Il élimine les perturbations des opérations critiques, minimise le réglage des performances et protège vos données contre les attaques de ransomware.  Il offre : • Des performances de pointe • Une sécurité des données sans compromis • Des mises à niveau simplifiées et non perturbatrices
@@ -54,6 +56,7 @@ Pour les déploiements les plus importants, les systèmes AFF A1K offrent les op
 
 
 
+[[nvidia-dgx-basepod]]
 == NVIDIA DGX BasePOD
 
 NVIDIA DGX BasePOD est une solution intégrée composée de composants matériels et logiciels NVIDIA , de solutions MLOps et de stockage tiers.  En tirant parti des meilleures pratiques de conception de systèmes évolutifs avec les produits NVIDIA et les solutions partenaires validées, les clients peuvent mettre en œuvre une plate-forme efficace et gérable pour le développement de l'IA.  La figure 1 met en évidence les différents composants de NVIDIA DGX BasePOD.
@@ -64,6 +67,7 @@ image:aipod-nv-basepod-layers.png["Figure montrant une boîte de dialogue d'entr
 
 
 
+[[nvidia-dgx-h100-systems]]
 === Systèmes NVIDIA DGX H100
 
 Le système NVIDIA DGX H100 est une centrale d'IA accélérée par les performances révolutionnaires du GPU NVIDIA H100 Tensor Core.
@@ -80,6 +84,7 @@ image:aipod-nv-h100-rear.png["Figure montrant une boîte de dialogue d'entrée/s
 
 
 
+[[nvidia-networking]]
 === Réseau NVIDIA
 
 
