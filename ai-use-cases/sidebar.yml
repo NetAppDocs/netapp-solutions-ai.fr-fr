@@ -3,6 +3,9 @@ section: ai-use-cases
 title: Cas d'utilisation de l'IA
 url: "/ai-use-cases/index.html"
 entries:
+- title: Déchargement du cache KV avec NetApp
+  pdf-filename: Déchargement du cache KV avec NetApp
+  url: "/software/ai-kv-cache-offloading-netapp.html"
 - title: NetApp AIPod Mini pour RAG d'entreprise
   pdf-filename: NetApp AIPod Mini pour l'inférence RAG
   url: "/infra/ai-minipod.html"
