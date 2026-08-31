@@ -1,0 +1,46 @@
+---
+sidebar: sidebar 
+permalink: infra/ai-eseries-lustre-deploy-hardware.html 
+keywords: Lustre, NetApp E-Series, EF80, hardware deployment, NVMe-oF, LNet 
+summary: Installez et câblez les serveurs, les baies EF80, le réseau NVMe-oF dorsal et le réseau LNet frontal pour un élément de base Lustre. 
+---
+= Matériel de rack et de câblage Lustre
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Installez en rack les serveurs Lustre et les baies NetApp EF80, puis câblez les réseaux NVMe-oF du backend et LNet du frontend pour chaque élément de base.
+
+
+
+[[before-you-begin]]
+== Avant de commencer
+
+Consultez le nombre de HCA, les exigences relatives aux emplacements PCIe, les exigences relatives aux chemins et les recommandations concernant la MTU dans link:ai-eseries-lustre-hw.html["Composants matériels"].
+
+.Étapes
+. Installez et câblez tous les serveurs Lustre et les systèmes de stockage E-Series conformément à la topologie de l’élément de base.
++
+image:eseries-lustre-building-block-labeled.png["Élément de base Lustre étiqueté empilé avec deux serveurs OSS/MDS et deux baies EF80"]
+
+. Pour chaque baie EF80, connectez le port 4a du contrôleur A au port 4a du contrôleur B, et le port 4b du contrôleur A au port 4b du contrôleur B. Ces connexions dédiées assurent la duplication entre les contrôleurs et ne sont pas utilisées pour le trafic hôte. Voir link:https://docs.netapp.com/us-en/e-series/install-hw-ef50-ef80/install-cable.html#step-1-cable-the-inter-controller-mirroring-connections["Câblez les connexions de mise en miroir intercontrôleurs EF50 et EF80"^].
+. Câblez le réseau NVMe-oF dorsal entre les serveurs et les baies selon la topologie EF80 à six HCA.
++
+.Câblage arrière EF80 six-HCA (RoCE ou InfiniBand)
+image:eseries-lustre-ef80-6hca-cabling.png["Câblage NVMe-oF du backend EF80 à six HCA entre deux nœuds de serveur OSS/MDS et deux baies EF80"]
+
+. Connectez les quatre interfaces LNet frontales (les HCA i1 et i4) sur chaque serveur Lustre et les clients Lustre à la matrice de commutation InfiniBand ou RoCE dédiée.
+. Lors de l'utilisation de RoCE, configurez le réseau pour un fonctionnement sans perte avec le contrôle de flux prioritaire (PFC). Les playbooks Ansible configurent RoCE sans perte sur toutes les interfaces de l'élément de base.
+
+
+
+
+[[after-you-finish]]
+== Après avoir terminé
+
+link:ai-eseries-lustre-deploy-prepare.html["Préparez les serveurs, les baies et le nœud de contrôle Ansible"].

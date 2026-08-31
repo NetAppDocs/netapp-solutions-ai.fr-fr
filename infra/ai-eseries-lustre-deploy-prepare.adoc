@@ -1,0 +1,107 @@
+---
+sidebar: sidebar 
+permalink: infra/ai-eseries-lustre-deploy-prepare.html 
+keywords: Lustre, NetApp E-Series, Ansible control node, EF80, deployment 
+summary: Préparez les baies EF80, les serveurs Lustre et le nœud de contrôle Ansible pour le déploiement. 
+---
+= Préparez l'environnement de déploiement de Lustre
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Configurez l'accès à la gestion et les paramètres de base sur chaque baie EF80 et serveur Lustre, puis préparez un nœud de contrôle Ansible pour déployer la solution.
+
+
+
+[[prepare-e-series-arrays]]
+== Préparez les baies E-Series
+
+.Étapes
+. Configurez l'interface de gestion sur chaque contrôleur et vérifiez que SANtricity System Manager est accessible.
+. Définissez le nom de la baie et les informations d'identification administrateur que l'inventaire Ansible utilisera.
+. Vérifiez que la baie est dans un état optimal et que tous les disques sont présents et signalés correctement.
+
+
+Pour obtenir des instructions sur la configuration de la connexion de gestion, consultez le link:https://docs.netapp.com/us-en/e-series/["Documentation de la série E"^].
+
+
+
+[[prepare-lustre-servers]]
+== Préparez les serveurs Lustre
+
+.Étapes
+. Configurez le contrôleur de gestion de la carte mère (BMC) sur chaque serveur pour un accès hors bande et définissez les paramètres système UEFI pour des performances maximales.
+. Installez un système d'exploitation compatible (RHEL ou Rocky Linux), puis configurez le nom de l'hôte et le port réseau de gestion.
+. Préparez tous les packages de micrologiciels et de logiciels pour répondre aux exigences de la solution *E-Series Lustre*, comme décrit dans link:ai-eseries-lustre-sw.html["Composants logiciels"].
+
+
+
+
+[[prepare-the-ansible-control-node]]
+== Préparez le nœud de contrôle Ansible
+
+Désignez un système Linux virtuel ou physique disposant d'un accès réseau de gestion à tous les serveurs Lustre et aux baies E-Series comme nœud de contrôle Ansible.
+
+Les étapes suivantes utilisent Ubuntu 24.04. Pour obtenir des instructions concernant une autre distribution Linux, consultez le link:https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html["Documentation d'installation d'Ansible"^].
+
+.Étapes
+. Installez Python, pip et le paquet d'environnement virtuel Python :
++
+[source, console]
+----
+sudo apt-get install python3 python3-pip python3-setuptools python3-venv
+----
+. Créez et activez un environnement virtuel Python :
++
+[source, console]
+----
+python3 -m venv ~/pyenv
+source ~/pyenv/bin/activate
+----
+. Installez Ansible et les packages Python requis dans l'environnement virtuel activé :
++
+[source, console]
+----
+pip install "ansible-core>=2.19" cryptography jinja2 ipaddr netaddr \
+  passlib pyyaml resolvelib
+----
+. Installez la collection Ansible Lustre NetApp E-Series. L'installation de la collection installe également ses collections dépendantes, y compris les collections SANtricity et Host :
++
+[source, console]
+----
+ansible-galaxy collection install netapp_eseries.lustre
+----
+. Vérifiez les versions installées d'Ansible, de Python et de la collection :
++
+[source, console]
+----
+ansible --version
+python3 --version
+ansible-galaxy collection list netapp_eseries.lustre
+----
+. Configurez une connexion SSH sans mot de passe entre le nœud de contrôle et chaque serveur Lustre. Remplacez  `<ip_or_hostname>` par l'adresse IP de gestion ou le nom de l'hôte d'un serveur :
++
+[source, console]
+----
+ssh-keygen
+ssh-copy-id <ip_or_hostname>
+----
++
+Répétez  `ssh-copy-id` pour chaque serveur Lustre.
+
+
+
+
+NOTE: Ne configurez pas l'accès SSH sans mot de passe aux baies de la série E. Ansible gère les baies via l'API des services Web SANtricity en utilisant les identifiants définis dans l'inventaire.
+
+
+
+[[after-you-finish]]
+== Après avoir terminé
+
+link:ai-eseries-lustre-deploy-inventory.html["Personnalisez l'inventaire Ansible"].

@@ -51,7 +51,7 @@ FSx ONTAP (Amazon FSx ONTAP) est un service de stockage AWS.  Il comprend un sys
 
 Dans les scénarios réels, les scientifiques des données utilisent généralement les données existantes stockées dans FSx ONTAP pour créer leurs modèles d’apprentissage automatique.  Cependant, à des fins de démonstration, étant donné que le système de fichiers FSx ONTAP est initialement vide après sa création, il est nécessaire de télécharger manuellement les données de formation.  Cela peut être réalisé en montant FSx ONTAP en tant que volume sur SageMaker.  Une fois le système de fichiers monté avec succès, vous pouvez télécharger votre ensemble de données vers l'emplacement monté, le rendant ainsi accessible pour la formation de vos modèles dans l'environnement SageMaker.  Cette approche vous permet d’exploiter la capacité de stockage et les capacités de FSx ONTAP tout en travaillant avec SageMaker pour le développement et la formation de modèles.
 
-Le processus de lecture des données implique la configuration de FSx ONTAP en tant que bucket S3 privé.  Pour connaître les instructions de configuration détaillées, veuillez vous référer àlink:ai-mlops-fsxn-s3.html["Partie 1 - Intégration Amazon FSx for NetApp ONTAP (FSx ONTAP) en tant que compartiment S3 privé dans AWS SageMaker"]
+Le processus de lecture des données implique la configuration de FSx ONTAP en tant que compartiment S3 privé. Pour connaître les instructions de configuration détaillées, veuillez vous référer à link:ai-mlops-fsxn-s3.html["Partie 1 - Intégration Amazon FSx for NetApp ONTAP (FSx ONTAP) en tant que compartiment S3 privé dans AWS SageMaker"]
 
 
 

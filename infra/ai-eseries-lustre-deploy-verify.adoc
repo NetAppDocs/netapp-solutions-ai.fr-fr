@@ -1,0 +1,61 @@
+---
+sidebar: sidebar 
+permalink: infra/ai-eseries-lustre-deploy-verify.html 
+keywords: Lustre, NetApp E-Series, deployment verification, Pacemaker, scaling 
+summary: 'Vérifiez l"état, les points de montage et la capacité du cluster Lustre, et étendez le système de fichiers avec des éléments de base supplémentaires.' 
+---
+= Vérifiez et étendez le déploiement de Lustre
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Confirmez l'état du cluster, les montages Lustre et la capacité du système de fichiers avant la mise en production, puis utilisez le même inventaire pour ajouter des éléments de base en cas de besoin.
+
+
+
+[[verify-the-deployment]]
+== Vérifiez le déploiement
+
+.Étapes
+. Depuis un serveur Lustre, vérifiez que toutes les ressources Pacemaker sont démarrées sur les nœuds attendus :
++
+[source, cli]
+----
+pcs status
+----
+. Depuis un client Lustre, vérifiez que le système de fichiers Lustre est monté :
++
+[source, cli]
+----
+mount -t lustre
+----
+. Depuis un client Lustre, vérifiez la capacité du système de fichiers et assurez-vous que les cibles MDT et OST sont visibles :
++
+[source, cli]
+----
+lfs df -h
+----
+
+
+Pour la validation des performances avec IOR, mdtest et fio, voir link:ai-eseries-lustre-sizing.html["Guide de dimensionnement"].
+
+Pour la migration contrôlée de la cible ou les tests de basculement de la paire haute disponibilité, suivez les procédures dans le link:https://github.com/NetApp/ansible-lustre/blob/release/1.0.0/roles/lustre/docs/ha_user_guide.md["Guide de l'utilisateur d'administration HA"^].
+
+
+
+[[expand-the-file-system]]
+== Étendre le système de fichiers
+
+Pour augmenter la capacité ou améliorer les performances des métadonnées, étendez votre inventaire existant avec un élément de base supplémentaire. Ne créez pas d'inventaire distinct pour le nouvel élément de base. Le playbook attribue automatiquement des indices MDT et OST uniques et enregistre les nouvelles cibles auprès du MGS existant.
+
+.Étapes
+. Ajoutez les nouveaux éléments de base hôtes, baies et groupes de ressources (MDT+OST ou OST uniquement) au même inventaire et aux fichiers  `host_vars` et  `group_vars` que vous avez utilisés pour le déploiement d'origine.
+. Réexécutez le playbook de déploiement principal sur l'inventaire mis à jour.
+
+
+Consultez link:ai-eseries-lustre-architecture.html["Architecture de la solution"] les règles de mise à l'échelle et link:ai-eseries-lustre-sizing.html["Guide de dimensionnement"] les conseils sur le moment d'ajouter chaque type d'élément de base.

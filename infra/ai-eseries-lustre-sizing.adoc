@@ -1,0 +1,119 @@
+---
+sidebar: sidebar 
+permalink: infra/ai-eseries-lustre-sizing.html 
+keywords: Lustre, NetApp E-Series, EF80, sizing, scaling, building block, validation, performance, capacity 
+summary: 'Dimensionnez Lustre avec les éléments de base de stockage NetApp E-Series selon vos besoins en capacité et en métadonnées, décidez du moment où effectuer la mise à l"échelle et examinez les facteurs qui influent sur les performances.' 
+---
+= Lustre avec le stockage NetApp E-Series - Guide de dimensionnement
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dimensionnez Lustre avec les éléments de base de stockage NetApp E-Series selon vos besoins en capacité et en métadonnées, décidez quand ajouter de la capacité et examinez les facteurs qui affectent les performances.
+
+
+
+[[capacity-sizing]]
+== Dimensionnement de la capacité
+
+Un élément de base composé de deux baies EF80 offre la configuration cible Lustre suivante. Pour connaître l’emplacement optimal des cibles et les chemins NVMe-oF, consultez link:ai-eseries-lustre-hw.html#_primary_building_block_volume_distribution["Répartition du volume de l’élément de base principal"] dans link:ai-eseries-lustre-hw.html["Composants matériels"].
+
+|===
+| Composant | Nombre | Taille de volume typique (par cible) 
+
+
+| MGS | 1 | 5-10 Gio 
+
+
+| MDT | 8 | La taille varie en fonction de la capacité du disque et de la configuration RAID 
+
+
+| OST | 32 | La taille varie en fonction de la capacité du disque et de la configuration RAID 
+|===
+Chaque baie EF80 utilise vingt-quatre disques NVMe. Les capacités prises en charge sont de 3,84 To, 7,68 To et 15,3 To avec les groupes de volumes traditionnels (RAID 1 pour MGS/MDT et RAID 6 pour OST) ou DDP, et de 30,7 To ou 61,4 To avec les disques Capacity Flash (QLC) en mode DDP uniquement. Les disques de 1,92 To ne sont actuellement pas recommandés pour cette solution. Pour la disposition des emplacements de disques et la sélection des pools, voir link:ai-eseries-lustre-hw.html["Composants matériels"].
+
+Le tableau suivant indique la capacité utilisable approximative d'un élément de base EF80 (deux baies, 48 disques). La capacité utilisable de la baie n'est pas la même que la capacité utilisable finale du système de fichiers Lustre. L'allocation des inodes MDT, les journaux, le surprovisionnement et les pourcentages de volume d'inventaire réduisent la capacité disponible pour les applications.
+
+[cols="2,4,2"]
+|===
+| Capacité du disque | Disposition (par tableau) | Utilisable approximatif (élément de base) 
+
+
+| 3,84 To | RAID 1 (2+2) + RAID 6 (10) + RAID 6 (10) | 138,08 TB 
+
+
+| 3,84 To | DDP (24 lecteurs, 2 réservés) | 133,63 To 
+
+
+| 7,68 To | RAID 1 (2+2) + RAID 6 (10) + RAID 6 (10) | 276,35 TB 
+
+
+| 7,68 To | DDP (24) | 267,47 To 
+
+
+| 15,3 To | RAID 1 (2+2) + RAID 6 (10) + RAID 6 (10) | 552,88 To 
+
+
+| 15,3 To | DDP (24) | 535,15 To 
+
+
+| 30,7 To | DDP uniquement | 1 070,35 TB 
+
+
+| 61,4 To | DDP uniquement | 2 162,70 TB 
+|===
+Dimensionnez séparément les métadonnées et les données, puis définissez les tailles de volume dans l'inventaire Ansible. Les modèles de déploiement formatent les cibles avec ldiskfs ; MDT utilise le ratio d'inodes par défaut de Lustre et les modèles OST définissent  `-i 4096`.
+
+* *Métadonnées (MDT) :* Dimensionnez les MDT en fonction du nombre de fichiers prévu. Prévoyez environ le double du nombre de fichiers attendu pour la croissance. Une MDT sous-dimensionnée peut empêcher la création de nouveaux fichiers même lorsque la capacité de l’OST reste suffisante.
+* *Données (OST) :* Dimensionnez les OST en fonction de la capacité utilisable et des besoins de débit.
+* *MGS :* Utilisez une petite cible de gestion (5 à 10 Gio) uniquement pour la configuration du système de fichiers.
+
+
+Ajustez la taille des volumes MDT et OST dans l'inventaire pour la capacité de disque sélectionnée. Modifiez  `format_options.mkfsoptions` dans  `eseries_lustre_filesystem_mdt` ou  `eseries_lustre_filesystem_ost` uniquement lorsqu'un site nécessite un ratio d'inodes différent. Pour plus d'informations sur les ratios d'inodes, consultez la link:https://wiki.lustre.org/Lustre_Tuning["Lustre Wiki : Réglage Lustre"^]. Pour savoir quand ajouter des éléments de base, consultez <<Mise à l'échelle>>.
+
+
+
+[[scaling]]
+== Mise à l'échelle
+
+Ajoutez des éléments de base lorsque la capacité ou la charge des métadonnées l'exigent :
+
+* *OST uniquement :* Le nombre de fichiers et la charge des métadonnées sont dans la capacité MDT existante, et vous avez besoin de plus de capacité de données ou de débit agrégé. Ajoute 32 OST et deux nœuds de serveur OSS/MDS.
+* *MDT+OST :* Le nombre de fichiers ou le débit de métadonnées approche la capacité du MDT, ou vous avez besoin à la fois d’un débit de métadonnées et d’une capacité de données accrus. Ajoute 8 MDT et 32 OST.
+
+
+Utilisez  `mdt.*.md_stats` sur les MDT existants pour confirmer si les métadonnées sont saturées. Limitez chaque cluster Pacemaker/Corosync à cinq éléments de base (dix nœuds de serveur OSS/MDS). Pour les déploiements plus importants, répartissez les éléments de base de manière égale entre plusieurs clusters HA. Voir link:ai-eseries-lustre-architecture.html["Architecture de la solution"] pour les règles de mise à l'échelle.
+
+L'exemple suivant illustre un système de fichiers avec un élément de base et un élément de base OST uniquement dans un cluster HA.
+
+|===
+| Élément de base | Type | Serveurs | Tableaux | MGS | MDT | OST 
+
+
+| BB1 | Base | 2 | 2 | 1 | 8 | 32 
+
+
+| BB2 | OST uniquement | 2 | 2 | 0 | 0 | 32 
+
+
+| Total |  | 4 | 4 | 1 | 8 | 64 
+|===
+BB2 enregistre ses cibles OST auprès du MGS dans BB1 en utilisant  `mgsnode=`. Les indices OST pour BB2 sont attribués globalement (par exemple, OST0032 à OST0063) afin qu’aucun indice n’entre en conflit avec BB1.
+
+
+
+[[performance]]
+== Performances
+
+La validation formelle utilise IOR, mdtest et fio des clients Lustre pour caractériser le débit relatif, les IOPS et le comportement des métadonnées, et pour valider le basculement haute disponibilité. Ces tests ne publient pas de chiffres de performance garantis. Les benchmarks synthétiques mesurent un comportement optimal et peuvent ne pas refléter la performance de l'application.
+
+Les performances augmentent approximativement avec le nombre d'éléments de base. Les résultats obtenus dépendent du type de disque et de la configuration du pool, du nombre de chemins NVMe-oF, du tissu LNet et du nombre de clients, ainsi que de la répartition des E/S entre données et métadonnées.
+
+Contactez votre équipe commerciale NetApp pour obtenir des recommandations de dimensionnement et de performance adaptées à votre charge de travail.
+
+Pour connaître la configuration des disques et le nombre de volumes, consultez link:ai-eseries-lustre-hw.html["Composants matériels"]. Pour connaître les étapes de déploiement, consultez link:ai-eseries-lustre-deploy.html["Déployez la solution"]. Pour obtenir des conseils sur l'inventaire au niveau du terrain, consultez link:ai-eseries-lustre-deploy-inventory.html["Personnalisez l'inventaire Ansible de Lustre"].

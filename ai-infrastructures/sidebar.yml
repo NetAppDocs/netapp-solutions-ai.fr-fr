@@ -33,6 +33,35 @@ entries:
 - title: BeeGFS sur NetApp avec stockage E-Series
   pdf-filename: BeeGFS sur NetApp avec stockage E-Series
   url: "/infra/ai-eseries-beegfs.html"
+- title: Lustre avec le système de stockage NetApp E-Series
+  pdf-filename: Lustre avec le système de stockage NetApp E-Series
+  entries:
+  - title: Introduction
+    url: "/infra/ai-eseries-lustre-intro.html"
+  - title: Architecture de la solution
+    url: "/infra/ai-eseries-lustre-architecture.html"
+  - title: Composants matériels
+    url: "/infra/ai-eseries-lustre-hw.html"
+  - title: Composants logiciels
+    url: "/infra/ai-eseries-lustre-sw.html"
+  - title: Guide de dimensionnement
+    url: "/infra/ai-eseries-lustre-sizing.html"
+  - title: Déployez la solution
+    entries:
+    - title: Flux de travail de déploiement
+      url: "/infra/ai-eseries-lustre-deploy.html"
+    - title: Matériel pour racks et câbles
+      url: "/infra/ai-eseries-lustre-deploy-hardware.html"
+    - title: Préparez l'environnement de déploiement
+      url: "/infra/ai-eseries-lustre-deploy-prepare.html"
+    - title: Personnalisez l'inventaire Ansible
+      url: "/infra/ai-eseries-lustre-deploy-inventory.html"
+    - title: Déployez le cluster HA et les clients
+      url: "/infra/ai-eseries-lustre-deploy-cluster.html"
+    - title: Vérifiez et étendez le déploiement
+      url: "/infra/ai-eseries-lustre-deploy-verify.html"
+  - title: Ressources connexes
+    url: "/infra/ai-eseries-lustre-resources.html"
 - title: Déployer IBM Spectrum Scale avec le stockage E-Series
   pdf-filename: Déployer IBM Spectrum Scale avec le stockage E-Series
   url: "/infra/ai-eseries-spectrumscale.html"

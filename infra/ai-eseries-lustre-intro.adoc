@@ -1,0 +1,31 @@
+---
+sidebar: sidebar 
+permalink: infra/ai-eseries-lustre-intro.html 
+keywords: Lustre, NetApp E-Series, EF80, HPC, AI, parallel file system, NVMe-oF, high-performance storage 
+summary: Lustre avec le stockage NetApp E-Series offre un système de fichiers parallèle validé et évolutif pour les charges de travail d’IA et de HPC, en utilisant une architecture à éléments de base reproductible avec les baies NetApp E-Series all-flash. 
+---
+= Lustre avec le stockage NetApp E-Series - Introduction
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Lustre avec le stockage NetApp E-Series est une solution de système de fichiers parallèle validée pour les charges de travail d’IA et de HPC, construite à partir d’éléments de base répétables de paires de serveurs HA et de baies tout flash E-Series.
+
+
+
+[[solution-overview]]
+== Présentation de la solution
+
+Lustre avec le stockage NetApp E-Series combine le système de fichiers parallèle open source Lustre avec le stockage bloc NetApp E-Series pour offrir une infrastructure évolutive et haute performance adaptée aux charges de travail intensives en données. Chaque élément de base associe deux nœuds de serveur OSS/MDS configurés pour la haute disponibilité (HA) à deux baies E-Series 100 % flash. La connectivité NVMe-oF du backend transporte les E/S bloc vers les baies et un réseau LNet distinct connecte les clients et les nœuds de serveur OSS/MDS pour l'accès parallèle au système de fichiers.
+
+Un élément de base héberge le serveur de gestion (MGS), les cibles de métadonnées initiales (MDT) et les cibles de stockage d'objets (OST). Des éléments de base supplémentaires s'enregistrent auprès du MGS de base pour augmenter la capacité de métadonnées, la capacité de données et le débit agrégé à mesure que les besoins de la charge de travail augmentent.
+
+La figure suivante illustre un exemple de déploiement avec plusieurs éléments de base et des clients Lustre connectés via LNet.
+
+.Présentation de la solution de stockage Lustre avec NetApp E-Series
+image:eseries-lustre-overview-diagram.png["Présentation de la solution de stockage Lustre avec NetApp E-Series, ses éléments de base et ses clients"]

@@ -1,0 +1,49 @@
+---
+sidebar: sidebar 
+permalink: infra/ai-eseries-lustre-resources.html 
+keywords: Lustre, NetApp E-Series, EF80, documentation, references, Ansible 
+summary: Trouvez la documentation, les outils et les logiciels associés à Lustre avec le stockage NetApp E-Series. 
+---
+= Lustre avec le stockage NetApp E-Series - Ressources associées
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Utilisez ces liens pour la documentation, les outils et les logiciels associés lors de la planification ou de l’expansion d’un déploiement Lustre avec stockage NetApp E-Series. Pour les étapes de dimensionnement et de déploiement, consultez link:ai-eseries-lustre-sizing.html["Guide de dimensionnement"] et link:ai-eseries-lustre-deploy.html["Déployez la solution"].
+
+
+
+[[netapp-resources]]
+== Ressources NetApp
+
+* link:https://imt.netapp.com/imt/#welcome["Outil NetApp Interoperability Matrix Tool"^]. Recherchez *E-Series Lustre*.
+* link:https://www.netapp.com/pdf.html?item=/media/14036-ds-4082.pdf["NetApp Fiche technique de la baie 100 % flash de la série EF"^]
+* link:https://docs.netapp.com/us-en/e-series-santricity/["NetApp Documentation de SANtricity System Manager"^]
+* link:https://github.com/NetApp/ansible-lustre/tree/release/1.0.0["collection NetApp ansible-lustre"^]. Pour obtenir des conseils sur le champ d'inventaire, consultez link:ai-eseries-lustre-deploy-inventory.html["Personnalisez l'inventaire Ansible de Lustre"].
+* link:https://github.com/NetApp/netapp-lustre/tree/master["NetApp Dépôt source Lustre"^]. NetApp fournit des RPM serveur Lustre précompilés pour Rocky Linux 9.8 et Red Hat Enterprise Linux 9.8. Créez des packages clients Lustre pour le système d’exploitation client et le noyau à partir du code source NetApp.
+
+
+
+
+[[lustre-community]]
+== Communauté Lustre
+
+* link:https://www.lustre.org/["système de fichiers Lustre"^]
+* link:https://wiki.whamcloud.com/display/PUB/Lustre+Support+Matrix["Matrice de support Lustre"^] pour les systèmes d'exploitation clients et les noyaux
+* link:https://wiki.lustre.org/Lustre_Tuning["Lustre Wiki : Réglage Lustre"^]
+
+
+
+
+[[related-netapp-ai-infrastructure-solutions]]
+== Solutions d'infrastructure d'IA NetApp connexes
+
+* link:ai-eseries-beegfs.html["BeeGFS sur NetApp avec stockage série E"]
+* link:ai-eseries-spectrumscale.html["Déploiement d'IBM Spectrum Scale avec le stockage NetApp E-Series"]
+* link:ai-eseries-superpod.html["NVIDIA DGX SuperPOD avec NetApp EF-Series"]
+
