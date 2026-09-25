@@ -1,0 +1,79 @@
+---
+sidebar: sidebar 
+permalink: infra/ai-pipeline-netapp-components.html 
+keywords:  
+summary:  
+---
+= 4. NetApp, composants technologiques tiers et open source
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+Karthikeyan Nagalingam, NetApp
+
+[cols="50%,50%"]
+|===
+| Composant | Rôle dans la solution 
+
+
+| NetApp StorageGRID | Niveaux d’ingestion de données brutes et de stockage objet d’archivage compatibles S3 
+
+
+| Bucket NAS NetApp ONTAP / NFS | Niveau de données préparées ; export source NFS validé par la vérification préalable XCP avant le déplacement des données 
+
+
+| NetApp ONTAP S3 | Destination optionnelle des données d’entraînement XCP et des artefacts de modèle 
+
+
+| NetApp XCP | Moteur de mobilité des données à haut débit ; copies vers S3 ou LustreFS 
+
+
+| NetApp FabricPool | Hiérarchisation optionnelle des données préparées ONTAP NAS et des données proches de l’archivage afin d’optimiser les coûts 
+
+
+| LustreFS (NetApp-intégré) | Système de fichiers parallèle hautes performances pour la couche d’entraînement 
+
+
+| NetApp Console (optionnelle) | Surveillance/observabilité étendue des ressources ONTAP et XCP 
+
+
+| ONTAP Snapshot/Sauvegarde | Protection ponctuelle des données préparées dans le niveau NAS ONTAP, indépendamment du pipeline 
+|===
+
+
+[[4-1-netapp-xcp-core-value]]
+== 4.1 NetApp XCP — Valeur fondamentale
+
+XCP est la couche de mobilité qui dissocie l'emplacement des données de l'emplacement de calcul. Un simple paramètre de configuration (`xcp++_++copy++_++destination`) détermine si les données préparées et les artefacts de modèle sont stockés dans NetApp ONTAP S3 ou dans un niveau haute performance LustreFS, avec  `model++_++training`, `fine++_++tuning`, et  `inferencing` qui lisent et écrivent automatiquement depuis et vers la même destination.
+
+
+
+[[4-2-third-party-and-open-source-technology-components]]
+== 4.2 Composants technologiques tiers et open source
+
+[cols="50%,50%"]
+|===
+| Composant | But 
+
+
+| Apache Airflow | Orchestration des DAG, nouvelles tentatives d’exécution, communication des tâches XCom, planification 
+
+
+| Apache Spark | Moteur de transformation distribué optionnel pour `data++_++prep` 
+
+
+| Delta Lake / Apache Iceberg | Formats de table lakehouse facultatifs pour les données tabulaires préparées 
+
+
+| scikit-learn | `LinearRegression` (tabulaire) et `SGDClassifier` (texte, incrémental) 
+
+
+| Airbyte / Apache NiFi | Connecteurs d'ingestion optionnels avant `data++_++prep` 
+
+
+| boto3 | SDK compatible AWS S3 utilisé pour les interactions avec StorageGRID, le bucket NAS ONTAP et ONTAP S3 
+|===

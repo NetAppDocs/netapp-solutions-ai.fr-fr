@@ -1,0 +1,814 @@
+---
+sidebar: sidebar 
+permalink: infra/ai-pipeline-configuration-reference.html 
+keywords:  
+summary:  
+---
+= 8. Référence de configuration
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+Karthikeyan Nagalingam, NetApp
+
+Le guide de configuration décrit les paramètres d'exécution qui contrôlent l'ingestion des données, la préparation des données, la mobilité des données XCP, l'apprentissage, la création de points de contrôle et l'archivage. Le bucket NAS ONTAP est utilisé principalement comme couche de staging des données préparées et de XCP pour la prise en charge et la portabilité. Dans un environnement de production en temps réel, ces mêmes données préparées peuvent également être exploitées via des chemins d'accès directs compatibles RDMA lorsque cela correspond mieux aux exigences de charge de travail et de latence.
+
+'''
+L'ensemble du comportement d'exécution est fourni via  `dag++_++run.conf`, ce qui permet à un même DAG de prendre en charge différents systèmes sources, moteurs de transformation, destinations de stockage, stratégies de récupération et périmètres d'archivage. Configurez uniquement les groupes de paramètres requis pour le flux de travail sélectionné, conservez les identifiants dans Airflow Connections ou un backend de secrets, et utilisez les exemples comme modèles hors production plutôt que comme valeurs d'identifiants.
+
+
+
+[[8-1-ingestion-parameters]]
+== 8.1 Paramètres d'ingestion
+
+Utilisez ces paramètres pour sélectionner et configurer le mécanisme d’ingestion en amont. `s3++_++direct` utilise les objets de données brutes StorageGRID configurés dans le groupe de préparation des données ; les paramètres Airbyte et NiFi ne sont nécessaires que si ces outils d’ingestion respectifs sont sélectionnés.
+
+[cols="20%,>23%,>23%,17%,17%"]
+|===
+| Paramètre | Défaut | Obligatoire | Description | Exemple 
+
+
+| `ingestion++_++tool` | `s3++_++direct` | Non | Sélectionne le mode d'ingestion | `"s3++_++direct"` 
+
+
+| `airbyte++_++api++_++url` | Aucune | Airbyte uniquement | Point de terminaison de l'API Airbyte | `"http://airbyte:8000"` 
+
+
+| `airbyte++_++connection++_++id` | Aucune | Airbyte uniquement | ID de connexion Airbyte | `"connection-123"` 
+
+
+| `airbyte++_++api++_++token` | Aucune | Facultatif | Jeton Bearer | `"++<++TOKEN++>++"` 
+
+
+| `airbyte++_++timeout++_++secs` | `30` | Non | Délai d'attente Airbyte dépassé | `60` 
+
+
+| `nifi++_++api++_++url` | Aucune | NiFi uniquement | NiFi point de terminaison de l’API | `"http://nifi:8080"` 
+
+
+| `nifi++_++process++_++group++_++id` | Aucune | NiFi uniquement | groupe de processus NiFi | `"abc123"` 
+
+
+| `nifi++_++timeout++_++secs` | `30` | Non | NiFi délai d’expiration | `60` 
+|===
+
+
+[[8-2-data-preparation-parameters]]
+== 8.2 Paramètres de préparation des données
+
+Ces paramètres contrôlent l'accès aux données brutes, la sortie des données préparées, la découverte des entrées et le comportement de transformation. Les paramètres `s3++_++raw++_*++` font référence à StorageGRID, tandis que les paramètres compatibles avec le code `s3++_++formatted++_*++` identifient le compartiment NAS ONTAP où les données préparées, horodatées à l’exécution, ainsi que les manifestes, sont écrits.
+
+*Bucket NAS StorageGRID brut / données préparées ONTAP :*
+
+Configurez des points de terminaison et des identifiants distincts lorsque StorageGRID et le compartiment NAS ONTAP utilisent des services compatibles S3 ou des politiques d'accès différents. Les clés de secours génériques ne s'appliquent que lorsqu'aucun paramètre de données brutes ou préparées plus spécifique n'est défini.
+
+[cols="24%,>30%,23%,23%"]
+|===
+| Paramètre | Défaut | Description | Exemple 
+
+
+| `s3++_++raw++_++bucket` | `ai-raw-data` | compartiment d'entrée brute StorageGRID | `"bucket1"` 
+
+
+| `s3++_++raw++_++prefix` | `example++_++ai++_++pipeline/raw` | Préfixe de données brutes StorageGRID | `"example++_++ai++_++pipeline/raw"` 
+
+
+| `s3++_++raw++_++endpoint++_++url` | chaîne de repli | Point de terminaison S3 StorageGRID | `"http://10.63.150.62:10444"` 
+
+
+| `s3++_++raw++_++access++_++key++_++id` | chaîne de repli | Clé d'accès brute | `"++<++KEY++>++"` 
+
+
+| `s3++_++raw++_++secret++_++access++_++key` | chaîne de repli | Clé secrète brute | `"++<++SECRET++>++"` 
+
+
+| `s3++_++raw++_++region` | `aws++_++region` | Région brute | `"us-east-1"` 
+
+
+| `s3++_++formatted++_++bucket` | `ai-formatted-data` | Compartiment de sortie des données préparées ONTAP NAS | `"prepnasbucket"` 
+
+
+| `s3++_++formatted++_++prefix` | `example++_++ai++_++pipeline/formatted` | Préfixe de données préparées ONTAP NAS | `"example++_++ai++_++pipeline/formatted"` 
+
+
+| `s3++_++formatted++_++endpoint++_++url` | chaîne de repli | Point de terminaison S3 du compartiment NAS ONTAP | `"http://10.63.150.159"` 
+
+
+| `s3++_++formatted++_++access++_++key++_++id` | chaîne de repli | Clé d'accès au compartiment NAS ONTAP | `"++<++KEY++>++"` 
+
+
+| `s3++_++formatted++_++secret++_++access++_++key` | chaîne de repli | Clé secrète du compartiment NAS ONTAP | `"++<++SECRET++>++"` 
+|===
+*Solution de repli générale :* `s3++_++endpoint++_++url`, `s3++_++access++_++key++_++id`, `s3++_++secret++_++access++_++key`, `s3++_++session++_++token`, `s3++_++verify`, `aws++_++region`, `aws++_++access++_++key++_++id`, `aws++_++secret++_++access++_++key`, `aws++_++session++_++token`.
+
+*Sélection des entrées :*
+
+Utilisez des paramètres explicites de clé d’objet pour traiter les entrées CSV connues ; sinon, la tâche détecte les objets tabulaires éligibles sous le préfixe brut StorageGRID configuré.
+
+[cols="24%,>30%,23%,23%"]
+|===
+| Paramètre | Défaut | Description | Exemple 
+
+
+| `s3++_++tabular++_++object++_++keys` | Découverte automatique | Liste explicite des clés CSV | `++[++"raw/demo/a.csv"++]++` 
+
+
+| `s3++_++tabular++_++object++_++key` | Aucune | Clé CSV explicite unique | `"raw/demo/a.csv"` 
+|===
+*Transformation:*
+
+Choisissez le chemin Python pour une préparation locale légère ou Spark pour une préparation distribuée. L'échantillonnage et la graine s'appliquent de manière reproductible aux ensembles d'entraînement, de validation et d'inférence générés.
+
+[cols="24%,>30%,23%,23%"]
+|===
+| Paramètre | Défaut | Description | Exemple 
+
+
+| `transformation++_++engine` | `python` | `python` ou `spark` | `"spark"` 
+
+
+| `spark++_++required` | `false` | Échec plutôt que repli | `true` 
+
+
+| `table++_++format` | `none` | `none`/`delta`/`iceberg` | `"delta"` 
+
+
+| `table++_++format++_++required` | `false` | Échec si le format est indisponible | `true` 
+
+
+| `sample++_++count` | toutes les lignes | Limite de lignes (≤0 = toutes) | `14400` 
+
+
+| `seed` | `7` | Graine de mélange reproductible | `11` 
+|===
+*Spark :*
+
+Ces paramètres s'appliquent uniquement à `transformation++_++engine=spark`. Ils contrôlent le placement des processus Spark, l'allocation des ressources, les limites de temps et les dépendances d'exécution optionnelles de Delta Lake ou d'Iceberg.
+
+[cols="24%,>30%,23%,23%"]
+|===
+| Paramètre | Défaut | Description | Exemple 
+
+
+| `spark++_++submit++_++bin` | `spark-submit` | Binaire Spark | `"/opt/spark/bin/spark-submit"` 
+
+
+| `spark++_++master` | `local++[*]++` | Spark master | `"local++[*]++"` 
+
+
+| `spark++_++driver++_++memory` | `4g` | Mémoire du pilote | `"8g"` 
+
+
+| `spark++_++executor++_++memory` | `4g` | Mémoire de l'exécuteur | `"8g"` 
+
+
+| `spark++_++timeout++_++secs` | `900`/`7200` | Délai d'attente (0 = désactivé) | `0` 
+
+
+| `spark++_++delta++_++packages` | Delta 3.2.0 | package d'exécution Delta | `"io.delta:delta-spark++_++2.12:3.2.0"` 
+
+
+| `spark++_++iceberg++_++packages` | Iceberg 1.5.2 | package d'exécution Iceberg | `"org.apache.iceberg:iceberg-spark-runtime-3.5++_++2.12:1.5.2"` 
+
+
+| `spark++_++iceberg++_++catalog` | `local` | Nom du catalogue Iceberg | `"local"` 
+|===
+
+
+[[8-3-xcp-and-training-destination-parameters]]
+== 8.3 Paramètres XCP et de destination d’entraînement
+
+Utilisez ce groupe `enable++_++xcp=true` pour valider la source ONTAP NAS NFS, invoquer l’hôte XCP et choisir le niveau d’entraînement actif. `xcp++_++copy++_++destination` est le commutateur de contrôle : il sélectionne soit les paramètres spécifiques à ONTAP S3, soit ceux spécifiques à LustreFS ci-dessous, et les étapes du modèle en aval utilisent le même niveau sélectionné.
+
+[cols="20%,>23%,>23%,17%,17%"]
+|===
+| Paramètre | Défaut | Obligatoire | Description | Exemple 
+
+
+| `enable++_++xcp` | `false` | Oui pour XCP | Active la branche XCP | `true` 
+
+
+| `xcp++_++copy++_++destination` | `s3` | Non | `s3` ou `lustrefs` | `"lustrefs"` 
+
+
+| `xcp++_++nfs++_++source++_++ip` | `10.63.150.159` | Vérification préalable XCP | IP du serveur NFS | `"10.63.150.159"` 
+
+
+| `xcp++_++nfs++_++source++_++path` | `/prepnasbucket/example++_++ai++_++pipeline` | Vérification préalable XCP | Chemin d'export NFS | `"/prepnasbucket/example++_++ai++_++pipeline"` 
+
+
+| `ssh++_++user` | `root` | Non | Utilisateur SSH de l’hôte XCP | `"root"` 
+
+
+| `ssh++_++host` | `10.63.150.178` | Non | Adresse de l’hôte XCP | `"10.63.150.178"` 
+|===
+*Destination S3 (requise lorsque `xcp++_++copy++_++destination=s3`) :*
+
+Fournissez ces paramètres uniquement pour le chemin d’entraînement ONTAP S3. Le profil ou les identifiants directs permettent à XCP et à la logique de synchronisation des artefacts du modèle d’accéder au compartiment et au préfixe ONTAP S3 sélectionnés.
+
+[cols="24%,>30%,23%,23%"]
+|===
+| Paramètre | Défaut | Description | Exemple 
+
+
+| `xcp++_++s3++_++endpoint` | défaut | Point de terminaison XCP S3 | `"http://10.63.150.161"` 
+
+
+| `xcp++_++s3++_++bucket` | Aucune | compartiment de destination XCP | `"trainingbucket"` 
+
+
+| `xcp++_++s3++_++dest++_++prefix` | `example++_++ai++_++pipeline` | Préfixe de destination | `"example++_++ai++_++pipeline"` 
+
+
+| `xcp++_++s3++_++training++_++prefix` | `xcp++_++s3++_++dest++_++prefix` | Préfixe de découverte de la formation | `"example++_++ai++_++pipeline"` 
+
+
+| `xcp++_++s3++_++profile` | `ontaps3` | Profil d’identifiant nommé | `"ontaps3"` 
+
+
+| `xcp++_++s3++_++profiles` | Aucune | Correspondance de profil | `++{++"ontaps3": ++{++...}}` 
+
+
+| `xcp++_++s3++_++access++_++key++_++id` | Aucune | Basculement direct par clé | `"++<++KEY++>++"` 
+
+
+| `xcp++_++s3++_++secret++_++access++_++key` | Aucune | Repli secret direct | `"++<++SECRET++>++"` 
+
+
+| `xcp++_++s3++_++region` | `aws++_++region` | Région XCP S3 | `"us-east-1"` 
+|===
+*Destination LustreFS (obligatoire lorsque `xcp++_++copy++_++destination=lustrefs`) :*
+
+Fournissez ces paramètres uniquement pour le chemin d'entraînement LustreFS. La source et la destination doivent être montées et accessibles sur l'hôte XCP ; la destination doit également être accessible au worker Airflow qui exécute les étapes du modèle.
+
+[cols="24%,>30%,23%,23%"]
+|===
+| Paramètre | Défaut | Description | Exemple 
+
+
+| `xcp++_++lustrefs++_++source++_++path` | `/prepnasbucket/example++_++ai++_++pipeline` | Source de copie XCP | `"/prepnasbucket/example++_++ai++_++pipeline"` 
+
+
+| `xcp++_++lustrefs++_++dest++_++path` | `/mnt/lustre/client` | Destination de montage LustreFS | `"/mnt/lustre/client"` 
+
+
+| `xcp++_++lustrefs++_++training++_++subpath` | `xcp++_++s3++_++dest++_++prefix` | Sous-répertoire d’entraînement sous le point de montage | `"example++_++ai++_++pipeline"` 
+
+
+| `xcp++_++lustrefs++_++newid` | `data++_++prep` cachet d’exécution | Identifiant de tâche XCP | `"20260901++_++120000"` 
+|===
+*Comportement du texte source :*
+
+Ces options déterminent comment les trois ensembles de données textuelles sont trouvés après la migration XCP. Les clés explicites prévalent sur la détection automatique ; le repli local peut être désactivé pour exiger que les entrées de texte proviennent de la destination XCP sélectionnée.
+
+[cols="24%,>30%,23%,23%"]
+|===
+| Paramètre | Défaut | Description | Exemple 
+
+
+| `xcp++_++text++_++allow++_++local++_++fallback` | `true` | Autoriser le repli vers le texte local | `false` 
+
+
+| `xcp++_++text++_++base++_++key` | Automatique | Emplacement explicite du texte de base | `".../text++_++base.json"` 
+
+
+| `xcp++_++text++_++finetune++_++key` | Automatique | Emplacement explicite du texte de réglage fin | `".../text++_++finetune.json"` 
+
+
+| `xcp++_++text++_++infer++_++key` | Automatique | Emplacement explicite du texte d'inférence | `".../text++_++infer.json"` 
+|===
+
+
+[[8-4-model-training-parameters]]
+== 8.4 Paramètres d'entraînement du modèle
+
+Ces paramètres permettent de sélectionner la source locale ou fournie par XCP, de limiter le volume d'entraînement et de préserver l'ordre reproductible des données. Lorsque XCP est activé, l'entraînement lit le niveau ONTAP S3 ou LustreFS sélectionné et publie les artefacts de référence vers cette même destination.
+
+[cols=",>,,"]
+|===
+| Paramètre | Défaut | Description | Exemple 
+
+
+| `enable++_++xcp` | `false` | Sélectionne la source XCP ou locale | `true` 
+
+
+| `xcp++_++copy++_++destination` | `s3` | Sélectionne le niveau source | `"lustrefs"` 
+
+
+| `sample++_++count` | toutes les lignes | Limite de l'échantillon d'entraînement | `14400` 
+
+
+| `seed` | `7` | Mélange reproductible | `11` 
+|===
+Produit `regression++_++model.bin`, `text++_++vectorizer.bin`, `text++_++classifier.bin`, `train++_++metrics.json`.
+
+
+
+[[8-5-fine-tuning-parameters]]
+== 8.5 Ajustement précis des paramètres
+
+Le réglage fin consiste à matérialiser les artefacts textuels de référence à partir de la destination XCP sélectionnée, à appliquer un apprentissage incrémental à l'ensemble de données de réglage fin, puis à republier le classificateur optimisé et ses métriques. Veillez à conserver la cohérence des paramètres XCP avec ceux utilisés lors de l'entraînement du modèle afin de préserver la provenance des artefacts.
+
+[cols="24%,>30%,23%,23%"]
+|===
+| Paramètre | Défaut | Description | Exemple 
+
+
+| `enable++_++xcp` | `false` | Permet de matérialiser/publier l'artefact | `true` 
+
+
+| `xcp++_++copy++_++destination` | `s3` | Sélectionne la source/destination de l'artefact | `"lustrefs"` 
+|===
+Consomme `text++_++vectorizer.bin`, `text++_++classifier.bin`, `text++_++finetune.json`. Produit `text++_++classifier++_++tuned.bin`, `fine++_++tune++_++metrics.json`.
+
+
+
+[[8-6-inference-parameters]]
+== 8.6 Paramètres d'inférence
+
+Ces indicateurs contrôlent la portée de l’évaluation une fois le modèle ajusté matérialisé à partir du niveau d’entraînement sélectionné. Activez l’une ou l’autre option lorsque les exigences de validation ou métier nécessitent des sorties au-delà de la répartition d’inférence par défaut et du texte d’entrée d’inférence.
+
+[cols=",>,,"]
+|===
+| Paramètre | Défaut | Description | Exemple 
+
+
+| `infer++_++all++_++splits` | `false` | Notation des divisions train/val/infer | `true` 
+
+
+| `infer++_++all++_++text` | `false` | Noter le texte de base/affiné/d’inférence | `true` 
+|===
+Consomme `regression++_++model.bin`, `text++_++vectorizer.bin`, `text++_++classifier++_++tuned.bin`. Produit `tabular++_++predictions.csv`, `text++_++predictions.json`.
+
+
+
+[[8-7-checkpoint-parameters]]
+== 8.7 Paramètres du point de contrôle
+
+La création de points de contrôle est limitée à  `model++_++training`. Ces paramètres déterminent si l'enregistrement de fin de formation est créé, où il est stocké, comment les échecs de téléchargement sont gérés et si une exécution ultérieure vérifie ou réutilise un résultat de formation terminé valide.
+
+[cols="24%,>30%,23%,23%"]
+|===
+| Paramètre | Défaut | Description | Exemple 
+
+
+| `checkpoint++_++enabled` | `true` | Permet la création de fichiers de point de contrôle | `true` 
+
+
+| `checkpoint++_++store` | `local` | `local` ou `formatted++_++s3` | `"formatted++_++s3"` 
+
+
+| `checkpoint++_++upload++_++fail++_++mode` | `warn` | `warn` ou `fail` | `"fail"` 
+
+
+| `training++_++checkpoint++_++reuse++_++mode` | `off` | `off`/`verify++_++only`/`resume++_++if++_++exists` | `"resume++_++if++_++exists"` 
+
+
+| `checkpoint++_++reuse++_++mode` | `off` | Alias rétrocompatible | `"verify++_++only"` 
+|===
+
+
+[[8-8-manual-archive-parameters]]
+== 8.8 Paramètres d'archivage manuel
+
+Utilisez ce groupe pour activer l’archivage StorageGRID, identifier le compartiment de destination et les identifiants, puis choisir le point d’archivage. Le paramètre sélectionné `manual++_++archive++_++stage`détermine à la fois le moment de l’archivage et si l’archive contient uniquement les artefacts d’entraînement de base ou l’ensemble complet des résultats d’inférence.
+
+[cols="20%,>23%,>23%,17%,17%"]
+|===
+| Paramètre | Défaut | Obligatoire | Description | Exemple 
+
+
+| `manual++_++archive++_++enabled` | `false` | Non | Permet l'archivage | `true` 
+
+
+| `manual++_++archive++_++stage` | `inferencing` | Non | Point d'archivage et ensemble d'artefacts : `model++_++training` pour les artefacts d'entraînement de base, ou `inferencing` pour l'ensemble complet des résultats | `"model++_++training"` 
+
+
+| `manual++_++archive++_++bucket` | `archivalbucket` | Oui lorsqu’elle est activée | compartiment d'archive | `"archivalbucket"` 
+
+
+| `manual++_++archive++_++prefix` | `ai-models` | Non | Préfixe d'archive | `"ai-models"` 
+
+
+| `manual++_++archive++_++endpoint` | défaut | Personnalisé uniquement | Point de terminaison S3 d’archivage | `"http://10.63.150.62:10444"` 
+
+
+| `manual++_++archive++_++profile` | `sgdlocal` | Recommandé | Profil d’identification | `"sgdlocal"` 
+
+
+| `manual++_++archive++_++profiles` | Aucune | Facultatif | Correspondance de profil | `++{++"sgdlocal": ++{++...}}` 
+
+
+| `manual++_++archive++_++include++_++xcp++_++inputs` | `false` | Non | Inclure les entrées XCP dans l'archive | `true` 
+
+
+| `manual++_++archive++_++cleanup++_++raw` | `false` | Non | Supprimer le dossier brut local après le téléchargement | `true` 
+|===
+Alias : `fabricpool++_++archive++_*++` pour tous les `manual++_++archive++_*++` paramètres.
+
+
+
+[[8-8-1-manual-archive-stage-decision]]
+=== 8.8.1 Décision relative à l’étape d’archivage manuel
+
+La `route++_++manual++_++archive++_++stage` tâche de branche lit `manual++_++archive++_++stage` une fois par exécution du DAG. La valeur sélectionnée détermine à la fois le moment où l'archivage s'exécute et les artefacts qui sont téléchargés vers le bucket d'archivage StorageGRID. Les objets d'archive sont stockés sous `s3://++<++manual++_++archive++_++bucket++>++/++<++manual++_++archive++_++prefix++>++/++<++stage++>++/++<++run++_++stamp++>++/`.
+
+[cols="25%,25%,25%,25%"]
+|===
+| `manual++_++archive++_++stage` valeur | Calendrier d’archivage | Artefacts archivés | Utilisation recommandée 
+
+
+| `model++_++training` | Immédiatement après `model++_++training`; sans attendre de réglage fin ni d'inférence | `regression++_++model.bin`, `text++_++vectorizer.bin`, `text++_++classifier.bin`, `train++_++metrics.json` | Préserver un modèle de référence reproductible, minimiser le volume des archives ou conserver un point de contrôle avant les étapes ultérieures 
+
+
+| `inferencing` (défaut) | Après `fine++_++tuning` et `inferencing` la fin | Tous `model++_++training` les artefacts plus `text++_++classifier++_++tuned.bin`, `fine++_++tune++_++metrics.json`, `tabular++_++predictions.csv` et `text++_++predictions.json` | Conserver l’ensemble des données relatives aux résultats commerciaux et aux preuves de prédiction pour une exécution du modèle 
+|===
+Quelle que soit l’option choisie, définissez `manual++_++archive++_++include++_++xcp++_++inputs=true` pour ajouter les entrées d’entraînement XCP matérialisées localement lorsqu’elles sont présentes. Définissez `manual++_++archive++_++enabled=false` pour ignorer la tâche d’archivage sans modifier le flux de travail d’entraînement et d’inférence.
+
+
+
+[[8-9-complete-sample-configuration]]
+== 8.9 Exemple de configuration complet
+
+Ce catalogue fournit les configurations de départ pour les principaux chemins de déploiement et de test. Chaque exemple suppose que les données brutes se trouvent dans StorageGRID et que les données préparées sont écrites dans le bucket NAS ONTAP. Remplacez les noms de bucket, les adresses de point de terminaison, les chemins du système de fichiers et les noms de profil par les valeurs de l'environnement cible. Ne placez pas les clés d'accès ou les secrets de production dans `CONF++_++JSON`; configurez-les via les connexions Airflow, les variables ou un backend de secrets.
+
+
+
+[[8-9-1-xcp-to-lustrefs-with-spark-and-delta-lake]]
+=== 8.9.1 XCP vers LustreFS avec Spark et Delta Lake
+
+Utilisez cet exemple à débit maximal pour la préparation distribuée et les E/S hautes performances du modèle LustreFS. Il traite tous les fichiers tabulaires admissibles sous `s3++_++raw++_++prefix`, écrit des tables Delta pendant la préparation, conserve le point de contrôle d’entraînement dans le compartiment de données préparées ONTAP NAS, et archive l’ensemble complet des résultats d’inférence.
+
+[source, json]
+----
+{
+  "ingestion_tool": "s3_direct",
+  "s3_raw_bucket": "bucket1",
+  "s3_raw_prefix": "example_ai_pipeline/raw",
+  "s3_formatted_bucket": "prepnasbucket",
+  "s3_formatted_prefix": "example_ai_pipeline/formatted",
+
+  "enable_xcp": true,
+  "xcp_copy_destination": "lustrefs",
+  "xcp_nfs_source_ip": "10.63.150.159",
+  "xcp_nfs_source_path": "/prepnasbucket/example_ai_pipeline",
+  "xcp_lustrefs_source_path": "/prepnasbucket/example_ai_pipeline",
+  "xcp_lustrefs_dest_path": "/mnt/lustre/client",
+  "xcp_lustrefs_training_subpath": "example_ai_pipeline",
+  "xcp_text_allow_local_fallback": false,
+
+  "transformation_engine": "spark",
+  "spark_required": true,
+  "table_format": "delta",
+  "table_format_required": true,
+  "spark_driver_memory": "8g",
+  "spark_executor_memory": "8g",
+  "spark_timeout_secs": 0,
+  "sample_count": 14400,
+  "seed": 11,
+
+  "infer_all_splits": true,
+  "infer_all_text": true,
+
+  "checkpoint_enabled": true,
+  "checkpoint_store": "formatted_s3",
+  "training_checkpoint_reuse_mode": "off",
+
+  "manual_archive_enabled": true,
+  "manual_archive_stage": "inferencing",
+  "manual_archive_bucket": "archivalbucket",
+  "manual_archive_prefix": "ai-models",
+  "manual_archive_profile": "sgdlocal",
+  "manual_archive_cleanup_raw": true
+}
+----
+
+
+[[8-9-2-no-xcp-with-python-preparation]]
+=== 8.9.2 Préparation de XCP sans Python
+
+Utilisez cette configuration de base pour une exécution fonctionnelle légère. La préparation utilise le moteur Python local et les étapes en aval utilisent les chemins locaux du pipeline pour les données préparées et les artefacts ; XCP, Spark, les formats de table, la réutilisation des points de contrôle et l'archivage sont désactivés.
+
+[source, json]
+----
+{
+    "ingestion_tool": "s3_direct",
+    "s3_raw_bucket": "bucket1",
+    "s3_raw_prefix": "example_ai_pipeline/raw",
+    "s3_formatted_bucket": "prepnasbucket",
+    "s3_formatted_prefix": "example_ai_pipeline/formatted",
+    "enable_xcp": false,
+    "transformation_engine": "python",
+    "table_format": "none",
+    "sample_count": 200,
+    "seed": 11,
+    "checkpoint_enabled": false,
+    "manual_archive_enabled": false
+}
+----
+
+
+[[8-9-3-python-preparation-with-two-explicit-input-files]]
+=== 8.9.3 Préparation de Python avec deux fichiers d'entrée explicites
+
+Utilisez ce test ciblé lors de la validation du pipeline par rapport à deux objets CSV StorageGRID connus. `s3++_++tabular++_++object++_++keys` Il désactive la détection automatique des fichiers tabulaires ; les entrées de texte utilisent toujours leurs emplacements attendus sous le préfixe brut.
+
+[source, json]
+----
+{
+    "ingestion_tool": "s3_direct",
+    "s3_raw_bucket": "bucket1",
+    "s3_raw_prefix": "example_ai_pipeline/raw",
+    "s3_tabular_object_keys": [
+        "example_ai_pipeline/raw/tabular_part_01.csv",
+        "example_ai_pipeline/raw/tabular_part_02.csv"
+    ],
+    "s3_formatted_bucket": "prepnasbucket",
+    "s3_formatted_prefix": "example_ai_pipeline/formatted",
+    "enable_xcp": false,
+    "transformation_engine": "python",
+    "table_format": "none",
+    "sample_count": 200,
+    "seed": 11,
+    "manual_archive_enabled": false
+}
+----
+
+
+[[8-9-4-python-preparation-with-automatic-all-file-discovery]]
+=== 8.9.4 Préparation de Python avec découverte automatique de tous les fichiers
+
+Omettez `s3++_++tabular++_++object++_++keys` et `s3++_++tabular++_++object++_++key` pour traiter chaque objet tabulaire admissible sous le préfixe brut StorageGRID. Cet exemple convient à un test fonctionnel ou de montée en charge sur tous les fichiers à l’aide du moteur de préparation Python.
+
+[source, json]
+----
+{
+    "s3_raw_bucket": "bucket1",
+    "s3_raw_prefix": "example_ai_pipeline/raw",
+    "s3_formatted_bucket": "prepnasbucket",
+    "s3_formatted_prefix": "example_ai_pipeline/formatted",
+    "enable_xcp": false,
+    "transformation_engine": "python",
+    "table_format": "none",
+    "sample_count": 0,
+    "seed": 11,
+    "manual_archive_enabled": false
+}
+----
+`sample++_++count: 0` signifie que la préparation des données utilise toutes les lignes disponibles. Définissez une valeur positive pour une exécution de test limitée.
+
+
+
+[[8-9-5-xcp-to-ontap-s3-with-python-preparation]]
+=== 8.9.5 Préparation de XCP vers ONTAP S3 avec Python
+
+Utilisez cette configuration lorsque des données préparées doivent être copiées depuis l’export NFS NAS ONTAP vers un compartiment d’entraînement ONTAP S3. L’entraînement, le réglage fin et l’inférence du modèle génèrent et publient des artefacts via cette même destination ONTAP S3.
+
+[source, json]
+----
+{
+    "s3_raw_bucket": "bucket1",
+    "s3_raw_prefix": "example_ai_pipeline/raw",
+    "s3_formatted_bucket": "prepnasbucket",
+    "s3_formatted_prefix": "example_ai_pipeline/formatted",
+    "enable_xcp": true,
+    "xcp_copy_destination": "s3",
+    "xcp_nfs_source_ip": "10.63.150.159",
+    "xcp_nfs_source_path": "/prepnasbucket/example_ai_pipeline",
+    "xcp_s3_endpoint": "https://ontap-s3.example.com",
+    "xcp_s3_bucket": "trainingbucket",
+    "xcp_s3_dest_prefix": "example_ai_pipeline",
+    "xcp_s3_training_prefix": "example_ai_pipeline",
+    "xcp_s3_profile": "ontaps3",
+    "transformation_engine": "python",
+    "table_format": "none",
+    "sample_count": 14400,
+    "seed": 11,
+    "checkpoint_enabled": true,
+    "checkpoint_store": "formatted_s3",
+    "manual_archive_enabled": true,
+    "manual_archive_stage": "model_training",
+    "manual_archive_bucket": "archivalbucket",
+    "manual_archive_profile": "storagegrid-archive"
+}
+----
+
+
+[[8-9-6-xcp-to-ontap-s3-with-spark-and-iceberg]]
+=== 8.9.6 XCP vers ONTAP S3 avec Spark et Iceberg
+
+Utilisez cette configuration pour la préparation distribuée avec une sortie de table Iceberg et ONTAP S3 comme destination d'entraînement active. Définissez `spark++_++required` et `table++_++format++_++required` sur `true` lorsque l'exécution doit échouer plutôt que de basculer vers une autre solution si Spark ou Iceberg est indisponible.
+
+[source, json]
+----
+{
+    "s3_raw_bucket": "bucket1",
+    "s3_raw_prefix": "example_ai_pipeline/raw",
+    "s3_formatted_bucket": "prepnasbucket",
+    "s3_formatted_prefix": "example_ai_pipeline/formatted",
+    "enable_xcp": true,
+    "xcp_copy_destination": "s3",
+    "xcp_nfs_source_ip": "10.63.150.159",
+    "xcp_nfs_source_path": "/prepnasbucket/example_ai_pipeline",
+    "xcp_s3_bucket": "trainingbucket",
+    "xcp_s3_dest_prefix": "example_ai_pipeline",
+    "xcp_s3_profile": "ontaps3",
+    "transformation_engine": "spark",
+    "spark_required": true,
+    "table_format": "iceberg",
+    "table_format_required": true,
+    "spark_driver_memory": "8g",
+    "spark_executor_memory": "8g",
+    "spark_timeout_secs": 0,
+    "sample_count": 0,
+    "seed": 11,
+    "manual_archive_enabled": true,
+    "manual_archive_stage": "inferencing",
+    "manual_archive_bucket": "archivalbucket",
+    "manual_archive_profile": "storagegrid-archive"
+}
+----
+
+
+[[8-9-7-scenario-selection-summary]]
+=== 8.9.7 Résumé de la sélection des scénarios
+
+[cols="20%,16%,16%,16%,16%,16%"]
+|===
+| Scénario | Destination XCP | Moteur de préparation | Format de tableau | Portée d’entrée | Étape d'archivage 
+
+
+| 8.9.1 | LustreFS | Étincelle | Delta | Tous les fichiers découverts | `inferencing` 
+
+
+| 8.9.2 | Aucune | Python | Aucune | Tous les fichiers découverts | Désactivées 
+
+
+| 8.9.3 | Aucune | Python | Aucune | Deux fichiers explicites | Désactivées 
+
+
+| 8.9.4 | Aucune | Python | Aucune | Tous les fichiers découverts | Désactivées 
+
+
+| 8.9.5 | ONTAP S3 | Python | Aucune | Tous les fichiers découverts | `model++_++training` 
+
+
+| 8.9.6 | ONTAP S3 | Étincelle | Iceberg | Tous les fichiers découverts | `inferencing` 
+|===
+
+
+[[8-9-8-execution-walkthroughs]]
+=== 8.9.8 Procédures pas à pas d'exécution
+
+Exécutez les exemples depuis l'espace de travail Airflow. Le script de déclenchement génère un ID d'exécution unique `manual++__<++UTC timestamp++>++`, attend la fin de l'exécution et renvoie un code de sortie différent de zéro en cas d'échec ou de dépassement du délai d'attente. Les configurations complètes suivantes utilisent le même schéma `CONF++_++JSON="$(python3 - ++<<++'PY' ...)"` que les exemples opérationnels. Configurez les connexions gérées par Airflow, les profils XCP et les profils d'archivage référencés dans votre système de gestion des secrets avant de les exécuter, et limitez-vous `CONF++_++JSON` aux identifiants non secrets de compartiment, de point de terminaison, de chemin et de profil.
+
+Le nom de format de tableau valide est `iceberg`. N'utilisez pas `icerberg`, qui n'est pas une valeur prise en charge.
+
+*Tous les fichiers, Spark, Iceberg, XCP vers ONTAP S3, point de contrôle vers prepared-data S3, archive après inférence :*
+
+[source, bash]
+----
+CONF_JSON="$(python3 - <<'PY'
+import json
+
+print(json.dumps({
+    "ingestion_tool": "s3_direct",
+    "enable_xcp": True,
+    "xcp_copy_destination": "s3",
+    "xcp_text_allow_local_fallback": True,
+
+    "s3_raw_bucket": "bucket1",
+    "s3_raw_prefix": "example_ai_pipeline/raw",
+    "s3_raw_endpoint_url": "https://storagegrid.example.com",
+    "s3_raw_region": "us-east-1",
+
+    "s3_formatted_bucket": "prepnasbucket",
+    "s3_formatted_prefix": "example_ai_pipeline/formatted",
+    "s3_formatted_endpoint_url": "https://ontap-nas.example.com",
+    "s3_formatted_region": "us-east-1",
+
+    "xcp_nfs_source_ip": "10.63.150.159",
+    "xcp_nfs_source_path": "/prepnasbucket/example_ai_pipeline",
+    "xcp_s3_endpoint": "https://ontap-s3.example.com",
+    "xcp_s3_bucket": "trainingbucket",
+    "xcp_s3_dest_prefix": "example_ai_pipeline",
+    "xcp_s3_training_prefix": "example_ai_pipeline",
+    "xcp_s3_profile": "ontaps3",
+
+    "transformation_engine": "spark",
+    "spark_required": True,
+    "table_format": "iceberg",
+    "table_format_required": True,
+    "sample_count": 0,
+    "seed": 11,
+    "spark_driver_memory": "8g",
+    "spark_executor_memory": "8g",
+    "spark_timeout_secs": 0,
+    "infer_all_splits": True,
+    "infer_all_text": True,
+
+    "checkpoint_enabled": True,
+    "checkpoint_store": "formatted_s3",
+    "manual_archive_enabled": True,
+    "manual_archive_stage": "inferencing",
+    "manual_archive_bucket": "archivalbucket",
+    "manual_archive_prefix": "ai-models",
+    "manual_archive_profile": "sgdlocal",
+    "manual_archive_endpoint": "https://storagegrid.example.com",
+    "manual_archive_cleanup_raw": True,
+    "manual_archive_include_xcp_inputs": True,
+}, separators=(",", ":")))
+PY
+)"
+CONF_JSON="$CONF_JSON" AIRFLOW_BIN=./.venv/bin/airflow INGESTION_TOOL=s3_direct \
+  ./trigger_and_wait_ai_pipeline_sklearn.sh
+----
+*Tous les fichiers, Spark, Iceberg, XCP vers LustreFS, point de contrôle vers prepared-data S3, archive après inférence :*
+
+[source, bash]
+----
+CONF_JSON="$(python3 - <<'PY'
+import json
+
+print(json.dumps({
+    "ingestion_tool": "s3_direct",
+    "enable_xcp": True,
+    "xcp_copy_destination": "lustrefs",
+    "ssh_user": "root",
+    "ssh_host": "10.63.150.178",
+    "xcp_text_allow_local_fallback": True,
+
+    "s3_raw_bucket": "bucket1",
+    "s3_raw_prefix": "example_ai_pipeline/raw",
+    "s3_raw_endpoint_url": "https://storagegrid.example.com",
+    "s3_raw_region": "us-east-1",
+
+    "s3_formatted_bucket": "prepnasbucket",
+    "s3_formatted_prefix": "example_ai_pipeline/formatted",
+    "s3_formatted_endpoint_url": "https://ontap-nas.example.com",
+    "s3_formatted_region": "us-east-1",
+
+    "xcp_nfs_source_ip": "10.63.150.159",
+    "xcp_nfs_source_path": "/prepnasbucket/example_ai_pipeline",
+    "xcp_lustrefs_source_path": "/prepnasbucket/example_ai_pipeline",
+    "xcp_lustrefs_dest_path": "/mnt/lustre/client",
+    "xcp_lustrefs_training_subpath": "example_ai_pipeline",
+
+    "transformation_engine": "spark",
+    "spark_required": True,
+    "table_format": "iceberg",
+    "table_format_required": True,
+    "sample_count": 0,
+    "seed": 11,
+    "spark_driver_memory": "8g",
+    "spark_executor_memory": "8g",
+    "spark_timeout_secs": 0,
+    "infer_all_splits": True,
+    "infer_all_text": True,
+
+    "checkpoint_enabled": True,
+    "checkpoint_store": "formatted_s3",
+    "manual_archive_enabled": True,
+    "manual_archive_stage": "inferencing",
+    "manual_archive_bucket": "archivalbucket",
+    "manual_archive_prefix": "ai-models",
+    "manual_archive_profile": "sgdlocal",
+    "manual_archive_endpoint": "https://storagegrid.example.com",
+    "manual_archive_cleanup_raw": True,
+    "manual_archive_include_xcp_inputs": True,
+}, separators=(",", ":")))
+PY
+)"
+AIRFLOW_BIN=./.venv/bin/airflow INGESTION_TOOL=s3_direct \
+  ./trigger_and_wait_ai_pipeline_sklearn.sh
+----
+Pour le mode ONTAP S3, transmettez uniquement le nom non secret `xcp++_++s3++_++profile` dans `CONF++_++JSON` et définissez les identifiants correspondants sur l’hôte XCP ou via le stockage de secrets géré par Airflow avant l’exécution. Pour le mode LustreFS, la `xcp++_++s3++_++profiles` correspondance est volontairement omise, car le parcours d’entraînement ne résout pas les identifiants ONTAP S3. Dans les deux exemples, définissez les identifiants des données brutes StorageGRID, des données préparées ONTAP NAS et des archives via le stockage de secrets géré par Airflow plutôt qu’en JSON inline. L’omission de `s3++_++tabular++_++object++_++keys` et le réglage de `sample++_++count` sur `0` demandent la découverte automatique de tous les fichiers tabulaires éligibles et l’utilisation de toutes les lignes disponibles.
+
+*Python, sans XCP, test à deux fichiers :*
+
+[source, bash]
+----
+CONF_JSON='{"s3_raw_bucket":"bucket1","s3_raw_prefix":"example_ai_pipeline/raw","s3_tabular_object_keys":["example_ai_pipeline/raw/tabular_part_01.csv","example_ai_pipeline/raw/tabular_part_02.csv"],"s3_formatted_bucket":"prepnasbucket","s3_formatted_prefix":"example_ai_pipeline/formatted","enable_xcp":false,"transformation_engine":"python","table_format":"none","sample_count":200,"manual_archive_enabled":false}' \
+./trigger_and_wait_ai_pipeline_sklearn.sh
+----
+*Spark, Delta Lake, XCP vers LustreFS :*
+
+[source, bash]
+----
+CONF_JSON='{"enable_xcp":true,"xcp_copy_destination":"lustrefs","xcp_nfs_source_ip":"10.63.150.159","xcp_nfs_source_path":"/prepnasbucket/example_ai_pipeline","xcp_lustrefs_source_path":"/prepnasbucket/example_ai_pipeline","xcp_lustrefs_dest_path":"/mnt/lustre/client","xcp_lustrefs_training_subpath":"example_ai_pipeline","transformation_engine":"spark","spark_required":true,"table_format":"delta","table_format_required":true,"sample_count":14400,"manual_archive_enabled":true,"manual_archive_stage":"inferencing"}' \
+./trigger_and_wait_ai_pipeline_sklearn.sh
+----
+*Spark, Iceberg, XCP vers ONTAP S3 :*
+
+[source, bash]
+----
+CONF_JSON='{"enable_xcp":true,"xcp_copy_destination":"s3","xcp_nfs_source_ip":"10.63.150.159","xcp_nfs_source_path":"/prepnasbucket/example_ai_pipeline","xcp_s3_bucket":"trainingbucket","xcp_s3_dest_prefix":"example_ai_pipeline","xcp_s3_profile":"ontaps3","transformation_engine":"spark","spark_required":true,"table_format":"iceberg","table_format_required":true,"sample_count":0,"manual_archive_enabled":true,"manual_archive_stage":"inferencing"}' \
+./trigger_and_wait_ai_pipeline_sklearn.sh
+----
+Avant une exécution de XCP, vérifiez le chemin NFS NAS ONTAP configuré et l'accessibilité de la destination depuis l'hôte XCP. Après une exécution réussie, consultez les journaux des tâches pour `++[++data++_++prep++]++ effective++_++config`, `++[++xcp++_++copy++]++ effective++_++config`, `++[++model++_++training++]++ effective++_++config` et `++[++manual++_++archive++]++` confirmer le moteur sélectionné, la portée d'entrée, la destination et l'étape d'archivage.
+
+'''

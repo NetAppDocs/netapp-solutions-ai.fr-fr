@@ -1,0 +1,127 @@
+---
+sidebar: sidebar 
+permalink: infra/ai-pipeline-executive-summary.html 
+keywords:  
+summary:  
+---
+= 1. synthèse
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+Karthikeyan Nagalingam, NetApp
+
+
+
+[[1-1-purpose-of-this-document]]
+== 1.1 Objet du présent document
+
+Cette architecture validée NetApp (NVA) décrit un pipeline de données d'IA de niveau production qui ingère les données brutes, les prépare pour l'apprentissage automatique, les déplace à grande vitesse entre les niveaux de stockage à l'aide de NetApp XCP, entraîne et affine progressivement les modèles, génère des prédictions et archive les résultats à des fins de gouvernance et de reproductibilité. Elle vise à guider les architectes et les équipes d'infrastructure dans la logique de conception, le déploiement, la configuration et l'exploitation.
+
+
+
+[[1-2-audience]]
+== 1.2 Public cible
+
+Architectes de solutions, ingénieurs en stockage/infrastructure, ingénieurs en plateformes de données, ingénieurs en apprentissage automatique et décideurs informatiques évaluant les technologies de stockage et de mobilité des données de NetApp pour les charges de travail d'IA/ML.
+
+
+
+[[1-3-business-challenge-overview]]
+== 1.3 Aperçu des défis commerciaux
+
+Les équipes d'IA ont besoin que les données arrivant dans un stockage objet soient transformées de manière fiable, puis acheminées vers la couche de calcul et de stockage la plus adaptée à l'entraînement : S3 élastique pour les charges de travail générales, ou des systèmes de fichiers parallèles haute performance (LustreFS) pour les entraînements nécessitant d'importantes opérations d'E/S. Sans une couche gouvernée de mobilité des données et d'orchestration, les équipes sont contraintes d'utiliser des scripts fragiles à usage unique, dépourvus de mécanismes de reprise, de points de contrôle, de flexibilité de stockage et de journaux d'audit.
+
+Les programmes d'IA en entreprise stagnent — non pas à cause de limitations liées aux modèles ou à la puissance de calcul, mais parce que les solutions de stockage traditionnelles n'ont pas été conçues pour l'IA. Le déplacement d'ensembles de données massifs, l'alimentation continue des GPU pendant l'entraînement, la gestion de la surcharge liée aux points de contrôle et la maîtrise des coûts de stockage demandent plus d'efforts que le travail d'IA lui-même. Les architectures à un seul niveau imposent un compromis entre performance et coût qui s'aggrave à mesure que les modèles et les ensembles de données augmentent.
+
+
+
+[[1-4-netapp-solution-summary]]
+== 1.4 Synthèse de la solution NetApp
+
+La solution orchestre l'ingestion, la préparation, la mobilité des données, l'entraînement, l'ajustement fin, l'inférence et l'archivage sous forme de DAG (graphe orienté acyclique) Apache Airflow. StorageGRID ancre les niveaux d'objets pour les données brutes et l'archivage à long terme. La préparation des données écrit des jeux de données horodatés à l'exécution et des manifestes dans un compartiment NAS ONTAP, exposé par NFS comme source XCP. NetApp XCP déplace ensuite les données préparées vers une destination d'entraînement sélectionnable à l'exécution — NetApp ONTAP S3 ou LustreFS — sans qu'aucune modification du code soit nécessaire pour changer de niveau.
+
+[NOTE]
+====
+Dans cette conception, le compartiment NAS ONTAP est principalement utilisé du point de vue de la prise en charge et de la validation de XCP, car il fournit une source NFS cohérente pour le flux de travail de mobilité. Dans les environnements de production réels, ces mêmes données actives peuvent également être fournies directement via des chemins haute performance compatibles RDMA. La couche NAS ONTAP doit donc être considérée comme un modèle de transit opérationnel pratique et pris en charge, plutôt que comme la seule méthode d'accès à l'exécution.
+
+====
+Ce pipeline est une implémentation concrète de l’architecture de stockage IA plus large de NetApp — un cadre de stockage à trois niveaux spécialement conçu qui aligne les performances et les coûts sur chaque phase de charge de travail IA :
+
+* *E-Series (LustreFS):* Stockage parallèle à très haut débit pour l’entraînement de modèles intensifs en GPU et la création de points de contrôle.
+* *ONTAP (AFF/AFX):* Stockage actif haute performance pour l'entraînement, le réglage fin, l'inférence, les charges de travail vectorielles/RAG et certains cas d'utilisation de préparation des données, avec prise en charge des compartiments FAS et NAS.
+* *StorageGRID:* Stockage d'objets évolutif compatible S3 pour l'ingestion, la gouvernance et la conservation à long terme des données.
+
+
+Le déplacement des données entre les différents niveaux est entièrement automatisé via Apache Airflow et NetApp XCP, éliminant ainsi totalement les opérations manuelles du chemin critique.
+
+L'architecture de stockage NetApp aide les entreprises à prendre en charge la préparation distribuée des données, l'entraînement des modèles, le réglage fin, l'inférence et la gouvernance du cycle de vie sans imposer de centraliser toutes les données dans un seul lac de données. En réduisant le déplacement inutile des données, elle s'intègre naturellement aux flux de travail d'IA hybrides.
+
+
+
+[[1-5-why-netapp]]
+== 1.5 Pourquoi NetApp
+
+[cols="34%,33%,33%"]
+|===
+| Dimension | Approche conventionnelle | NetApp Architecture de stockage IA 
+
+
+| Productivité du GPU | Les goulots d'étranglement du stockage immobilisent des ressources de calcul coûteuses | GPUDirect Storage over RDMA permet de maintenir les clusters GPU pleinement utilisés 
+
+
+| mobilité des données | Les scripts manuels retardent les pipelines | Déplacement automatisé entre les niveaux via Airflow {plus} XCP 
+
+
+| Contrôle des coûts | Toutes les données sur une mémoire flash coûteuse | FabricPool rétrograde automatiquement les données froides vers un stockage d'objets à faible coût 
+
+
+| Multilocataire | Les espaces de noms partagés présentent un risque de fuite de données | Les SVM ONTAP dédiés imposent une isolation stricte des locataires 
+
+
+| Étendue de la charge de travail | Piles séparées pour l'entraînement et l'inférence | Une architecture unique et unifiée couvrant l’intégralité du cycle de vie de l’IA 
+|===
+
+
+[[1-6-the-business-case]]
+== 1.6 Analyse de rentabilité
+
+Le calcul GPU représente généralement le poste de dépense en capital le plus important dans un budget d'infrastructure d'IA. Chaque heure pendant laquelle un cluster reste inactif en attendant des données constitue une perte financière directe et mesurable. NetApp garantit que les bonnes données se trouvent sur le bon niveau au bon moment — automatiquement — offrant ainsi un débit d'IA supérieur, un TCO réduit et une architecture qui passe du POC à la production en entreprise sans refonte.
+
+
+
+[[1-7-key-benefits-at-a-glance]]
+== 1.7 Principaux avantages en bref
+
+[cols="50%,50%"]
+|===
+| Avantage | Description 
+
+
+| Orchestration unifiée | Un seul DAG couvre l’ingestion → l’archivage 
+
+
+| Flexibilité du niveau de stockage | S3 ou LustreFS sélectionné par exécution via la configuration 
+
+
+| Coût de reconversion réduit | Affinage incrémentiel via `partial++_++fit` 
+
+
+| Récupération plus rapide | Reprise de l'entraînement basée sur des points de contrôle 
+
+
+| Traçabilité complète | Manifestes, journaux effective-config, documents d’archives 
+
+
+| Aucun enfermement propriétaire du stockage | Multi-protocole : NFS, S3, Lustre 
+
+
+| Utilisation du GPU | Le stockage hiérarchisé alimente en continu les ressources de calcul, évitant ainsi les coûts liés à l’inactivité du GPU 
+
+
+| Rétention optimisée en termes de coûts | FabricPool hiérarchise automatiquement les données froides vers le stockage objet 
+|===

@@ -1,0 +1,106 @@
+---
+sidebar: sidebar 
+permalink: infra/ai-pipeline-solution-overview.html 
+keywords:  
+summary:  
+---
+= 2. Présentation de la solution, valeur commerciale et avantages pour le client
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+Karthikeyan Nagalingam, NetApp
+
+
+
+[[2-1-solution-description]]
+== 2.1 Description de la solution
+
+Le pipeline est implémenté sous la forme du DAG Airflow `example++_++ai++_++pipeline++_++sklearn`, composé des tâches `ingestion`, `data++_++prep`, `xcp++_++preflight++_++source`, `xcp++_++copy++_++prep++_++to++_++training`, `model++_++training`, `fine++_++tuning`, `inferencing`, `checkpoint++_++model++_++training`, `route++_++manual++_++archive++_++stage`, et `manual++_++archive`.
+
+
+
+[[2-2-use-case-and-problem-statement]]
+== 2.2 Cas d'utilisation et énoncé du problème
+
+Les clients doivent entraîner et actualiser régulièrement les modèles de régression tabulaire et de classification de texte à l'aide de données brutes provenant de StorageGRID. Le pipeline prépare ces données dans un bucket NAS ONTAP, puis utilise NetApp XCP pour les transférer vers ONTAP S3 ou LustreFS à des fins d'entraînement, selon la destination sélectionnée pour chaque exécution.
+
+
+
+[[2-3-target-customer-profile-and-industry-applicability]]
+== 2.3 Profil du client cible et applicabilité sectorielle
+
+Services financiers (modèles de risque/fraude), industrie manufacturière (maintenance prédictive), domaine de la santé (classification/triage), commerce de détail (prévision de la demande) — toute entreprise nécessitant une formation ML gouvernée et reproductible sur l’infrastructure NetApp.
+
+
+
+[[2-4-solution-scope-and-boundaries]]
+== 2.4 Portée et limites de la solution
+
+*Dans le périmètre :* contrôle de l’ingestion, préparation des données (Python/Spark), mobilité des données XCP (S3/LustreFS), entraînement et ajustement incrémentiel avec scikit-learn, inférence, checkpointing, archivage manuel. *Hors périmètre :* API de service de modèles en temps réel, ingestion en flux continu, frameworks d’apprentissage profond basés sur GPU.
+
+
+
+[[2-5-assumptions-and-prerequisites]]
+== 2.5 Hypothèses et prérequis
+
+* Point de terminaison StorageGRID compatible S3 accessible depuis Airflow pour l'accès aux données brutes et l'archivage.
+* Compartiment NAS ONTAP accessible depuis Airflow pour les écritures de données préparées et exposé via NFS à l’hôte XCP.
+* NetApp point de terminaison compatible ONTAP S3 accessible depuis Airflow et XCP lorsque ONTAP S3 est sélectionné comme destination de formation.
+* NetApp XCP installé et accessible via SSH (connexion Airflow `ssh++_++default`).
+* Client LustreFS monté sur l’hôte XCP lorsque LustreFS est sélectionné.
+* Airflow 2.x avec `boto3`, `scikit-learn`; packages Delta/Iceberg et PySpark &#43; en option.
+
+
+
+
+[[2-6-business-drivers]]
+== 2.6 Facteurs commerciaux
+
+Réduisez le délai de mise au point des modèles, réduisez les coûts d’infrastructure grâce à l’entraînement incrémentiel et éliminez les risques liés aux scripts ponctuels.
+
+
+
+[[2-7-value-proposition-summary]]
+== 2.7 Résumé de la proposition de valeur
+
+StorageGRID, ONTAP NAS, ONTAP S3, LustreFS et XCP, associés à l'orchestration Airflow, offrent un pipeline d'IA observable, résilient et prenant en compte le niveau de stockage.
+
+
+
+[[2-8-stakeholder-benefits]]
+== 2.8 Avantages pour les parties prenantes
+
+[cols="50%,50%"]
+|===
+| Partie prenante | Avantage 
+
+
+| Ingénierie des données | Préparation déclarative et paramétrée ; détection automatique des fichiers ; prise en charge de Spark/Delta/Iceberg 
+
+
+| Science des données/apprentissage automatique | Réglage fin incrémentiel ; source d’artefacts cohérente à toutes les étapes ; divisions reproductibles 
+
+
+| Opérations informatiques | Sélection du stockage au moment de l’exécution ; journaux guard/effective-config ; récupération basée sur des points de contrôle 
+
+
+| Conformité/Gouvernance | Les manifestes et les archives fournissent une traçabilité vérifiable ; étape de conservation configurable 
+|===
+
+
+[[2-9-tco-considerations]]
+== 2.9 Considérations relatives au coût total de possession
+
+Le réglage fin incrémentiel et la reprise à partir d’un point de contrôle réduisent les coûts de calcul récurrents ; la flexibilité des niveaux de stockage évite le surprovisionnement du stockage haute performance pour toutes les charges de travail.
+
+
+
+[[2-10-roi-considerations]]
+== 2.10 Considérations relatives au retour sur investissement
+
+Cycles de mise à jour des modèles plus rapides, maintenance manuelle réduite, temps de récupération réduit par incident.
