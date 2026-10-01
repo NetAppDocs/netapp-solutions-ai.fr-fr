@@ -108,7 +108,7 @@ image:ai-edge-007.png["Figure montrant une boîte de dialogue d'entrée/sortie o
 
 
 
-NOTE: Pour plus d'informations, consultez le https://www.netapp.com/pdf.html?item=/media/19339-DS-4082.pdf["Fiche technique des NetApp 100 % flash NetApp EF-Series EF600, F300, EF570 et EF280"^] .
+NOTE: Pour plus d'informations, consultez le  https://www.netapp.com/pdf.html?item=/media/19339-ds-4082.pdf["Fiche technique des NetApp 100 % flash NetApp EF-Series EF600, F300, EF570 et EF280"^].
 
 
 

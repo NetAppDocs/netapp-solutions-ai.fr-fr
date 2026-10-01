@@ -42,7 +42,7 @@ GPFS d'IBM est un système de fichiers d'entreprise qui offre une alternative à
 [[netapp-in-place-analytics-module]]
 === Module d'analyse sur place NetApp
 
-Le module NetApp In-Place Analytics (NIPAM) sert de pilote aux clusters Hadoop pour accéder aux données NFS.  Il comporte quatre composants : un pool de connexions, un flux d'entrée NFS, un cache de gestion de fichiers et un flux de sortie NFS. Pour plus d'informations, consultez la section  https://www.netapp.com/pdf.html?item=/media/16351-tr-4382pdf.pdf[] .
+Le module In-Place Analytics Module (NIPAM) de NetApp permet aux clusters Hadoop d'accéder aux données NFS. Il comprend quatre composants : un pool de connexions, un InputStream NFS, un cache de descripteurs de fichiers et un OutputStream NFS. Pour plus d'informations, consultez https://www.netapp.com/pdf.html?item=/media/16351-tr-4382.pdf[].
 
 
 

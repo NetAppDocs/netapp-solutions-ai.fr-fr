@@ -48,7 +48,7 @@ Nous vous recommandons d'utiliser BlueXP pour créer le volume FlexCache .  Pour
 
 Si vous préférez ne pas utiliser BlueXP, vous pouvez utiliser ONTAP System Manager ou l' ONTAP CLI pour créer le volume FlexCache .  Pour créer un volume FlexCache avec System Manager, reportez-vous aux instructions décrites dans lelink:https://docs.netapp.com/us-en/ontap/task_nas_flexcache.html["Documentation ONTAP"] .  Pour créer un volume FlexCache avec l'interface de ligne de commande ONTAP , reportez-vous aux instructions décrites dans lelink:https://docs.netapp.com/us-en/ontap/flexcache/index.html["Documentation ONTAP"] .
 
-Si vous souhaitez automatiser ce processus, vous pouvez utiliser lelink:https://docs.netapp.com/us-en/bluexp-automation/["API BlueXP"] , lelink:https://devnet.netapp.com/restapi.php["API REST ONTAP"] , ou lelink:https://docs.ansible.com/ansible/latest/collections/netapp/ontap/index.html["Collection Ansible ONTAP"] .
+Si vous souhaitez automatiser ce processus, vous pouvez utiliser le link:https://docs.netapp.com/us-en/bluexp-automation/["API BlueXP"], le link:https://docs.netapp.com/us-en/ontap-restapi/index.html["API REST ONTAP"] ou le link:https://docs.ansible.com/ansible/latest/collections/netapp/ontap/index.html["Collection Ansible ONTAP"].
 
 
 NOTE: System Manager n'est pas disponible dans Amazon FSx ONTAP.
@@ -92,7 +92,7 @@ Nous vous recommandons d'utiliser BlueXP pour créer la relation SnapMirror .  P
 
 Si vous préférez ne pas utiliser BlueXP, vous pouvez utiliser ONTAP System Manager ou ONTAP CLI pour créer la relation SnapMirror .  Pour créer une relation SnapMirror avec le Gestionnaire système, reportez-vous aux instructions décrites dans lelink:https://docs.netapp.com/us-en/ontap/task_dp_configure_mirror.html["Documentation ONTAP"] .  Pour créer une relation SnapMirror avec l'interface de ligne de commande ONTAP , reportez-vous aux instructions décrites dans lelink:https://docs.netapp.com/us-en/ontap/data-protection/snapmirror-replication-workflow-concept.html["Documentation ONTAP"] .
 
-Si vous souhaitez automatiser ce processus, vous pouvez utiliser lelink:https://docs.netapp.com/us-en/bluexp-automation/["API BlueXP"] , lelink:https://devnet.netapp.com/restapi.php["API REST ONTAP"] , ou lelink:https://docs.ansible.com/ansible/latest/collections/netapp/ontap/index.html["Collection Ansible ONTAP"] .
+Si vous souhaitez automatiser ce processus, vous pouvez utiliser le link:https://docs.netapp.com/us-en/bluexp-automation/["API BlueXP"], le link:https://docs.netapp.com/us-en/ontap-restapi/index.html["API REST ONTAP"] ou le link:https://docs.ansible.com/ansible/latest/collections/netapp/ontap/index.html["Collection Ansible ONTAP"].
 
 
 NOTE: System Manager n'est pas disponible dans Amazon FSx ONTAP.
@@ -111,7 +111,7 @@ Nous vous recommandons d'utiliser BlueXP pour rompre la relation SnapMirror .  P
 
 Si vous préférez ne pas utiliser BlueXP, vous pouvez utiliser ONTAP System Manager ou ONTAP CLI pour rompre la relation SnapMirror .  Pour rompre une relation SnapMirror avec le Gestionnaire système, reportez-vous aux instructions décrites dans lelink:https://docs.netapp.com/us-en/ontap/task_dp_serve_data_from_destination.html["Documentation ONTAP"] .  Pour rompre une relation SnapMirror avec l'interface de ligne de commande ONTAP , reportez-vous aux instructions décrites dans lelink:https://docs.netapp.com/us-en/ontap/data-protection/make-destination-volume-writeable-task.html["Documentation ONTAP"] .
 
-Si vous souhaitez automatiser ce processus, vous pouvez utiliser lelink:https://docs.netapp.com/us-en/bluexp-automation/["API BlueXP"] , lelink:https://devnet.netapp.com/restapi.php["API REST ONTAP"] , ou lelink:https://docs.ansible.com/ansible/latest/collections/netapp/ontap/index.html["Collection Ansible ONTAP"] .
+Si vous souhaitez automatiser ce processus, vous pouvez utiliser le link:https://docs.netapp.com/us-en/bluexp-automation/["API BlueXP"], le link:https://docs.netapp.com/us-en/ontap-restapi/index.html["API REST ONTAP"] ou le link:https://docs.ansible.com/ansible/latest/collections/netapp/ontap/index.html["Collection Ansible ONTAP"].
 
 
 
