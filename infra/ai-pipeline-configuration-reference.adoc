@@ -15,6 +15,7 @@ summary:
 
 Karthikeyan Nagalingam, NetApp
 
+[role="lead"]
 Le guide de configuration décrit les paramètres d'exécution qui contrôlent l'ingestion des données, la préparation des données, la mobilité des données XCP, l'apprentissage, la création de points de contrôle et l'archivage. Le bucket NAS ONTAP est utilisé principalement comme couche de staging des données préparées et de XCP pour la prise en charge et la portabilité. Dans un environnement de production en temps réel, ces mêmes données préparées peuvent également être exploitées via des chemins d'accès directs compatibles RDMA lorsque cela correspond mieux aux exigences de charge de travail et de latence.
 
 '''

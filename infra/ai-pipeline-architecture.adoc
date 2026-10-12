@@ -15,6 +15,7 @@ summary:
 
 Karthikeyan Nagalingam, NetApp
 
+[role="lead"]
 Cette section présente le flux de travail logique, les interactions entre les composants, le déploiement physique et la traçabilité des données du pipeline d’IA validé. Ensemble, les diagrammes montrent comment Apache Airflow orchestre le déplacement des données de StorageGRID via ONTAP NAS, utilise éventuellement NetApp XCP pour placer les données sur ONTAP S3 ou LustreFS pour l’exécution du modèle, et renvoie les résultats gouvernés vers le stockage d’archivage StorageGRID.
 
 

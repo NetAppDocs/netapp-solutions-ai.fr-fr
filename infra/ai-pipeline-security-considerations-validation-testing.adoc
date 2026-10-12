@@ -15,6 +15,7 @@ summary:
 
 Karthikeyan Nagalingam, NetApp
 
+[role="lead"]
 Cette section combinée traite des contrôles requis pour exploiter le pipeline d'IA en toute sécurité et des activités de validation utilisées pour démontrer que la conception se comporte comme prévu dans des environnements représentatifs. La même séparation des niveaux de stockage, le même modèle d'accès au moindre privilège, la même logique de points de contrôle et la même traçabilité par exécution utilisés dans le pipeline éclairent également le plan de validation et les garde-fous opérationnels.
 
 
