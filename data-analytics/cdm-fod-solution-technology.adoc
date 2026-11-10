@@ -17,11 +17,11 @@ summary: 'Un cas d’utilisation potentiel pour l’accès au double protocole N
 Cette solution utilise les technologies suivantes :
 
 * *Bloc-notes AWS SageMaker.*  Offre des capacités d'apprentissage automatique aux développeurs et aux scientifiques des données pour créer, former et déployer efficacement des modèles ML de haute qualité.
-* * NetApp BlueXP.*  Permet la découverte, le déploiement et l’exploitation du stockage sur site ainsi que sur AWS, Azure et Google Cloud.  Il offre une protection des données contre la perte de données, les cybermenaces et les pannes imprévues et optimise le stockage et l'infrastructure des données.
+* *NetApp Console.* Fournit un plan de contrôle unique pour la découverte, le déploiement et l'exploitation du stockage sur site ainsi que sur AWS, Azure et Google Cloud. Elle assure la protection des données contre la perte de données, les cybermenaces et les pannes imprévues, et optimise le stockage des données et l'infrastructure.
 * * NetApp Cloud Volumes ONTAP.*  Fournit des volumes de stockage de niveau entreprise avec les protocoles NFS, SMB/CIFS, iSCSI et S3 sur AWS, Azure et Google Cloud, offrant aux utilisateurs une plus grande flexibilité dans l'accès et la gestion de leurs données dans le cloud.
 
 
-NetApp Cloud Volumes ONTAP créé à partir de BlueXP pour stocker les données ML.
+NetApp Cloud Volumes ONTAP créé à partir de NetApp Console pour stocker des données ML.
 
 La figure suivante montre les composants techniques de la solution.
 
