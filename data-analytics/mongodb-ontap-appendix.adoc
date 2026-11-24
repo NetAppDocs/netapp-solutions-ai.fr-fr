@@ -1,0 +1,116 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/mongodb-ontap-appendix.html 
+keywords: mongodb, quiesce, balancer, sharding, commands, appendix 
+summary: Cette annexe répertorie les commandes quiesce et balancer ainsi que les commandes de cluster MongoDB utilisées dans la validation. 
+---
+= Annexe
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Cette annexe répertorie les commandes quiesce et balancer ainsi que les commandes MongoDB utilisées dans la validation.
+
+
+
+[[quiesce-and-balancer-commands]]
+== Commandes de suspension et d'équilibrage
+
+La validation utilisait des scripts Python 2.7 sur les serveurs applicatifs MongoDB comme commandes quiesce, unquiesce et pre-exit ; ces scripts ne sont pas inclus. Pour éviter cette dépendance, configurez les hooks avec les commandes `mongosh` dans xref:mongodb-ontap-solution-validation.html#snapcenter-backup[Sauvegardez avec SnapCenter]. Installez `mongosh` sur l’hôte qui exécute les commandes, et adaptez l’hôte, le port et les options d’authentification à votre déploiement. Les scripts de validation utilisaient une ancienne version de PyMongo qui fournit la classe `Connection` ; Python 2 et `Connection` ne sont plus pris en charge.
+
+[cols="35%,65%"]
+|===
+| Script utilisé pour la validation | Opération 
+
+
+| `wait-for-cleared-locks.py` | Attendez que le verrouillage de l'équilibreur soit levé, puis arrêtez l'équilibreur. Dans `mongosh`, exécutez `sh.stopBalancer()`, ce qui attend également la fin de tout cycle d'équilibrage en cours. 
+
+
+| `start-balancer.py` | Redémarrez l'équilibreur. Dans `mongosh`, exécutez `sh.startBalancer()`. 
+
+
+| `fsync-lock.py` | Videz les écritures sur le disque et bloquez les nouvelles écritures lorsque la sauvegarde nécessite une mise au repos, y compris les données et le journal WiredTiger sur des volumes distincts sans Snapshot de groupe de cohérence. Dans `mongosh`, exécutez `db.fsyncLock()` sur chaque membre en cours de sauvegarde. 
+
+
+| `fsync-unlock.py` | Libérez chaque verrou d'écriture acquis pour la sauvegarde, y compris après une panne. Dans `mongosh`, exécutez `db.fsyncUnlock()`. 
+|===
+
+
+[[mongodb-operations]]
+== Opérations MongoDB
+
+Les opérations suivantes configurent le cluster partitionné et y ajoutent deux shards. Les commandes et la sortie ont été capturées avec MongoDB 3.0.7 et l’ancien `mongo` shell. Dans les versions actuelles de MongoDB, utilisez `mongosh`, déployez les serveurs de configuration en tant qu’ensemble de réplicas (démarrez-les avec `--configsvr` et `--replSet`, puis transmettez le nom de l’ensemble de réplicas à `mongos` avec `--configdb`), et omettez l’option `--rest` supprimée.
+
+. Vérifiez les partitions montées pour la base de données MongoDB sur chaque membre du shard (`mdb-srv-1`, `mdb-srv-10`, `mdb-srv-11`, `mdb-srv-2`, `mdb-srv-20`, et `mdb-srv-21`). Chaque membre monte un système de fichiers XFS sur `/data`:
++
+[listing]
+----
+[mongodb@mdb-srv-1 db_wt]$ df -h /data
+[mongodb@mdb-srv-1 db_wt]$ cat /etc/fstab | grep sdb
+/dev/sdb1 /data xfs defaults 0 0
+----
+. Sur chaque membre du shard, créez les dossiers nécessaires, définissez la propriété et les permissions, puis démarrez `mongod`. Pour le premier shard, les membres sont `mdb-srv-1`, `mdb-srv-10`, et `mdb-srv-11`. Par exemple, sur `mdb-srv-1`:
++
+[listing]
+----
+[root@mdb-srv-1 ~]# mkdir -p /mongodb/data
+[root@mdb-srv-1 ~]# mkdir -p /data/db_wt
+[root@mdb-srv-1 ~]# chown -R mongodb:mongodb /mongodb
+[root@mdb-srv-1 ~]# chown -R mongodb:mongodb /data
+[root@mdb-srv-1 ~]# chmod -R 700 /mongodb
+[mongodb@mdb-srv-1 ~]$ mongod --replSet shard1/mdb-srv-10,mdb-srv-11 --journal --rest --shardsvr --fork --storageEngine wiredTiger --dbpath /data/db_wt --logpath /mongodb/data/mongod.log --directoryperdb
+----
+. Démarrez les serveurs de configuration (`mdb-cfg-1`, `mdb-cfg-2` et `mdb-cfg-3`) sur le port 27019. Créez `/mongodb/data/configdb` avec `mongodb` la propriété et les autorisations 700 d'abord :
++
+[listing]
+----
+[mongodb@mdb-cfg-3 ~]$ mongod --configsvr --dbpath /mongodb/data/configdb --port 27019 --fork --logpath /mongodb/data/arbiter.log
+----
+. Démarrez le `mongos` processus sur chaque serveur applicatif (`mdb-ms-1` et `mdb-ms-2`), et vérifiez qu'il écoute sur le port 27017 :
++
+[listing]
+----
+[mongodb@mdb-ms-1 ~]$ mongos --configdb mdb-cfg-1:27019,mdb-cfg-2:27019,mdb-cfg-3:27019 --logpath /mongodb/data/mongos.log --fork --port 27017
+----
+. Connectez-vous au shard principal (`mdb-srv-1`) depuis le serveur applicatif, et initialisez le jeu de réplicas avec `rs.initiate(cfg)`:
++
+[listing]
+----
+[mongodb@mdb-ms-1 ~]$ mongo mdb-srv-1:27018/admin
+> var cfg = { _id: "shard1", members: [ { _id: 0, host: "mdb-srv-1:27018" }, { _id: 1, host: "mdb-srv-10:27018" }, { _id: 2, host: "mdb-srv-11:27018" } ] };
+> rs.initiate(cfg);
+----
+. Vérifiez l'état du jeu de réplicas à partir du membre du shard :
++
+[listing]
+----
+[mongodb@mdb-srv-1 ~]$ mongo --host mdb-srv-1 --port 27018
+shard1:PRIMARY> rs.printReplicationInfo()
+PRIMARY> rs.status()
+----
+. Ajoutez le premier fragment depuis le serveur applicatif. Si vous ajoutez à nouveau le même fragment depuis un autre serveur applicatif, MongoDB indique que le fragment existe déjà :
++
+[listing]
+----
+[mongodb@mdb-ms-1 ~]$ mongo mdb-ms-1:27017/admin
+mongos> db.adminCommand( { addShard : "shard1/mdb-srv-1:27018,mdb-srv-10:27018,mdb-srv-11:27018" } )
+----
+. Vérifiez l'état du partitionnement :
++
+[listing]
+----
+mongos> sh.status();
+----
+. Ajoutez le deuxième fragment. Préparez `mdb-srv-2`, `mdb-srv-20` et `mdb-srv-21` de la même manière que le premier fragment, initialisez son ensemble de réplicas et ajoutez-le:
++
+[listing]
+----
+mongos> db.adminCommand( { addShard : "shard2/mdb-srv-2:27018,mdb-srv-20:27018,mdb-srv-21:27018" } )
+----
+. Exécutez `sh.status()` à nouveau pour confirmer que les deux partitions (`shard1` et `shard2`) sont répertoriées. L'ajout de partitions ne distribue pas automatiquement les données de la collection. Pour la configuration MongoDB 3.0.7 présentée ici, activez le partitionnement sur la base de données avec `sh.enableSharding()`, sélectionnez une clé de partitionnement appropriée et créez les index nécessaires, puis partitionnez chaque collection souhaitée avec `sh.shardCollection()`.
+

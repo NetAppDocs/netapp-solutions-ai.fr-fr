@@ -1,0 +1,33 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/mongodb-ontap.html 
+keywords: mongodb, ontap, aff, snapcenter, snapmirror, flexclone, ycsb, atlas, ops manager, tr-4492, tr4492 
+summary: Ce rapport technique décrit une architecture de référence validée pour le déploiement et la protection d’une base de données MongoDB virtualisée et fragmentée sur un stockage NetApp ONTAP avec VMware vSphere, y compris la sauvegarde, la restauration, le clonage, la reprise après sinistre dans le cloud, les résultats de performance et deux cas d’utilisation client. 
+---
+= TR-4492: MongoDB sur NetApp ONTAP
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+Karthikeyan Nagalingam, NetApp
+
+[role="lead"]
+Cette architecture de référence montre comment déployer et protéger une base de données MongoDB virtualisée et fragmentée sur NetApp ONTAP avec VMware vSphere. Elle offre aux équipes MongoDB des performances constantes à faible latence, des copies instantanées et économes en espace pour la sauvegarde, la restauration, le développement/test et l’assurance qualité, ainsi qu’une reprise après sinistre vers ONTAP dans le cloud. Une baie NetApp AFF en mode scale-out héberge les machines virtuelles MongoDB (VMs) et les bases de données. NetApp SnapCenter gère les copies Snapshot NetApp de l’environnement MongoDB, et SnapMirror les réplique vers le cloud. Le rapport décrit également deux cas d’utilisation client : assurer le service de NetApp Digital Advisor à partir de MongoDB Atlas, et la sauvegarde et la restauration MongoDB en entreprise avec Ops Manager.
+
+MongoDB est une base de données NoSQL open source populaire et évolutive. Elle alimente les applications modernes de lac de données qui exigent une faible latence en lecture et en écriture, une haute disponibilité et une gestion avancée des données. Parmi les principaux cas d'utilisation de MongoDB figurent l'analyse en temps réel, les catalogues de produits, la gestion du contenu et les applications mobiles.
+
+La solution NetApp offre les principaux avantages suivants pour le déploiement d'applications MongoDB stratégiques :
+
+* Des performances élevées et prévisibles avec une faible latence constante par rapport au stockage à connexion directe, offrant un excellent temps de réponse pour les applications analytiques les plus exigeantes basées sur MongoDB.
+* L'efficacité inline grâce à la déduplication et à la compression inline, ce qui minimise le stockage Flash requis par MongoDB.
+* Clonage instantané de bases de données, optimisé en espace et économique, pour une mise en place rapide d'environnements de développement/test ou d'assurance qualité sans acheter de nouveau stockage.
+* Sauvegarde et restauration basées sur la technologie Snapshot de NetApp, économe en espace, et réplication à distance vers le cloud.
+* Évolutivité grâce à la baie AFF à extension verticale et horizontale, qui fait évoluer le stockage de manière modulaire avec MongoDB.
+* Opérations sans interruption avec une haute disponibilité, assurant une disponibilité maximale et des performances constantes, notamment en cas de panne disque.
+* Déploiement de MongoDB dans un environnement hétérogène, offrant flexibilité et économies supplémentaires.
+* Gestion centralisée des sauvegardes, des restaurations et du clonage avec NetApp SnapCenter.
+

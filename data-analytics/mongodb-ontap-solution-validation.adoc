@@ -1,0 +1,547 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/mongodb-ontap-solution-validation.html 
+keywords: mongodb, snapcenter, snapshot, flexclone, snapmirror, disaster recovery, ycsb, deduplication, compression, certification 
+summary: 'Cette page décrit comment la solution a été validée, notamment la création du cluster, la sauvegarde et la restauration, le clonage, la réplication et la reprise après sinistre, les performances de YCSB et l"efficacité en ligne.' 
+---
+= Validation de la solution
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Cette page décrit comment nous avons validé la solution de bout en bout, en mettant l'accent sur les principaux avantages énumérés dans xref:mongodb-ontap.html[Introduction].
+
+
+NOTE: Les procédures NetApp SnapCenter de cette page suivent la documentation SnapCenter et ne faisaient pas partie des tests de validation de ce rapport. Elles utilisent les fonctionnalités ONTAP Snapshot, SnapRestore, FlexClone et SnapMirror que nous avons validées. Pour plus d'informations, consultez xref:mongodb-ontap-solution-overview.html#snapcenter[NetApp SnapCenter].
+
+
+
+[[build-the-mongodb-sharded-cluster]]
+== Créez le cluster MongoDB fragmenté
+
+Le déploiement du cluster MongoDB partitionné implique les tâches suivantes :
+
+. Vérifiez les partitions montées pour la base de données MongoDB.
+. Vérifiez et démarrez les membres du cluster de fragments, créez les dossiers nécessaires et définissez les autorisations requises. Le `mongod` processus démarre avec les ports par défaut (27018 et 28018), ou vous pouvez spécifier d'autres ports.
+. Vérifiez que les dossiers du serveur de configuration, tels que le chemin des journaux (`/mongodb/data/configdb`) et le chemin de la base de données (`/data/db`), existent et disposent d'autorisations  `mongodb`utilisateur (700). Vérifiez que le  `mongod`processus s'exécute en mode fork sur le port correct (27019).
+. Démarrez le `mongos` processus sur le routeur MongoDB ou le serveur applicatif, et vérifiez qu'il écoute sur le port 27017.
+. Initialisez l'ensemble de répliques en vous connectant au serveur principal du shard MongoDB depuis le serveur applicatif MongoDB.
+. Vérifiez l'état du jeu de réplicas depuis un membre du shard.
+. Ajoutez un shard depuis le serveur applicatif. Ensuite, essayez d'ajouter le même shard depuis un autre serveur applicatif. Vous devriez recevoir un message indiquant que le shard existe déjà.
+. Vérifiez l'état du partitionnement depuis le serveur applicatif.
+. Ajouter un autre fragment au cluster fragmenté existant.
+. Vérifiez l'état du cluster shardé en exécutant la `sh.status()` commande depuis le serveur applicatif MongoDB.
+
+
+Pour les étapes détaillées concernant MongoDB, voir xref:mongodb-ontap-appendix.html#mongodb-operations[Annexe : Opérations MongoDB].
+
+
+
+[[back-up-and-restore-with-netapp-snapcenter]]
+== Sauvegarder et restaurer avec NetApp SnapCenter
+
+NetApp SnapCenter utilise la technologie Snapshot économe en espace de NetApp pour sauvegarder, restaurer et cloner l'environnement de base de données MongoDB virtualisé. Lors de nos tests de la technologie Snapshot de NetApp, les sauvegardes de l'environnement complet ont pris moins d'une minute, et la restauration des volumes NetApp qui hébergeaient la base de données MongoDB a également pris moins d'une minute.
+
+MongoDB utilise le moteur de stockage WiredTiger dans cette solution. Pour chaque copie Snapshot, la sauvegarde effectue les opérations suivantes :
+
+. Arrêtez l'équilibreur.
+. Effectuez  `fsync` et verrouillez, si nécessaire.
+. Créez des copies Snapshot NetApp de tous les volumes utilisés dans la configuration.
+. Déverrouillez les bases de données en écriture, si nécessaire.
+. Redémarrez l'équilibreur.
+
+
+
+NOTE: Le moteur de stockage WiredTiger ne requiert pas une `fsync` et un verrouillage en écriture sur chaque shard, et il n'est pas nécessaire de déverrouiller ensuite les bases de données. Si vous utilisez le moteur de stockage MMAPv1, vous devez effectuer une `fsync` et verrouiller chaque shard en écriture, puis les déverrouiller. MongoDB 4.2 et les versions ultérieures n'intègrent pas MMAPv1.
+
+
+
+[[back-up-with-snapcenter]]
+[[snapcenter-backup]]
+=== Sauvegardez avec SnapCenter
+
+NetApp SnapCenter offre une console centrale, un contrôle d'accès basé sur des rôles et un plug-in pour MongoDB qui crée des copies Snapshot NetApp cohérentes au niveau des applications. La taille de la base de données n'a aucune incidence sur la sauvegarde Snapshot, dont la création ne prend que quelques secondes.
+
+La figure suivante illustre le processus de sauvegarde SnapCenter.
+
+.SnapCenter flux de travail de sauvegarde
+image:mongodb-ontap-028.png["SnapCenter flux de travail de sauvegarde. Définissez une stratégie de sauvegarde, ajoutez des ressources, créez une règle de sauvegarde, créez un groupe de ressources et associez-y des règles, sauvegardez la ressource ou le groupe de ressources, surveillez l'opération de sauvegarde et consultez les sauvegardes et les clones associés sur la page Topology."]
+
+Pour protéger le cluster MongoDB avec SnapCenter :
+
+. Définissez la stratégie de sauvegarde, notamment la planification et la conservation des Snapshot. Un bon point de départ consiste à conserver 24 copies Snapshot horaires, 30 quotidiennes, 7 hebdomadaires et 12 mensuelles.
+. Ajoutez la ressource MongoDB. Sur la page Paramètres de la ressource, indiquez les paires clé-valeur personnalisées dans le tableau suivant. Les noms des clés personnalisées doivent être en majuscules.
++
+[cols="1,2"]
+|===
+| Clé | Valeur 
+
+
+| `MONGODB_APP_SERVER` | Le serveur applicatif MongoDB (routeur). Utilisez cette clé lorsque le type de ressource est un cluster shardé. 
+
+
+| `MONGODB_REPLICASET_SERVER` | Le membre du jeu de réplicas. Utilisez cette clé lorsque le type de ressource est un jeu de réplicas. 
+
+
+| `OPLOG_PATH` | Facultatif. Chemin d'accès à l'oplog. Indiquez-le ici ou dans le `MongoDB.properties` fichier. 
+
+
+| `MONGODB_AUTHENTICATION_TYPE` | `PLAIN` pour l'authentification LDAP, ou `None` pour d'autres types d'authentification. 
+|===
++
+Dans ce  `MongoDB.properties`fichier, vous pouvez également définir  `DISABLE_STARTING_STOPPING_SERVICES`<option>. Utilisez  `N`<option>, la valeur par défaut, si le plug-in démarre et arrête les services MongoDB. Utilisez  `Y`<option> si vous les démarrez et les arrêtez vous-même.
+
+. Sur la page « Fournir l’empreinte de stockage », sélectionnez le système de stockage ONTAP et les volumes contenant les données MongoDB. Pour cette solution, sélectionnez les quatre volumes de base de données (`n1_mdbdata_p_01`,  `n1_mdbdata_s_02`,  `n2_mdbdata_p_02` et  `n2_mdbdata_s_01`). SnapCenter ne détecte pas automatiquement le stockage pour ces ressources.
+. Créez une règle de sauvegarde. Dans les paramètres du script de stratégie, exécutez la commande suivante sur le routeur MongoDB ou le serveur applicatif avant la copie Snapshot pour arrêter l'équilibreur de charge, puis la seconde commande après la copie Snapshot pour le redémarrer :
++
+[listing]
+----
+mongosh --quiet --host mdb-ms-1 --port 27017 --eval 'sh.stopBalancer()'
+mongosh --quiet --host mdb-ms-1 --port 27017 --eval 'sh.startBalancer()'
+----
++
+Installez `mongosh` sur l'hôte qui exécute les commandes et adaptez les options d'hôte, de port et d'authentification à votre déploiement.
+
+. Créez un groupe de ressources contenant les ressources MongoDB, associez-y la stratégie et, éventuellement, créez une planification.
+. Sauvegardez la ressource ou le groupe de ressources, surveillez l'opération et consultez les sauvegardes et les clones associés dans la page Topology.
+
+
+Pour connaître les étapes détaillées, consultez la documentation suivante de SnapCenter :
+
+* link:https://docs.netapp.com/us-en/snapcenter-60/protect-nsp/add_resources_to_netapp_supported_plugins.html["Ajouter des ressources aux plug-ins pris en charge par NetApp"^]
+* link:https://docs.netapp.com/us-en/snapcenter-60/protect-nsp/create_policies_for_netapp_supported_plugins_resources.html["Créer des politiques pour les ressources des plug-ins pris en charge par NetApp"^]
+* link:https://docs.netapp.com/us-en/snapcenter-60/protect-nsp/create_resource_groups_and_attach_policies.html["Créez des groupes de ressources et associez-y des politiques"^]
+* link:https://docs.netapp.com/us-en/snapcenter-60/protect-nsp/back_up_netapp_supported_plugins_resources.html["Sauvegarder les ressources des plug-ins pris en charge par NetApp"^]
+
+
+
+
+[[restore-with-snapcenter]]
+[[snapcenter-restore]]
+=== Restaurer avec SnapCenter
+
+À mesure qu'une base de données s'agrandit, sa sauvegarde et sa restauration deviennent plus difficiles. La technologie Snapshot de NetApp offre la manière la plus simple et la plus efficace de sauvegarder et de restaurer une base de données distribuée, quelle que soit sa taille. Lorsque les sauvegardes reposent sur des copies Snapshot, la restauration d'une grande base de données composée de plusieurs shards dépend davantage du temps nécessaire pour arrêter et redémarrer les processus de base de données que de la restauration des données elle-même. La restauration à partir d'une sauvegarde Snapshot ne prend souvent que quelques secondes, ou quelques minutes tout au plus.
+
+Utilisez le plug-in SnapCenter pour MongoDB afin de restaurer la base de données à partir des sauvegardes Snapshot que SnapCenter crée.
+
+La figure suivante illustre le processus de restauration SnapCenter.
+
+.Flux de travail de restauration SnapCenter
+image:mongodb-ontap-029.png["SnapCenter Flux de travail de restauration. Définir une stratégie de restauration, restaurer la ressource et surveiller l'opération de restauration."]
+
+Pour restaurer la ressource MongoDB avec SnapCenter :
+
+. Définissez la stratégie de restauration. Pour les ressources de plug-in prises en charge ajoutées manuellement par NetApp, SnapCenter prend en charge deux stratégies :
++
+** *Ressource complète* restaure tous les volumes, qtrees et LUNs de la ressource.
+** *Au niveau des fichiers* restaure les fichiers à partir de volumes, de qtrees ou de répertoires, ou uniquement les LUN sélectionnés.
++
+
+NOTE: Si vous restaurez une ressource complète, les copies Snapshot plus récentes que la copie Snapshot sélectionnée sur les mêmes volumes ou qtrees sont supprimées et ne peuvent pas être récupérées. Toute autre ressource hébergée sur les mêmes volumes ou qtrees est également affectée. SnapCenter ne peut pas récupérer les ressources de plug-in prises en charge par NetApp ajoutées manuellement.
+
+
+
+. Dans SnapCenter, sélectionnez *Ressources*, sélectionnez le plug-in MongoDB, puis sélectionnez la ressource. Dans la vue *Gérer les copies*, sélectionnez la sauvegarde à restaurer.
+. Sur la page Portée de restauration, sélectionnez *Ressource complète* ou *Niveau fichier*.
+. Sur la page *Pré-opérations*, saisissez les commandes à exécuter avant la restauration. Pour cette solution, arrêtez les `mongod` processus sur les serveurs de shard et démontez les volumes de base de données, comme l'illustre l'exemple suivant.
+. Sur la page *Post ops*, saisissez les commandes à exécuter après la restauration. Pour cette solution, montez les volumes, supprimez le `mongod.lock` fichier et démarrez les `mongod` processus sur les serveurs de partitionnement, comme le montre l'exemple suivant.
+. Vous pouvez également configurer les notifications par e-mail, consulter le récapitulatif, puis sélectionner *Terminer*.
+. Surveillez l'opération de restauration en sélectionnant *Surveillance* > *Tâches*, puis vérifiez l'état du partitionnement et le nombre de documents dans la base de données restaurée.
+
+
+Pour connaître les étapes détaillées, consultez la documentation suivante de SnapCenter :
+
+* link:https://docs.netapp.com/us-en/snapcenter-60/protect-nsp/restore_netapp_supported_plugins_resources.html["Restaurer les ressources des plug-ins pris en charge par NetApp"^]
+* link:https://docs.netapp.com/us-en/snapcenter-60/protect-nsp/types_of_restore_strategies_supported_for_manually_added_netapp_supported_plugins_resources.html["Types de stratégies de restauration pour les ressources de plug-in prises en charge ajoutées manuellement par NetApp"^]
+* link:https://docs.netapp.com/us-en/snapcenter-60/protect-nsp/restore_a_resource_backup.html["Restaurer une sauvegarde de ressource"^]
+
+
+L'exemple suivant, tiré de nos tests, supprime la `c7` collection, arrête tous `mongod` les processus sur tous les shards, démonte les `/data` systèmes de fichiers, restaure les volumes, remonte les systèmes de fichiers, supprime les fichiers de verrouillage et redémarre tous les processus:
+
+. Avant la restauration, vérifiez la base de données et ses documents depuis l'un des serveurs d'application. La `c7` collection de la `db7` base de données contenait 144 569 144 documents au moment de la sauvegarde. Supprimez la collection pour simuler une perte de données et vérifiez que le nombre de documents est de 0 :
++
+[listing]
+----
+mongos> use db7;
+mongos> db.c7.count();
+144569144
+mongos> db.c7.drop();
+true
+mongos> db.c7.count();
+0
+----
+. Arrêtez le `mongod` processus sur les membres du jeu de réplicas du premier shard  `mdb-srv-1`, `mdb-srv-10` et `mdb-srv-11`) à l'aide du script d'initialisation ou de la commande `kill`, puis démontez le volume de la base de données. Par exemple, sur `mdb-srv-1`:
++
+[listing]
+----
+[mongodb@mdb-srv-1 ~]$ pkill mongod
+[root@mdb-srv-1 ~]# umount /data
+----
+. Arrêtez le `mongod` processus sur les membres du jeu de réplicas du deuxième shard (`mdb-srv-2`, `mdb-srv-20`, et `mdb-srv-21`) et démontez leurs volumes de base de données de la même manière.
+. Supprimez les disques virtuels existants (les volumes de la base de données MongoDB) des machines virtuelles des deux shards, y compris les serveurs principal et secondaire.
+. Restaurez les quatre volumes de base de données (`n1_mdbdata_p_01`, `n1_mdbdata_s_02`, `n2_mdbdata_p_02` et `n2_mdbdata_s_01`) à partir de la sauvegarde, un volume à la fois.
+. Reconnectez les volumes de base de données restaurés en tant que disques existants aux serveurs primaire et secondaire de chaque partition.
+. Montez les volumes.
+. Supprimez le `mongod.lock` fichier des volumes de base de données MongoDB montés.
+. Démarrez le `mongod` processus sur les serveurs de partitionnement et vérifiez que les `mongod` ports (27018 et 28018) sont à l'écoute. Par exemple, sur `mdb-srv-1`:
++
+[listing]
+----
+[root@mdb-srv-1 ~]# mount /data
+[mongodb@mdb-srv-1 ~]$ cd /data/db_wt/
+[mongodb@mdb-srv-1 db_wt]$ rm -f mongod.lock
+[mongodb@mdb-srv-1 db_wt]$ mongod --replSet shard1/mdb-srv-10,mdb-srv-11 --journal --rest --shardsvr --fork --storageEngine wiredTiger --dbpath /data/db_wt --logpath /mongodb/data/mongod.log --directoryperdb
+----
+. Répétez la procédure sur `mdb-srv-10`, `mdb-srv-11`, `mdb-srv-2`, `mdb-srv-20` et `mdb-srv-21`. Montez le volume restauré, supprimez le fichier `mongod.lock` et lancez le processus `mongod` pour l'ensemble de réplicas.
+. Vérifiez l’état du sharding et le nombre de documents dans la base de données restaurée. La  `c7`collection contient à nouveau 144 569 144 documents :
++
+[listing]
+----
+mongos> use db7
+mongos> show collections;
+c7
+mongos> db.c7.count();
+144569144
+----
+
+
+Cet exemple démontre que vous pouvez restaurer une base de données MongoDB à partir de copies Snapshot NetApp en utilisant la technologie NetApp SnapRestore.
+
+
+
+[[mongodb-cloning-for-devtest-and-qa]]
+== Clonage de MongoDB pour développement/test et l'assurance qualité
+
+NetApp Snapshot backups de MongoDB de production vous permettent de créer des environnements de préproduction ou de développement. Grâce à la technologie NetApp FlexClone, vous pouvez présenter à n'importe quel hôte clone des volumes qui contiennent des copies Snapshot. Cette approche vous permet de créer rapidement des environnements de développement/test sans doubler le stockage dont vous avez besoin. Les clones FlexClone offrent un moyen rapide, évolutif et efficace de fournir à la demande des environnements de développement/test.
+
+
+
+[[clone-with-snapcenter]]
+[[snapcenter-clone]]
+=== Cloner avec SnapCenter
+
+Utilisez le plug-in pour MongoDB de SnapCenter afin de cloner les sauvegardes Snapshot que SnapCenter crée. Vous pouvez cloner à partir d'une sauvegarde principale ou secondaire.
+
+Vous pouvez utiliser des clones de sauvegardes MongoDB aux fins suivantes :
+
+* Pour tester la fonctionnalité par rapport à la structure et au contenu actuels de la base de données pendant le développement d'applications.
+* Pour extraire et manipuler des données, par exemple lors du remplissage d'un entrepôt de données.
+* Pour récupérer des données supprimées ou modifiées par erreur.
+
+
+La figure suivante illustre le flux de travail de clonage SnapCenter.
+
+.Flux de travail de clonage SnapCenter
+image:mongodb-ontap-030.png["SnapCenter flux de travail de clonage. Clonez la sauvegarde, surveillez l'opération de clonage et, si nécessaire, divisez le clone."]
+
+Pour cloner une sauvegarde MongoDB avec SnapCenter:
+
+. Assurez-vous d'avoir sauvegardé la ressource ou le groupe de ressources, et que les agrégats qui hébergent les volumes figurent dans la liste des agrégats attribués à la machine virtuelle de stockage (SVM).
+. Dans SnapCenter, sélectionnez *Resources*, sélectionnez le plug-in MongoDB, puis sélectionnez la ressource. Dans la vue *Manage Copies*, sélectionnez la sauvegarde principale ou secondaire, puis sélectionnez l'icône de clonage.
+. Sur la page Emplacements, sélectionnez le serveur de clonage, c'est-à-dire l'hôte sur lequel le clone est monté et le plug-in est installé. L'hôte source est sélectionné par défaut. Si vous clonez sur le même hôte que l'hôte source, vous devez saisir un suffixe de clonage, tel que `_clone`, afin que la ressource clonée soit unique. Dans le cas contraire, l'opération échoue.
+. Sur la page Scripts, saisissez les commandes de pré-clonage et de post-clonage, ainsi que la commande de montage du volume cloné. Pour cette solution, utilisez ces commandes pour supprimer les `.lck` fichiers du volume de base de données cloné, attribuer de nouvelles adresses IP, mettre à jour `/etc/hosts` et redémarrer les processus MongoDB dans le réseau de clonage isolé, comme l'illustre l'exemple suivant.
+. Vous pouvez également configurer les notifications par e-mail, consulter le récapitulatif, puis sélectionner *Terminer*.
+. Surveillez l'opération de clonage en sélectionnant *Monitor* > *Jobs*. Si nécessaire, séparez le clone de sa copie Snapshot parente.
+
+
+Connectez les machines virtuelles clonées à un réseau isolé afin qu'elles ne puissent pas accéder aux hôtes MongoDB de production, et réservez de la capacité de stockage pour la croissance des clones.
+
+Pour connaître les étapes détaillées, consultez la documentation suivante de SnapCenter :
+
+* link:https://docs.netapp.com/us-en/snapcenter-60/protect-nsp/clone_netapp_supported_plugins_resource_backups.html["Cloner les sauvegardes de ressources des plug-ins pris en charge par NetApp"^]
+* link:https://docs.netapp.com/us-en/snapcenter-60/protect-nsp/clone_from_a_backup.html["Cloner à partir d'une sauvegarde"^]
+
+
+L'exemple suivant, issu de nos tests, clone toutes les bases de données de tous les serveurs de partition vers de nouveaux serveurs de partition. Dans cet exemple, les volumes du système d'exploitation sont également clonés.
+
+. Créez des volumes FlexClone pour le système d'exploitation et les volumes de base de données à partir d'une copie Snapshot spécifique.
+. Créez un datastore sur les serveurs VMware qui inclut les volumes clonés du système d'exploitation et de la base de données.
++
+image:mongodb-ontap-008.png["Datastore VMware créé à partir d'un volume de système d'exploitation cloné."]
+
++
+
+NOTE: Les captures d'écran VMware et les chemins d'accès aux menus dans cette procédure proviennent d'une version antérieure de VMware vSphere et d'ESXi. Les écrans et les noms de menus sont différents dans les versions actuelles de VMware vSphere et d'ESXi. Les étapes sont les mêmes, suivez donc la documentation VMware correspondant à votre version.
+
++
+image:mongodb-ontap-009.png["Magasin de données VMware créé à partir d'un volume de base de données cloné."]
+
+. Créez la machine virtuelle clonée à partir du datastore, en vous basant sur le `.vmx` fichier:
++
+.. Sélectionnez le datastore que vous avez créé à l’étape précédente.
+.. Trouvez le `.vmx` fichier.
+.. Enregistrez la machine virtuelle.
+.. Nommez la VM clonée au format `cl_<old VM name>`.
+.. Sélectionnez le cluster VMware et le serveur pour terminer la création de la machine virtuelle clonée.
+
+
+. La VM clonée (nouvellement enregistrée) accède au fichier de base de données `.vmdk` provenant d’un autre volume de base de données cloné. Vérifiez que le `.vmdk` fichier est identifié comme un disque existant. Si ce n’est pas le cas, dans la VM clonée, sélectionnez *Edit > Settings > Remove disk > Confirm*. Veillez à ne pas supprimer le disque du référentiel.
+. Supprimez les `.lck-<16 alphanumeric characters>` fichiers du volume de base de données cloné. Montez le volume cloné sur le serveur VMware ou Linux et supprimez les `.lck` fichiers :
++
+[listing]
+----
+[root@stlrx300s8-9:/vmfs/volumes/24631f70-b7e80cce/mdb-srv-1] ls -la
+-rwxrwxr-x 1 root root 84 Dec 18 14:41 .lck-be54694500000000
+-rwxrwxr-x 1 root root 84 Dec 18 2015 .lck-be546a4500000000
+-rw------- 1 root root 1088516510720 Dec 18 14:41 mdb-srv-1-flat.vmdk
+-rw------- 1 root root 475 Nov 22 17:51 mdb-srv-1.vmdk
+[root@stlrx300s8-9:/vmfs/volumes/24631f70-b7e80cce/mdb-srv-1] rm -fr .lck-be546*
+----
+. Avant de mettre sous tension une machine virtuelle clonée, connectez sa carte réseau à un groupe de ports isolé sans accès aux hôtes MongoDB de production.
+. Mettez sous tension les machines virtuelles clonées et utilisez la console de VM pour attribuer de nouvelles adresses IP et mettre à jour `/etc/hosts` pour tous les membres clonés avant de démarrer MongoDB. Conservez les noms d'hôtes uniquement au sein du réseau de clonage isolé.
+. Redémarrez les serveurs de configuration MongoDB, d'application et de jeu de réplicas ou de partitionnement avec les nouvelles adresses IP des machines virtuelles clonées.
+
+
+Cette procédure crée une copie clonée fonctionnelle de la base de données MongoDB de production. Le clone est isolé, vous pouvez donc l'utiliser pour les écritures, le dépannage, le développement ou les tests. FlexClone partage les blocs inchangés avec la copie Snapshot parent, évitant une copie complète initiale des données. Les blocs nouveaux et modifiés consomment du stockage supplémentaire, vous devez donc réserver de la capacité pour la croissance du clone.
+
+
+
+[[replicate-to-amazon-fsx-for-netapp-ontap-for-disaster-recovery]]
+== Réplication vers Amazon FSx for NetApp ONTAP pour la reprise après sinistre
+
+Amazon FSx for NetApp ONTAP est un service AWS entièrement géré qui exécute NetApp ONTAP. AWS exploite le système de fichiers et l'infrastructure sous-jacente, et vous bénéficiez de la même gestion des données ONTAP que celle fournie par la baie AFF sur site. FSx for ONTAP prend en charge les accès NFS, SMB et iSCSI, et inclut les copies Snapshot, les volumes FlexClone, l'efficacité du stockage et la réplication SnapMirror. Comme il s'agit d'ONTAP, vous pouvez répliquer les volumes MongoDB de la baie AFF sur site vers FSx for ONTAP avec SnapMirror et l'utiliser comme cible de reprise après sinistre.
+
+Vous créez et gérez le système de fichiers à l’aide de AWS Management Console, de AWS CLI ou de AWS API. Vous gérez les ressources ONTAP, telles que les machines virtuelles de stockage, les volumes et les relations SnapMirror, à l’aide de ONTAP CLI, de ONTAP REST API, de ONTAP System Manager ou de NetApp Console.
+
+
+NOTE: La validation initiale utilisait une instance ONTAP logicielle sur AWS et sa console web. Les étapes de SnapMirror sont les mêmes avec FSx for ONTAP, mais les écrans de gestion sont différents. Pour plus d'informations, consultez xref:mongodb-ontap-solution-overview.html#amazon-fsx-for-ontap[Amazon FSx for NetApp ONTAP].
+
+
+
+[[disaster-recovery-validation-to-the-cloud]]
+== Validation de la reprise après sinistre vers le cloud
+
+Cette solution protège les données MongoDB en utilisant SnapMirror pour les répliquer vers Amazon FSx for NetApp ONTAP. La connectivité réseau entre le cluster sur site et le VPC, par exemple un VPN ou AWS Direct Connect, doit autoriser le trafic intercluster. La réplication nécessite les tâches suivantes :
+
+. Dans la console Amazon FSx, ouvrez le système de fichiers et notez les adresses IP des points de terminaison interclusters.
+. Créez une relation entre clusters sur le cluster ONTAP sur site.
+. Créez la relation d'homologue sur le système de fichiers FSx for ONTAP.
+. Configurer et initialiser une relation SnapMirror.
+
+
+Lors de la validation initiale, la relation SnapMirror et l'état de la réplication ont montré ce qui suit :
+
+* Une relation de volume, du  `n1_mdbdata_p_01`volume sur le cluster AFF sur site vers un volume miroir (`mongodb_n1_mdbdata_p_01_mirror`) sur l'instance ONTAP dans AWS.
+* Une relation saine à l’état SnapMirrored, avec un statut de transfert inactif, la `MirrorLatest` politique et le `mongodbbackup` calendrier de transfert.
+* 559 Go de capacité répliquée, sans aucun transfert en cours ni aucune relation défaillante.
+* Le dernier transfert était une mise à jour sans erreur, et le temps de latence indiquait le retard de la destination par rapport à la source.
+* Deux environnements, le cluster AFF sur site et l’instance ONTAP dans AWS, avec la capacité allouée de chaque côté.
+
+
+Vous pouvez consulter les mêmes informations dans la console AWS, ONTAP System Manager ou NetApp Console pour votre système de fichiers FSx for ONTAP.
+
+Pour valider la reprise après sinistre :
+
+. Vérifiez que le statut de SnapMirror est  `snapmirrored` et que l'état de la relation est  `healthy`.
+. Activer la reprise après sinistre pour la relation SnapMirror :
++
+.. Créez une instance de système d'exploitation Linux sur Amazon EC2 et installez-y la base de données MongoDB, comme sur la base de données de production.
+.. Sur le système de fichiers FSx for ONTAP, suspendez et rompez la relation SnapMirror.
+.. Créez un volume FlexClone à partir du volume de destination.
+.. Montez les volumes de base de données primaire et secondaire sur les instances du système d'exploitation appropriées.
+.. Démarrez les serveurs de configuration, les serveurs de partitionnement primaire et secondaire, ainsi que le serveur d'application ou de requête `mongod` et `mongos` les processus à l'aide du script d'initialisation ou des commandes CLI.
+.. Vérifiez que la base de données et les documents sont présents jusqu'à la dernière copie Snapshot répliquée avec succès, et que la nouvelle base de données de reprise après sinistre est toujours accessible en écriture. Notez la date et l'heure du dernier transfert pour déterminer le point de restauration.
+
+
+
+
+
+
+[[performance-and-certification-validation]]
+== Validation des performances et de la certification
+
+
+
+[[certification-validation]]
+=== Validation de la certification
+
+Pour valider l'interopérabilité du stockage NetApp avec MongoDB, nous avons mené à bien le processus de certification MongoDB. Pour valider la certification, nous avons utilisé une baie 100 % flash AFF-A30 connectée via un switch Fibre Channel à un serveur x86 doté de 24 cœurs et de 128 Go de RAM, exécutant le système d'exploitation RHEL 7.1. Nous avons installé MongoDB Enterprise v3.2 sur le serveur RHEL. Ces versions reflètent les tests d'origine. Pour un nouveau déploiement, utilisez un système d'exploitation actuellement pris en charge ainsi qu'une version prise en charge de MongoDB.
+
+Avec cette configuration, le NetApp système de stockage a réussi tous les tests de certification MongoDB et était répertorié comme plateforme certifiée MongoDB au moment des tests. Pour plus d'informations, consultez link:https://www.mongodb.com/partners/netapp["Page partenaire MongoDB de NetApp"^]. Vérifiez cette page pour connaître l'état actuel de la certification.
+
+
+NOTE: La certification a utilisé un serveur physique connecté à l’AFF-A30 via Fibre Channel, qui correspond à du stockage bloc. Elle ne couvre pas la conception du datastore NFS qui héberge les machines virtuelles MongoDB dans le xref:mongodb-ontap-solution-design.html[conception de solutions].
+
+En plus des tests de certification, nous avons validé les performances de MongoDB avec le stockage NetApp à l’aide du framework de test YCSB.
+
+
+
+[[performance-validation-with-ycsb]]
+=== Validation des performances avec YCSB
+
+
+NOTE: Les tests YCSB ont été exécutés sur trois serveurs physiques utilisant des LUN Fibre Channel, et non sur la configuration virtualisée basée sur NFS dans le xref:mongodb-ontap-solution-design.html[conception de solutions]. Les résultats montrent ce que l’AFF-A30 peut fournir à MongoDB sous forte charge, et ils ne constituent pas une mesure de la conception du datastore NFS. Testez votre propre configuration et votre propre protocole pour dimensionner un déploiement.
+
+Yahoo! Cloud Serving Benchmark (YCSB) est un framework et un ensemble commun de workloads permettant d'évaluer les performances de différents magasins clés-valeurs et cloud serving. Il comporte deux composants :
+
+* Le client YCSB, un générateur de workload extensible.
+* Les workloads principaux, un ensemble de scénarios de workload exécutés par le générateur.
+
+
+Nous avons choisi les workloads A, B, C et un workload C personnalisé parmi les six workloads principaux :
+
+* *Workload A* est un workload avec de nombreuses mises à jour, avec un équilibre 50/50 entre lectures et écritures. Un exemple d'application est un système de stockage de sessions qui enregistre les actions récentes.
+* *Workload B* est un workload principalement en lecture, avec un ratio de 95/5 entre les lectures et les écritures. L'étiquetage de photos en est un exemple : l'ajout d'une étiquette correspond à une mise à jour, tandis que la plupart des opérations consistent à lire des étiquettes.
+* *Workload C* est un workload en lecture seule avec 100 % de lectures. Un exemple d'application est un cache de profils utilisateur, où les profils sont créés ailleurs, par exemple dans des déploiements Hadoop.
+* *Workload personnalisée C* est une workload en lecture seule que nous avons créée, car YCSB est principalement destiné à tester les performances des bases de données et n'est pas conçu pour solliciter fortement la couche d'E/S de la base de données. Elle montre le débit et le temps de réponse que vous pouvez attendre d'un AFF-A30 lorsque les requêtes d'E/S de l'application le sollicitent fortement.
+
+
+Lors de notre validation, la base de données contenait 700 Go de données. Chaque document pèse 1 000 octets et comporte 10 champs. L’outil YCSB a chargé les données.
+
+.Ensemble de répliques utilisé pour la validation
+image:mongodb-ontap-012.png["Jeu de réplicas MongoDB composé d’un primaire et de deux secondaires utilisé pour la validation YCSB."]
+
+
+
+[[storage-architecture-used-for-ycsb]]
+=== Architecture de stockage utilisée pour YCSB
+
+Nous avons utilisé trois serveurs physiques pour créer un ensemble de réplicas MongoDB primaire, secondaire, secondaire (PSS).
+
+.Architecture de stockage utilisée pour YCSB
+image:mongodb-ontap-013.png["Trois serveurs RHEL, chacun doté de deux connexions Fibre Channel de 16 Gbit/s à un switch FC, qui se connecte via quatre liaisons Fibre Channel de 16 Gbit/s à une paire haute disponibilité AFF-A30 à deux nœuds exécutant ONTAP 9.1 avec 24 SSD de 800 Go."]
+
+Chaque serveur possède la configuration suivante :
+
+* 256 Go de RAM
+* Deux processeurs Intel Xeon E5-2630 v2 à 2,60 GHz (24 cœurs au total)
+* Deux ports Fibre Channel de 16 Gbit/s
+* Serveurs MongoDB installés avec Red Hat Enterprise Linux 7.2 ou version ultérieure
+* Brocade switch Fibre Channel
+
+
+Le contrôleur de stockage est une paire haute disponibilité AFF-A30. Chaque contrôleur possède :
+
+* 16 cœurs
+* 128 Go de cache
+* 8 Go de NVMEM
+* Cache flash de 1 To
+* Quatre ports Fibre Channel de 16 Gbit/s
+* La moitié d'un tiroir DS2246 avec 24 SSD de 800 Go
+
+
+Nous avons construit le système de fichiers pour l'ensemble de réplicas comme suit :
+
+. Nous avons créé quatre volumes par contrôleur de stockage AFF-A30, soit huit volumes au total. Chaque volume a une capacité de 386 Go.
+. Chaque volume comportait trois LUN de 128 Go chacune. Nous avons provisionné une LUN dans chaque volume pour le serveur principal et les deux autres LUN pour les serveurs secondaires.
+. Sur chaque serveur, nous avons créé un groupe de volumes logiques à partir de huit LUN, puis un volume logique entrelacé sur les huit LUN du groupe de volumes.
+. Nous avons créé le système de fichiers XFS sur le volume logique distribué en bandes.
+
+
+.Agencement du stockage sur AFF-A30 et couches du système de fichiers
+image:mongodb-ontap-014.png["Disposition des volumes et des LUN sur l'AFF-A30."] image:mongodb-ontap-015.png["Couches du système de fichiers des LUN au système de fichiers XFS."]
+
+
+
+[[ycsb-performance-testing]]
+=== Tests de performance YCSB
+
+Nous avons exécuté les tests suivants sur les workloads YCSB A, B et C :
+
+* Une instance YCSB s'exécute sur une base de données.
+* Le test commence avec un nombre de threads YCSB égal à 8.
+* Le nombre de threads augmente jusqu'à ce que la latence augmente et que les opérations par seconde diminuent.
+* Les indicateurs de performance YCSB sont collectés à partir de la sortie YCSB à la fin de chaque exécution.
+
+
+Pendant l'exécution de YCSB sur les données, la charge sur le serveur augmente progressivement. Une fois l'index de la collection chargé dans la mémoire du serveur, toutes les lectures sont effectuées depuis la mémoire et les écritures sont envoyées vers le stockage.
+
+.Workload A : 50 % de lecture, 50 % de mise à jour
+image:mongodb-ontap-016.png["Opérations par seconde et latence pour le workload YCSB A à des nombres de threads croissants."]
+
+La commande suivante a exécuté workload A. Nous l'avons répétée avec 8, 16, 32 et 64 threads :
+
+[listing]
+----
+/root/YCSB/bin/ycsb run mongodb -s -P /root/YCSB/workloads/workloada -p mongodb.url="mongodb://mongodb-s1:27017/ycsb1" -p operationcount=120000000 -p maxexecutiontime=1800 -threads 16
+----
+.workload B : 95 % de lecture, 5 % de mise à jour
+image:mongodb-ontap-017.png["Opérations par seconde et latence pour le workload B de YCSB à mesure que le nombre de threads augmente."]
+
+La commande suivante a exécuté workload B. Nous l'avons répétée avec 8, 16, 32 et 64 threads :
+
+[listing]
+----
+/root/YCSB/bin/ycsb run mongodb -s -P /root/YCSB/workloads/workloadb -p mongodb.url="mongodb://mongodb-s1:27017/ycsb1" -p operationcount=120000000 -p maxexecutiontime=1800 -threads 16
+----
+.Workload C: 100 % de lecture
+image:mongodb-ontap-018.png["Opérations par seconde et latence pour le workload C de YCSB à mesure que le nombre de threads augmente."]
+
+La commande suivante a exécuté workload C :
+
+[listing]
+----
+/root/YCSB/bin/ycsb run mongodb -s -P /root/YCSB/workloads/workloadc -p mongodb.url="mongodb://mongodb-s1:27017/ycsb1" -p operationcount=120000000 -p maxexecutiontime=1800 -threads 16
+----
+La charge de travail personnalisée en C utilise les options YCSB `scanproportion` et `maxscanlength`. Ces options permettent à YCSB de parcourir tous les documents renvoyés par le curseur MongoDB. Grâce à ces options, les requêtes envoyées à la base de données génèrent un nombre considérable de lectures aléatoires au niveau du stockage.
+
+Au niveau du stockage, l'AFF-A30 a traité 175 400 IOPS avec une latence de 0,53 ms, en lisant 2,1 Go/s de données.
+
+.workload personnalisé C : 100 % de lecture, débit FCP
+image:mongodb-ontap-019.png["Débit Fibre Channel sur l'AFF-A30 pendant le workload C personnalisé."]
+
+.workload personnalisé C : 100 % de lecture, latence FCP
+image:mongodb-ontap-020.png["Latence Fibre Channel sur l'AFF-A30 pendant le workload C personnalisé."]
+
+.Workload personnalisée C : 100 % de lectures, débit de lecture en Go/s
+image:mongodb-ontap-021.png["Débit de lecture en Go/s sur l'AFF-A30 pendant la workload C personnalisée."]
+
+La commande suivante a exécuté le workload personnalisé C :
+
+[listing]
+----
+/root/YCSB/bin/ycsb run mongodb -s -P /root/YCSB/workloads/workloadc -p mongodb.url="mongodb://mongodb-s1:27017/ycsb1" -p operationcount=120000000 -p maxexecutiontime=1800 -p scanproportion=1 -p updateproportion=0 -p readproportion=0 -p maxscanlength=8000 -threads 64
+----
+
+
+[[inline-efficiency]]
+=== Efficacité en ligne
+
+NetApp la déduplication et la compression en ligne sont des technologies d'efficacité du stockage qui augmentent la capacité effective des SSD et réduisent le coût effectif par gigaoctet. Les technologies d'efficacité du stockage en ligne peuvent également améliorer les performances du système, car moins de blocs physiques sont écrits pour stocker une quantité donnée de données logiques. La déduplication en ligne et la compression en ligne sont deux composants clés de NetApp AFF qui vous permettent de stocker la quantité maximale de données au coût le plus bas possible. Ces technologies complémentaires fonctionnent ensemble pour réaliser des économies optimales.
+
+
+
+==== Déduplication
+
+La déduplication réduit les besoins en capacité de stockage en éliminant les blocs de données redondants, comme l'illustre la figure suivante. La déduplication NetApp améliore l'efficacité du stockage en localisant des blocs de données 4K identiques dans un volume NetApp FlexVol et en remplaçant les blocs identiques par des références à un seul bloc partagé. Avant de supprimer les blocs, elle effectue une vérification au niveau de l'octet pour confirmer que les blocs sont identiques. Cette vérification évite les problèmes potentiels liés aux collisions de hachage.
+
+.Réduction des besoins en capacité de stockage grâce à la déduplication
+image:mongodb-ontap-022.png["Diagramme montrant que les blocs identiques sont remplacés par des références à un seul bloc partagé."]
+
+NetApp AFF systems prennent en charge la déduplication à la fois en ligne et en post-traitement. Lorsque les écritures entrent dans le système, la déduplication en ligne élimine les blocs dupliqués conservés en mémoire, ce qui réduit l'espace nécessaire pour stocker les données.
+
+Si la déduplication post-traitement est activée, elle permet de récupérer davantage d’espace en analysant les données existantes à la recherche de doublons et en les supprimant. Par défaut, les systèmes AFF activent à la fois la déduplication en ligne et la déduplication en ligne des blocs de zéros. La déduplication en ligne des blocs de zéros détecte les blocs de zéros en ligne et les déduplique avant qu’ils ne soient écrits sur le disque.
+
+
+
+==== Compression
+
+NetApp propose une compression transparente des données au niveau du fichier. Elle ne compresse pas l'intégralité du fichier en un seul flux continu d'octets, car cela rendrait excessivement coûteux le traitement des petites lectures ou des écrasements sur une partie du fichier. Il faudrait lire l'intégralité du fichier à partir du disque et le décompresser avant de pouvoir traiter la requête, ce qui est particulièrement contraignant pour les fichiers volumineux.
+
+Pour éviter ce problème, la compression des données NetApp compresse un petit groupe de blocs consécutifs, appelé groupe de compression. Lorsqu'une demande de lecture ou d'écrasement arrive, seul ce petit groupe de blocs doit être lu, et non l'ensemble du fichier. Cette approche optimise les performances de lecture et d'écrasement et permet une plus grande évolutivité de la taille des fichiers compressés.
+
+NetApp prend en charge deux types de compression :
+
+* Compression adaptative (taille du groupe de compression 8K)
+* Compression secondaire (taille du groupe de compression 32K)
+
+
+La compression adaptative est mieux adaptée aux workloads composés principalement d'écritures aléatoires ou d'un mélange d'écritures séquentielles et aléatoires. La compression secondaire est mieux adaptée aux workloads composés principalement de grandes E/S séquentielles (32 Ko ou plus).
+
+La compression est prise en charge uniquement en tant qu’opération en ligne sur les systèmes AFF, et la compression adaptative en ligne est activée par défaut pour tous les nouveaux volumes sur les systèmes AFF. Si la compression et la déduplication sont toutes deux activées, la compression s’exécute en premier, suivie de la déduplication. Vous pouvez activer ou désactiver les deux au niveau du volume FlexVol.
+
+Les résultats de la première des figures suivantes montrent les statistiques d'efficacité du stockage de MongoDB exécutant la `mongoperf` workload sur des contrôleurs All Flash FAS. La seconde figure indique un taux de réduction des données supérieur à 15:1 avec à la fois la déduplication en ligne et la compression en ligne.
+
+.Statistiques d’efficacité des volumes de Perfstat
+image:mongodb-ontap-023.png["Résultats de Perfstat affichant les statistiques d'efficacité des volumes MongoDB."]
+
+.Réduction des données supérieure à 15:1 grâce à la déduplication en ligne et à la compression en ligne
+image:mongodb-ontap-024.png["Résultat d’efficacité du stockage indiquant un taux de réduction des données supérieur à 15:1."]
+
+
+NOTE: Grâce à ses capacités de déduplication et de compression intégrées, le NetApp All Flash FAS a démontré un taux de réduction des données supérieur à 15:1 tout au long des tests. Le `mongoperf` workload écrit de nombreux zéros lors de ses opérations de lecture et d'écriture, de sorte que l'efficacité de votre stockage peut varier en fonction du type et du volume de données de votre déploiement.

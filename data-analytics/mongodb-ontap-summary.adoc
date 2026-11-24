@@ -1,0 +1,35 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/mongodb-ontap-summary.html 
+keywords: mongodb, ontap, summary, conclusion 
+summary: Cette page résume les avantages validés pour MongoDB sur NetApp ONTAP. 
+---
+= Résumé
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Cette architecture de référence fournit une solution de bout en bout pour déployer efficacement une base de données NoSQL MongoDB virtualisée et évolutive sur l’infrastructure de données intelligente de NetApp. Dans l’architecture testée, qui associait la technologie de stockage NetApp à VMware vSphere, les machines virtuelles MongoDB et les bases de données étaient hébergées sur une baie AFF NetApp évolutive. NetApp SnapCenter gère les sauvegardes, et SnapMirror les réplique vers Amazon FSx for NetApp ONTAP dans AWS pour la reprise après sinistre.
+
+Cette solution a validé les principaux avantages suivants :
+
+* Des performances élevées et prévisibles, avec une latence constamment faible, ce qui garantit des temps de réponse très rapides pour les applications d’analyse basées sur MongoDB les plus exigeantes.
+* La déduplication et la compression en ligne rendent MongoDB sur stockage Flash économique.
+* Clonage instantané de bases de données, économe en espace, qui accélère la mise en place d’environnements de développement/test et d’assurance qualité sans nécessiter de nouvel espace de stockage.
+* Sauvegarde et restauration basées sur des copies Snapshot NetApp économes en espace et une réplication à distance vers le cloud.
+
+
+Au-delà des résultats de validation, NetApp AFF complète MongoDB avec les fonctionnalités clés suivantes :
+
+* Une baie 100 % Flash évolutive verticalement et horizontalement qui permet au stockage d'évoluer de manière modulaire avec MongoDB.
+* Des opérations sans interruption qui garantissent une disponibilité maximale et une haute disponibilité.
+
+
+Lors des tests de performance YCSB, NetApp AFF a obtenu d'excellents résultats, démontrant qu'il s'agit d'une baie 100 % Flash haute performance et économique pour la mise à l'échelle des déploiements MongoDB.
+
+Ce rapport décrit également deux cas d’utilisation client : la fourniture de Digital Advisor à partir de MongoDB Atlas et la sauvegarde ainsi que la restauration d’entreprise avec MongoDB Ops Manager. Concernant Ops Manager, il fournit des recommandations de conception, encore à évaluer, sur l’ajout de NetApp SnapCenter pour des copies Snapshot au niveau du stockage, une restauration rapide et la reprise après sinistre.

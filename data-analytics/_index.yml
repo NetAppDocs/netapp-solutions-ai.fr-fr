@@ -53,6 +53,8 @@ indexpage:
       url: stgr-splunkss-introduction.html
     - title: NetApp E-Series E5700 et Splunk Enterprise
       url: tr-4623.html
+    - title: MongoDB sur NetApp ONTAP
+      url: mongodb-ontap.html
   - title: Ressources supplémentaires
     links:
     - title: Différentes solutions pour différentes stratégies d'analyse

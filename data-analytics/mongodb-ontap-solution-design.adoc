@@ -1,0 +1,84 @@
+---
+sidebar: sidebar 
+permalink: data-analytics/mongodb-ontap-solution-design.html 
+keywords: mongodb, sharded cluster, mongos, config server, storage layout, aff-a30 
+summary: 'Cette page décrit l"architecture de cluster fragmenté de MongoDB, l"architecture validée et la disposition du stockage sur NetApp AFF.' 
+---
+= Conception de solutions
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Cette page décrit l'architecture de MongoDB, y compris ses composants et sa structure, suivie de l'architecture validée et de l'architecture de stockage utilisées dans cette solution.
+
+
+
+[[mongodb-architecture]]
+== Architecture MongoDB
+
+Le partitionnement, ou mise à l'échelle horizontale, divise un ensemble de données et le répartit sur plusieurs serveurs, ou shards. Chaque shard est une base de données indépendante, et ensemble, les shards constituent une seule base de données logique. La figure suivante montre comment les shards d'une collection peuvent être répartis sur plusieurs serveurs.
+
+.Fragments répartis sur plusieurs serveurs
+image:mongodb-ontap-002.png["Diagramme illustrant une collection divisée en fragments répartis sur plusieurs serveurs."]
+
+Les partitions stockent les données. Dans un cluster de production partitionné, chaque partition est un ensemble de répliques, ce qui garantit une haute disponibilité et la cohérence des données.
+
+Les routeurs de requêtes, ou `mongos` instances, interagissent avec les applications clientes et dirigent les opérations vers le ou les fragments appropriés. Un client envoie des requêtes à un `mongos`, qui achemine les opérations vers les fragments et renvoie les résultats au client. Un cluster fragmenté peut contenir plus d’un `mongos` afin de répartir la charge des requêtes clientes, et la plupart des clusters fragmentés en possèdent plusieurs.
+
+Les serveurs de configuration (config servers) stockent les métadonnées du cluster, qui associent le jeu de données du cluster aux shards. Le routeur de requêtes utilise ces métadonnées pour diriger les opérations vers des shards spécifiques, comme l’illustre la figure suivante.
+
+.Routeurs de requêtes (instances mongos) utilisant des métadonnées pour acheminer les données vers les fragments
+image:mongodb-ontap-003.png["Diagramme illustrant les routeurs de requêtes mongos utilisant les métadonnées du serveur de configuration pour acheminer les opérations vers les shards."]
+
+
+NOTE: À partir de MongoDB 3.2, les serveurs de configuration des clusters partitionnés peuvent être déployés sous forme d'ensemble de réplicas, lequel doit exécuter le moteur de stockage WiredTiger. MongoDB 3.4 a supprimé les serveurs de configuration en miroir, par conséquent les versions actuelles de MongoDB exigent que les serveurs de configuration soient déployés sous forme d'ensemble de réplicas.
+
+
+
+[[validated-architecture]]
+== Architecture validée
+
+Cette solution utilise un cluster MongoDB shardé virtualisé sur VMware vSphere. Conformément à la recommandation de MongoDB pour une configuration de production, nous avons déployé un cluster shardé de deux shards lors des tests. Chaque shard contient un sous-ensemble des données d'une collection, et chaque shard est un jeu de réplicas. Le cluster utilise également trois serveurs de configuration et deux routeurs de requêtes (`mongos` instances), et MongoDB est configuré avec le moteur de stockage WiredTiger. WiredTiger gère la manière dont les données sont stockées, à la fois en mémoire et sur disque, et crée les fichiers de données dans l'emplacement `--dbpath` ou `storage.dbPath`.
+
+Pour plus d'informations, consultez la documentation MongoDB pour link:https://www.mongodb.com/docs/manual/core/wiredtiger/["WiredTiger Moteur de stockage"^] et link:https://docs.mongodb.org/manual/core/sharded-cluster-architectures-production/["Architecture du cluster de production"^].
+
+
+
+[[storage-architecture]]
+== Architecture de stockage
+
+Six datastores NFS, qui sont des volumes NetApp accessibles via NFS version 3 (NFSv3), sont provisionnés sur la baie 100 % flash NetApp AFF-A30. Le NetApp SnapCenter Plug-in for VMware vSphere (SCV) est utilisé pour héberger les différents composants de l'architecture. Le tableau suivant répertorie ces composants.
+
+[cols="10%,35%,20%,15%,20%"]
+|===
+| Numéro de série | volume NetApp | Rôle MongoDB | Nombre de serveurs possédant ce rôle | Format de disque virtuel utilisé pour la validation 
+
+
+| 1 | Les volumes d'images du système d'exploitation (par exemple, `vol_vmOS_01` et `vol_vmOS_02`), partagés par tous les systèmes d'exploitation | Serveurs de requêtes/routeurs | 2 | Épais à mise à zéro immédiate (.vmdk) 
+
+
+| 2 | Les volumes d'images du système d'exploitation (par exemple, `vol_vmOS_01` et `vol_vmOS_02`), partagés par tous les systèmes d'exploitation | Serveurs de configuration | 3 | Épais à mise à zéro immédiate (.vmdk) 
+
+
+| 3 | Les volumes d'images du système d'exploitation (par exemple, `vol_vmOS_01` et `vol_vmOS_02`), partagés par tous les systèmes d'exploitation | Serveurs de fragments principaux | 2 | Épais à mise à zéro immédiate (.vmdk) 
+
+
+| 4 | Les volumes d'images du système d'exploitation (par exemple, `vol_vmOS_01` et `vol_vmOS_02`), partagés par tous les systèmes d'exploitation | Serveurs de fragments secondaires | 4 | Épais à mise à zéro immédiate (.vmdk) 
+
+
+| 5 | Volumes des bases de données principales (par exemple, `vol_mdbdata_p_01` et `vol_mdbdata_p_02`) | Serveurs de base de données de fragments primaires | 2 | Épais à mise à zéro immédiate (.vmdk) 
+
+
+| 6 | Volumes de bases de données secondaires (par exemple, `vol_mdbdata_s_01` pour les serveurs secondaires du premier partitionnement et `vol_mdbdata_s_02` pour les serveurs secondaires du deuxième partitionnement) | Serveurs de base de données de fragments secondaires | 4 | Épais à mise à zéro immédiate (.vmdk) 
+|===
+La validation a utilisé des disques virtuels thick initialisés à zéro de manière anticipée, qui allouent et initialisent à zéro l'intégralité du disque lors de sa création plutôt que lors de la première écriture. Cela évite la latence de première écriture pendant la croissance des fichiers de données MongoDB et maintient une latence d'écriture constante. Ce format n'est pas une exigence de MongoDB. Sur ONTAP, l'efficacité du stockage permet de limiter le coût d'espace des blocs initialisés à zéro, et vous pouvez évaluer le provisionnement pour votre environnement.
+
+La figure suivante illustre l'architecture de stockage. Le trafic du datastore NFS transite par deux commutateurs Ethernet pour assurer la redondance. Pour les nouveaux déploiements, utilisez un réseau 25 GbE ou plus rapide.
+
+.Disposition du stockage sur NetApp AFF-A30
+image:mongodb-ontap-004.png["Schéma de la disposition des volumes et des datastores pour les machines virtuelles et les bases de données MongoDB sur l'AFF-A30."]
